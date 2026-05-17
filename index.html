@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>UNIBRIDGE 粵語學習空間</title>
+    <title>UNIBRIDGE 煲匯橋 - 粵語學習空間</title>
     <style>
         :root {
             --bg-color: #ffffff;
             --text-color: #333333;
             --card-bg: #f5f7fa;
             --primary-blue: #0056b3;
+            --logo-blue: #2a8dcc; /* 稍微柔和點的IP與Logo藍色 */
             --border-color: #e0e0e0;
             --accent-gold: #ffb703;
             --success-green: #2a9d8f;
@@ -20,6 +21,7 @@
             --text-color: #e0e0e0;
             --card-bg: #1e1e1e;
             --primary-blue: #4da3ff;
+            --logo-blue: #4da3ff;
             --border-color: #333333;
         }
 
@@ -33,24 +35,67 @@
             -webkit-font-smoothing: antialiased;
         }
 
+        /* 頂部 Header & 商標區塊配置 */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
             border-bottom: 1px solid var(--border-color);
-        }
-        .logo {
-            font-size: 24px;
-            font-weight: 900;
-            color: var(--primary-blue);
-            font-style: italic;
-            letter-spacing: 1px;
+            flex-wrap: wrap; /* 允許在窄螢幕上換行 */
         }
 
+        /* 品牌核心區塊：IP + Logo */
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        /* 最左邊藍色的煲仔人物IP形象 (簡約向量圖形) */
+        .ip-char {
+            width: 40px;
+            height: 40px;
+        }
+        .ip-char svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* 商標文字容器：EN + CN */
+        .logo-text-group {
+            display: flex;
+            flex-direction: column; /* 上下排列 */
+            line-height: 1.1;
+        }
+
+        /* UNIBRIDGE 藍色藝術字英文商標 */
+        .logo-en {
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--logo-blue);
+            font-style: italic;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+
+        /* 煲匯橋 中文名 */
+        .logo-cn {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--logo-blue);
+            letter-spacing: 2px;
+            margin-top: 1px;
+        }
+
+        /* 控制按鈕區塊 */
+        .controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
         .controls button, .btn {
             padding: 8px 14px;
-            margin-left: 3px;
             cursor: pointer;
             border: 1px solid var(--primary-blue);
             background: transparent;
@@ -97,13 +142,13 @@
             transition: width 0.3s ease;
         }
 
-        /* 手機端優化：橫向滾動不換行的導航列 */
+        /* 導航列配置：居中、不換行滾動 */
         nav {
             display: flex;
-            justify-content: flex-start;
+            justify-content: center; /* 🎉 導航欄內容居中 */
             background-color: var(--card-bg);
             border-bottom: 1px solid var(--border-color);
-            overflow-x: auto;
+            overflow-x: auto; /* 在手機端允許橫向滾動 */
             scrollbar-width: none; /* Firefox */
             -webkit-overflow-scrolling: touch;
         }
@@ -119,6 +164,8 @@
             font-weight: bold;
             white-space: nowrap;
             flex-shrink: 0;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
         }
         nav button.active-nav {
             color: var(--primary-blue);
@@ -239,19 +286,39 @@
 
         /* 手機端寬度小於 600px 的適配調整 */
         @media (max-width: 600px) {
-            header { padding: 10px 4%; }
-            .logo { font-size: 20px; }
+            header { padding: 10px 4%; flex-direction: column; gap: 10px; } /* Header 手機端改上下 */
+            .logo-en { font-size: 22px; }
+            .logo-cn { font-size: 14px; }
             .welcome-hero h1 { font-size: 26px; }
             .chat-bubble { max-width: 95%; }
             th, td { padding: 8px 5px; font-size: 13px; }
             .controls button, .btn { padding: 6px 10px; font-size: 12px; }
+            nav { justify-content: flex-start; } /* 手機端導航列恢復左對齊便於滑動 */
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">UNIBRIDGE</div>
+        <div class="brand-container">
+            <div class="ip-char">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20,35 Q50,15 80,35 Z" fill="#f5f7fa" stroke="#2a8dcc" stroke-width="3"/>
+                    <circle cx="50" cy="22" r="6" fill="#f5f7fa" stroke="#2a8dcc" stroke-width="3"/>
+                    <path d="M15,35 Q50,45 85,35 L80,75 Q50,85 20,75 Z" fill="#2a8dcc" stroke="#2a8dcc" stroke-width="2"/>
+                    <path d="M5,40 H15 M85,40 H95" stroke="#2a8dcc" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M40,10 Q50,0 60,10 M45,5 Q50,0 55,5" stroke="#ffb703" stroke-width="3" stroke-linecap="round" fill="none"/>
+                    <circle cx="38" cy="55" r="3" fill="white"/>
+                    <circle cx="62" cy="55" r="3" fill="white"/>
+                    <path d="M42,68 Q50,75 58,68" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="logo-text-group">
+                <div class="logo-en">UNIBRIDGE</div>
+                <div class="logo-cn">煲匯橋</div>
+            </div>
+        </div>
+        
         <div class="controls">
             <button onclick="changeLang('zh-HK')">繁</button>
             <button onclick="changeLang('zh-CN')">简</button>
@@ -635,7 +702,7 @@
             const feedback = document.getElementById(`sys-feedback-${index}`);
             const q = currentDailyQuizzes[index];
             if(userAns === q.answer) {
-                feedback.innerHTML = "✅ 回答正確，獲得 30 XP！"; feedback.style.color = "var(--success-green)"; gainXP(30);
+                feedback.innerHTML = "✅ 回回答正確，獲得 30 XP！"; feedback.style.color = "var(--success-green)"; gainXP(30);
             } else {
                 feedback.innerHTML = `❌ 答錯囉！提示：${q.hint}`; feedback.style.color = "var(--danger-red)";
             }
