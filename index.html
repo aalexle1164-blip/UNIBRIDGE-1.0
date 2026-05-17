@@ -6,237 +6,173 @@
     <title>UNIBRIDGE 煲匯橋 - 粵語學習空間</title>
     <style>
         :root {
-            --bg-color: #ffffff;
+            /* 基礎顏色定義 */
+            --bg-color: #f7f9fc; /* 稍微帶點藍灰，配搭背景線條 */
             --text-color: #333333;
-            --card-bg: #f5f7fa;
+            --card-bg: rgba(255, 255, 255, 0.9); /* ✨ 卡片半透明透視效果 */
             --primary-blue: #0056b3;
-            --logo-blue: #2a8dcc; /* 稍微柔和點的IP與Logo藍色 */
+            --logo-blue: #2a8dcc;
             --border-color: #e0e0e0;
             --accent-gold: #ffb703;
             --success-green: #2a9d8f;
             --danger-red: #e63946;
+            /* ✨ 背景線條顏色 */
+            --svg-line-color: #d1d9e6;
         }
         [data-theme="dark"] {
-            --bg-color: #121212;
+            --bg-color: #10141d; /* 深色背景配搭 */
             --text-color: #e0e0e0;
-            --card-bg: #1e1e1e;
+            --card-bg: rgba(30, 30, 30, 0.85); /* ✨ 深色半透明 */
             --primary-blue: #4da3ff;
             --logo-blue: #4da3ff;
             --border-color: #333333;
+            --svg-line-color: #1a2335;
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
             margin: 0;
             padding: 0;
             transition: all 0.3s ease;
             -webkit-font-smoothing: antialiased;
+            
+            /* =========================================
+               ✨ 核心：簡約大氣的香港天際線背景設計
+               ========================================= */
+            background-color: var(--bg-color);
+            /* 使用超低透明度的 SVG 線條圖，並配合漸變 */
+            background-image: linear-gradient(180deg, transparent 0%, transparent 60%, rgba(255,255,255,0.1) 100%),
+                url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" opacity="0.05"><path d="M0 380 L1600 380 M50 380 L50 200 L120 200 L120 380 M150 380 L150 150 L200 150 L200 380 M230 380 L230 250 L270 250 L270 380 M300 380 L300 100 Q350 50 400 100 L400 380 M430 380 L430 180 L490 180 Q520 120 550 18 L580 180 L640 180 L640 380 M670 380 L670 20 L730 20 L730 380 M760 380 L760 120 L800 120 L800 380 M830 380 L830 200 L870 200 L870 380 M900 380 L900 30 Q1000 80 1100 30 L1100 380 M1130 380 L1130 150 L1170 150 L1170 380 M1200 380 L1200 180 L1260 180 L1260 380 M1300 380 L1300 10 L1360 10 L1360 380 M1400 380 L1400 200 L1440 200 L1440 380 M1480 380 L1480 100 L1550 100 L1550 380" fill="none" stroke="%23d1d9e6" stroke-width="2.5" stroke-linecap="round"/></svg>');
+            background-size: cover, auto 28%; /* 手機端自動配搭背景線條大小 */
+            background-position: center bottom;
+            background-repeat: no-repeat, repeat-x;
+            background-attachment: fixed; /* 固定背景，滾動時內容在上面滑動 */
+        }
+        
+        [data-theme="dark"] body {
+            background-image: linear-gradient(180deg, transparent 0%, transparent 60%, rgba(10,10,20,0.1) 100%),
+                url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" opacity="0.04"><path d="M0 380 L1600 380 M50 380 L50 200 L120 200 L120 380 M150 380 L150 150 L200 150 L200 380 M230 380 L230 250 L270 250 L270 380 M300 380 L300 100 Q350 50 400 100 L400 380 M430 380 L430 180 L490 180 Q520 120 550 18 L580 180 L640 180 L640 380 M670 380 L670 20 L730 20 L730 380 M760 380 L760 120 L800 120 L800 380 M830 380 L830 200 L870 200 L870 380 M900 380 L900 30 Q1000 80 1100 30 L1100 380 M1130 380 L1130 150 L1170 150 L1170 380 M1200 380 L1200 180 L1260 180 L1260 380 M1300 380 L1300 10 L1360 10 L1360 380 M1400 380 L1400 200 L1440 200 L1440 380 M1480 380 L1480 100 L1550 100 L1550 380" fill="none" stroke="%231a2335" stroke-width="2.5" stroke-linecap="round"/></svg>');
         }
 
-        /* 頂部 Header & 商標區塊配置 */
+        /* 頂部 Header - 改為半透明背景 */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 15px 5%;
             border-bottom: 1px solid var(--border-color);
-            flex-wrap: wrap; /* 允許在窄螢幕上換行 */
+            flex-wrap: wrap; 
+            background-color: var(--card-bg); /* 透視背景 */
+            backdrop-filter: blur(8px); /* 毛玻璃效果 */
+            -webkit-backdrop-filter: blur(8px);
         }
 
-        /* 品牌核心區塊：IP + Logo */
+        /* 品牌區塊 */
         .brand-container {
             display: flex;
             align-items: center;
             gap: 12px;
         }
 
-        /* 最左邊藍色的煲仔人物IP形象 (簡約向量圖形) */
-        .ip-char {
-            width: 40px;
-            height: 40px;
-        }
-        .ip-char svg {
-            width: 100%;
-            height: 100%;
-        }
+        /* IP形象 */
+        .ip-char { width: 40px; height: 40px; }
+        .ip-char svg { width: 100%; height: 100%; }
 
-        /* 商標文字容器：EN + CN */
-        .logo-text-group {
-            display: flex;
-            flex-direction: column; /* 上下排列 */
-            line-height: 1.1;
-        }
+        /* 商標文字 */
+        .logo-text-group { display: flex; flex-direction: column; line-height: 1.1; }
+        .logo-en { font-size: 26px; font-weight: 900; color: var(--logo-blue); font-style: italic; letter-spacing: 1px; margin: 0; }
+        .logo-cn { font-size: 16px; font-weight: 700; color: var(--logo-blue); letter-spacing: 2px; margin-top: 1px; }
 
-        /* UNIBRIDGE 藍色藝術字英文商標 */
-        .logo-en {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--logo-blue);
-            font-style: italic;
-            letter-spacing: 1px;
-            margin: 0;
-        }
-
-        /* 煲匯橋 中文名 */
-        .logo-cn {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--logo-blue);
-            letter-spacing: 2px;
-            margin-top: 1px;
-        }
-
-        /* 控制按鈕區塊 */
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        /* 控制按鈕 */
+        .controls { display: flex; align-items: center; gap: 5px; }
         .controls button, .btn {
-            padding: 8px 14px;
-            cursor: pointer;
-            border: 1px solid var(--primary-blue);
-            background: transparent;
-            color: var(--primary-blue);
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            transition: all 0.2s;
-            white-space: nowrap;
+            padding: 8px 14px; cursor: pointer; border: 1px solid var(--primary-blue);
+            background: transparent; color: var(--primary-blue); border-radius: 20px;
+            font-weight: bold; font-size: 14px; transition: all 0.2s; white-space: nowrap;
         }
-        .controls button:hover, .btn:hover {
-            background: var(--primary-blue);
-            color: white;
-        }
+        .controls button:hover, .btn:hover { background: var(--primary-blue); color: white; }
         .btn-success { border-color: var(--success-green); color: var(--success-green); }
         .btn-success:hover { background: var(--success-green); color: white; }
         .btn-danger { border-color: var(--danger-red); color: var(--danger-red); }
 
         .status-bar {
             background: linear-gradient(135deg, #0056b3, #0a1128);
-            color: white;
-            padding: 12px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            flex-wrap: wrap;
-            gap: 10px;
+            color: white; padding: 12px 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 14px; flex-wrap: wrap; gap: 10px;
         }
         .xp-bar-bg {
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
-            width: 100px;
-            height: 8px;
-            display: inline-block;
-            margin-left: 8px;
-            overflow: hidden;
-            vertical-align: middle;
+            background: rgba(255,255,255,0.2); border-radius: 10px;
+            width: 100px; height: 8px; display: inline-block;
+            margin-left: 8px; overflow: hidden; vertical-align: middle;
         }
-        .xp-bar-fill {
-            background: var(--accent-gold);
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
+        .xp-bar-fill { background: var(--accent-gold); height: 100%; width: 0%; transition: width 0.3s ease; }
 
-        /* 導航列配置：居中、不換行滾動 */
+        /* 導航列 - 也改為透視背景 */
         nav {
-            display: flex;
-            justify-content: center; /* 🎉 導航欄內容居中 */
-            background-color: var(--card-bg);
+            display: flex; justify-content: center;
             border-bottom: 1px solid var(--border-color);
-            overflow-x: auto; /* 在手機端允許橫向滾動 */
-            scrollbar-width: none; /* Firefox */
+            overflow-x: auto; scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
+            background-color: var(--card-bg); /* 透視 */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
         }
-        nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+        nav::-webkit-scrollbar { display: none; }
         
         nav button {
-            background: none;
-            border: none;
-            padding: 15px 18px;
-            font-size: 15px;
-            color: var(--text-color);
-            cursor: pointer;
-            font-weight: bold;
-            white-space: nowrap;
-            flex-shrink: 0;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s;
+            background: none; border: none; padding: 15px 18px;
+            font-size: 15px; color: var(--text-color); cursor: pointer;
+            font-weight: bold; white-space: nowrap; flex-shrink: 0;
+            border-bottom: 3px solid transparent; transition: all 0.2s;
         }
-        nav button.active-nav {
-            color: var(--primary-blue);
-            border-bottom: 3px solid var(--primary-blue);
-        }
+        nav button.active-nav { color: var(--primary-blue); border-bottom: 3px solid var(--primary-blue); }
 
         .content-section {
-            display: none;
-            padding: 20px 4%;
-            max-width: 800px;
-            margin: 0 auto;
-            box-sizing: border-box;
+            display: none; padding: 20px 4%;
+            max-width: 800px; margin: 0 auto; box-sizing: border-box;
         }
         .content-section.active { display: block; }
 
-        /* 模塊描述頂部裝飾條 */
+        /* 描述頂部裝飾條 - 半透明 */
         .section-desc {
             background: rgba(0, 86, 179, 0.05);
             border-left: 4px solid var(--primary-blue);
-            padding: 12px 15px;
-            border-radius: 4px;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            padding: 12px 15px; border-radius: 4px;
+            font-size: 14px; line-height: 1.5; margin-bottom: 20px;
             color: var(--text-color);
+            backdrop-filter: blur(4px);
         }
 
+        /* ✨ 卡片增加透視效果 */
         .card {
-            background-color: var(--card-bg);
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 15px;
+            background-color: var(--card-bg); /* 半透明透視 */
+            padding: 18px; border-radius: 12px; margin-bottom: 15px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.015); /* 稍微增加陰影層次 */
             box-sizing: border-box;
+            backdrop-filter: blur(4px); /* 卡片內容稍微模糊配搭背景 */
+            -webkit-backdrop-filter: blur(4px);
         }
+        .clickable-card { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
+        .clickable-card:hover { transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.05); border-color: var(--primary-blue); }
 
-        /* 歡迎頁特色排版 */
+        /* 歡迎頁 */
         .welcome-hero {
-            text-align: center;
-            padding: 40px 10px;
+            text-align: center; padding: 40px 10px;
             background: linear-gradient(180deg, rgba(0,86,179,0.08) 0%, transparent 100%);
-            border-radius: 16px;
-            margin-bottom: 20px;
+            border-radius: 16px; margin-bottom: 20px;
         }
-        .welcome-hero h1 {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--primary-blue);
-            margin: 0 0 15px 0;
-        }
+        .welcome-hero h1 { font-size: 32px; font-weight: 900; color: var(--primary-blue); margin: 0 0 15px 0; }
         .soup-box {
-            font-style: italic;
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            display: inline-block;
-            max-width: 90%;
-            border: 1px dashed var(--border-color);
+            font-style: italic; color: #666; font-size: 16px; line-height: 1.6;
+            padding: 15px; background: var(--card-bg); border-radius: 8px;
+            display: inline-block; max-width: 90%; border: 1px dashed var(--border-color);
         }
         [data-theme="dark"] .soup-box { color: #aaa; }
 
-        /* 表格響應式包裝 */
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
+        /* 表格響應式 */
+        .table-responsive { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; }
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 14px; }
         th { background-color: rgba(0,0,0,0.02); white-space: nowrap; }
@@ -244,35 +180,21 @@
         /* 對話流 */
         .chat-container { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
         .chat-bubble {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 16px;
-            line-height: 1.5;
-            box-sizing: border-box;
-            font-size: 15px;
+            max-width: 85%; padding: 12px 16px; border-radius: 16px;
+            line-height: 1.5; box-sizing: border-box; font-size: 15px;
         }
         .chat-waiter { background-color: var(--primary-blue); color: white; align-self: flex-start; border-top-left-radius: 0; }
         .chat-user { background-color: var(--card-bg); color: var(--text-color); align-self: flex-end; border-top-right-radius: 0; border: 1px solid var(--border-color); }
         
-        /* 真實語音反饋盒 */
         .ai-score-box {
-            margin-top: 8px;
-            padding: 10px;
+            margin-top: 8px; padding: 10px;
             background: rgba(42, 157, 143, 0.08);
-            border-left: 4px solid var(--success-green);
-            border-radius: 4px;
-            font-size: 13px;
-            display: none;
+            border-left: 4px solid var(--success-green); border-radius: 4px;
+            font-size: 13px; display: none;
         }
 
-        /* 文化專屬：折疊流 */
-        .culture-content {
-            max-height: 45px;
-            overflow: hidden;
-            transition: max-height 0.35s ease;
-            font-size: 14px;
-            line-height: 1.6;
-        }
+        /* 文化專屬：折疊 */
+        .culture-content { max-height: 45px; overflow: hidden; transition: max-height 0.35s ease; font-size: 14px; line-height: 1.6; }
         .culture-content.expanded { max-height: 800px; }
         .toggle-story-btn {
             background: none; border: none; color: var(--primary-blue);
@@ -284,16 +206,16 @@
             border-radius: 6px; background-color: var(--bg-color); color: var(--text-color); box-sizing: border-box;
         }
 
-        /* 手機端寬度小於 600px 的適配調整 */
+        /* 手機端適配調整 */
         @media (max-width: 600px) {
-            header { padding: 10px 4%; flex-direction: column; gap: 10px; } /* Header 手機端改上下 */
+            header { padding: 10px 4%; flex-direction: column; gap: 10px; }
             .logo-en { font-size: 22px; }
             .logo-cn { font-size: 14px; }
             .welcome-hero h1 { font-size: 26px; }
             .chat-bubble { max-width: 95%; }
             th, td { padding: 8px 5px; font-size: 13px; }
             .controls button, .btn { padding: 6px 10px; font-size: 12px; }
-            nav { justify-content: flex-start; } /* 手機端導航列恢復左對齊便於滑動 */
+            nav { justify-content: flex-start; } 
         }
     </style>
 </head>
@@ -425,7 +347,7 @@
     </main>
 
     <script>
-        // 港風心靈雞湯池（每日更新）
+        // 每日雞湯
         const soupPool = [
             "「做人如果無夢想，同條鹹魚有咩分別呀？」—— 撐住！今日一齊學多句粵語！",
             "「最緊要個人開心，行行下就到黎明啦。」—— 唔好急，最緊要keep住進步！",
@@ -446,317 +368,4 @@
             {
                 name: "茶餐廳點餐實戰連線",
                 story: [
-                    {role: "waiter", text: "歡迎光臨！入面坐，同人搭枱得唔得啊？", sub: "(歡迎光臨！裡面坐，拼桌可以嗎？)"},
-                    {role: "user", text: "得，冇問題。唔該比個常餐我。", sub: "(可以，沒問題。麻煩給我一個常餐。)"},
-                    {role: "waiter", text: "飲咩嘢啊？凍飲要加三蚊喎。", sub: "(喝什麼？冰飲要加三元喔。)"},
-                    {role: "user", text: "要一杯凍檸茶，少甜走冰，唔該。", sub: "(要一杯冰檸檬茶，少甜去冰，謝謝。)"}
-                ]
-            },
-            {
-                name: "中環街頭攔截的士",
-                story: [
-                    {role: "waiter", text: "去邊度啊老友？行紅隧定東隧？", sub: "(去哪裡啊朋友？走紅隧還是東隧？)"},
-                    {role: "user", text: "唔該去尖沙咀，行紅隧啦，邊條唔塞行邊條。", sub: "(麻煩去尖沙咀，走紅隧吧，哪條不堵走哪條。)"},
-                    {role: "waiter", text: "好咧，坐穩。今日路面有啲塞車喎。", sub: "(好咧，坐穩。今天路面有點堵車喔。)"},
-                    {role: "user", text: "唔緊要，慢慢揸，安全第一就行。", sub: "(沒關係，慢慢開，安全第一就可以。)"}
-                ]
-            }
-        ];
-
-        const culturePool = [
-            { title: "☕ 茶餐廳的「密碼暗號」", preview: "除了「靚仔」指白飯外，夥計單據上的「反Q」其實代表...", full: "在極度追求效率的香港茶餐廳，夥計們發展出一套極高深莫測的速記代號。除了大家熟知的「靚仔」代表白飯、「靚女」代表白粥外，單據上寫「反Q」代表「西多士」（因為法式吐司 Toast 諧音像托，Q版翻轉）；而「敗家仔」是指阿華田（因其高熱量且以往價格較昂貴，有奢侈之意）。掌握了這些密碼，你在茶餐廳就能瞬間變身老香港！" },
-            { title: "🚌 紅色小巴：沒有車站的心理博弈", preview: "紅色小巴路線與車站不固定！下車不能按鈴，必須大喊...", full: "香港的紅色小巴是街頭最魔幻的交通工具。它最致命的特點是：路線與車站完全不固定！司機開車全憑經驗，而乘客想要下車時，絕對不能按鈴，必須在上車後一邊盯著窗外，一邊用宏亮且充滿自信的粵語對著司機大喊：「唔該，有落！」（麻煩你，有下車的）。如果聲音太小，司機聽不到就會直接開走，這對於內向的學習者而言無疑是一場高度心理挑戰。" },
-            { title: "👵 驚蟄「打小人」的地道巫術", preview: "每年驚蟄，大批婆婆聚集在鵝頸橋底用鞋頭拍打紙張...", full: "每年驚蟄，香港銅鑼灣鵝頸橋底就會聚集大批婆婆。她們會一邊用鞋頭狠狠拍打剪成小人狀的紙張，一邊唸唸有詞：「打你個小人頭，打到你作嘔...」以此驅逐霉運與身邊的「小人」。這種極具歷史感與魔幻現實主義的地道民俗，已經成為香港非物質文化遺產之一。" },
-            { title: "🚃 百年叮叮車：極速城市的慢行美學", preview: "自1904年啟行至今，行駛在港島北岸的雙層電車...", full: "自1904年啟行至今，行駛在香港島北岸的雙層電車——「叮叮車」，已走過超逾一個世紀的歲月。它是世界上現存唯一全數採用雙層電車的系統。在步調快到令人窒息的中環，叮叮車以時速不超過30公里的慢節奏悠然穿梭，坐在上層靠窗的位置，就能用最浪漫的視角靜靜閱讀這座新舊交織的傳奇都市。" },
-            { title: "🍦 富豪雪糕車：移動的集體回憶", preview: "當街頭傳來《藍色多瑙河》音樂，就知道它來了...", full: "自1970年代引入香港以來，富豪雪糕車那紅白藍相間的車身和香滑的軟雪糕，承載了幾代香港人的童年回憶。全港只有固定數量的牌照，它們開到哪裡，哪裡就會排起長隊。經典的軟雪糕入口即化，伴隨著多年不變的叮噹音樂，是街頭最溫暖的風景。"}
-        ];
-
-        const autoQuizPool = [
-            {question: "茶餐廳裡如果夥計叫你「靚仔」，是指什麼？", answer: "白飯", hint: "一種主食"},
-            {question: "當你想問路，問「在哪裡」時，粵語說法是？", answer: "邊度", hint: "兩個字"},
-            {question: "「結賬/買單」的粵語正確寫法是？", answer: "埋單", hint: "兩個字"}
-        ];
-
-        let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
-        let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
-        let customQuizzes = JSON.parse(localStorage.getItem('ub_custom_quizzes')) || [];
-        let currentDailyQuizzes = JSON.parse(localStorage.getItem('ub_daily_quizzes_current')) || [];
-
-        function updateStatus() {
-            document.getElementById('user-xp').textContent = xp;
-            document.getElementById('user-level').textContent = level;
-            document.getElementById('xp-fill').style.width = `${xp}%`;
-        }
-
-        function speak(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const u = new SpeechSynthesisUtterance(text);
-                u.lang = 'zh-HK';
-                u.rate = 0.95;
-                window.speechSynthesis.speak(u);
-            }
-        }
-
-        function showSection(sectionId) {
-            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
-            document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active-nav'));
-            document.getElementById(sectionId).classList.add('active');
-            document.getElementById('nav-' + sectionId).classList.add('active-nav');
-            window.scrollTo(0,0);
-        }
-
-        // 📅 每日雞湯語自動更新調度
-        function initDailySoup() {
-            const todayIndex = new Date().getDate() % soupPool.length;
-            document.getElementById('daily-soup').innerText = soupPool[todayIndex];
-        }
-
-        function refreshVocab() {
-            const shuffled = [...bigVocabPool].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 4);
-            const tbody = document.getElementById('vocab-table-body');
-            tbody.innerHTML = '';
-            selected.forEach(item => {
-                tbody.innerHTML += `<tr><td><strong>${item.tc}</strong></td><td><code>${item.jp}</code></td><td>${item.en}</td><td><button class="btn" style="padding:4px 8px;" onclick="speak('${item.tc}')">🔊</button></td></tr>`;
-            });
-        }
-
-        function refreshDialogue() {
-            const sc = dialoguePool[Math.floor(Math.random() * dialoguePool.length)];
-            document.getElementById('current-scenario-name').textContent = sc.name;
-            const container = document.getElementById('dialogue-chat-container');
-            container.innerHTML = '';
-            
-            sc.story.forEach((line, index) => {
-                const isWaiter = line.role === 'waiter';
-                const bubbleClass = isWaiter ? 'chat-waiter' : 'chat-user';
-                const senderLabel = isWaiter ? '💁‍♂️ 夥計/店主' : '🙋‍♂️ 你';
-                
-                let actionBtn = `<button class="btn" style="padding:3px 8px; font-size:12px; border-color:white; color:white;" onclick="speak('${line.text}')">🔊 播放</button>`;
-                if (!isWaiter) {
-                    actionBtn = `
-                        <button class="btn" style="padding:3px 8px; font-size:12px;" onclick="speak('${line.text}')">🔊 聽範例</button>
-                        <button class="btn btn-success" id="mic-btn-${index}" style="padding:3px 8px; font-size:12px;" onclick="startRealSpeechRecognition('${line.text}', ${index})">🎤 開始跟讀</button>
-                    `;
-                }
-
-                container.innerHTML += `
-                    <div class="chat-bubble ${bubbleClass}">
-                        <strong>${senderLabel}：</strong><br>
-                        <span>「${line.text}」</span><br>
-                        <small style="opacity:0.85; display:block; margin-top:3px;">${line.sub}</small>
-                        <div style="margin-top:5px;">actionBtn</div>
-                        <div class="ai-score-box" id="score-box-${index}"></div>
-                    </div>
-                `.replace('actionBtn', actionBtn);
-            });
-        }
-
-        // 🎙️ 核心：引入 Web Speech API 進行真實語音轉文字比對打分
-        function startRealSpeechRecognition(targetText, index) {
-            const micBtn = document.getElementById(`mic-btn-${index}`);
-            const scoreBox = document.getElementById(`score-box-${index}`);
-            
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                // 如果瀏覽器完全不支援語音識別，退回到高度模擬反饋
-                simulateFallbackScoring(targetText, index);
-                return;
-            }
-
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'zh-HK'; // 設定為香港粵語
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            micBtn.innerText = "🛑 正在聆聽中...";
-            micBtn.style.backgroundColor = "var(--danger-red)";
-            micBtn.style.color = "white";
-            scoreBox.style.display = "block";
-            scoreBox.innerHTML = `<span style="color:var(--primary-blue);">🎙️ 請對著麥克風讀出句子...</span>`;
-
-            recognition.start();
-
-            recognition.onresult = function(event) {
-                const speechResult = event.results[0][0].transcript;
-                // 清洗標點符號計算匹配率
-                const cleanTarget = targetText.replace(/[，。？、！「」]/g, "");
-                const cleanSpeech = speechResult.replace(/[，。？、！「」]/g, "");
-                
-                let matchCount = 0;
-                for (let char of cleanTarget) {
-                    if (cleanSpeech.includes(char)) matchCount++;
-                }
-                
-                // 真實計算得分率
-                let accuracy = Math.round((matchCount / cleanTarget.length) * 100);
-                if (accuracy > 100) accuracy = 100;
-                if (accuracy < 30 && cleanSpeech.length > 0) accuracy = Math.floor(Math.random() * 20) + 40; // 保底鼓勵分
-
-                let evaluation = "發音相當地道，連音流暢！";
-                if (accuracy < 75) evaluation = "辨識度較低，建議多聽兩次範例，注意聲調的起伏。";
-
-                scoreBox.innerHTML = `
-                    <strong style="color:var(--success-green);">📊 語音辨識打分報告 (真實捕獲)：</strong><br>
-                    • 你說的是：<mark style="background:yellow; padding:2px 4px;">"${speechResult || '未檢測到有效發音'}"</mark><br>
-                    • 發音匹配度：<span style="color:var(--primary-blue); font-weight:bold; font-size:16px;">${accuracy}%</span><br>
-                    • 精準診斷：<span style="color:gray;">${evaluation}</span><br>
-                    🎉 <span style="color:var(--accent-gold); font-weight:bold;">完成練習：+15 XP！</span>
-                `;
-                gainXP(15);
-            };
-
-            recognition.onerror = function() {
-                scoreBox.innerHTML = `<span style="color:var(--danger-red);">❌ 錄音失敗。請確認已開啟瀏覽器麥克風權限！</span>`;
-            };
-
-            recognition.onend = function() {
-                micBtn.innerText = "🎤 重新跟讀";
-                micBtn.style.backgroundColor = "transparent";
-                micBtn.style.color = "var(--success-green)";
-            };
-        }
-
-        // 降級仿真引擎
-        function simulateFallbackScoring(targetText, index) {
-            const scoreBox = document.getElementById(`score-box-${index}`);
-            scoreBox.style.display = "block";
-            scoreBox.innerHTML = "⏳ 語音引擎分析中...";
-            setTimeout(() => {
-                const score = Math.floor(Math.random() * 15) + 82;
-                scoreBox.innerHTML = `<strong>📊 模擬 AI 評分：</strong><br>精準度: ${score}% | 流利度: 90%<br><small style="color:gray;">(環境暫不支援原生麥克風比對，已切換至仿真分析)</small><br>🎉 +15 XP`;
-                gainXP(15);
-            }, 1000);
-        }
-
-        // 🧳 香港文化隨機三塊展示功能
-        function refreshCulture() {
-            const shuffled = [...culturePool].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 3); // 這裡精準修改為 3 塊展示
-            const container = document.getElementById('culture-card-container');
-            container.innerHTML = '';
-            
-            selected.forEach((item, idx) => {
-                container.innerHTML += `
-                    <div class="card">
-                        <h3 style="margin-top:0; color:var(--primary-blue);">${item.title}</h3>
-                        <div class="culture-content" id="culture-text-${idx}">
-                            <p style="margin:0; color:gray;"><em>導讀：${item.preview}</em></p>
-                            <p style="margin-top:10px; border-top:1px dashed var(--border-color); padding-top:10px;">${item.full}</p>
-                        </div>
-                        <button class="toggle-story-btn" onclick="toggleCultureStory(${idx}, this)">展開全文 ➔</button>
-                    </div>
-                `;
-            });
-        }
-
-        function toggleCultureStory(idx, btn) {
-            const contentBox = document.getElementById(`culture-text-${idx}`);
-            if(contentBox.classList.contains('expanded')) {
-                contentBox.classList.remove('expanded');
-                btn.innerHTML = "展開全文 ➔";
-            } else {
-                contentBox.classList.add('expanded');
-                btn.innerHTML = "收起故事 ↩";
-            }
-        }
-
-        // 📅 每日問題派發
-        function refreshSystemQuiz(isManual = false) {
-            const shuffled = [...autoQuizPool].sort(() => 0.5 - Math.random());
-            currentDailyQuizzes = shuffled.slice(0, 2);
-            localStorage.setItem('ub_daily_quizzes_current', JSON.stringify(currentDailyQuizzes));
-            renderSystemQuizzes();
-            if(isManual) alert("已自動重刷今日挑戰題！");
-        }
-
-        function checkDailyQuizCron() {
-            const todayStr = new Date().toDateString();
-            const lastDate = localStorage.getItem('ub_last_quiz_date');
-            if (lastDate !== todayStr || currentDailyQuizzes.length === 0) {
-                refreshSystemQuiz(false);
-                localStorage.setItem('ub_last_quiz_date', todayStr);
-            } else {
-                renderSystemQuizzes();
-            }
-        }
-
-        function renderSystemQuizzes() {
-            const container = document.getElementById('system-quiz-container');
-            container.innerHTML = '';
-            currentDailyQuizzes.forEach((q, index) => {
-                container.innerHTML += `
-                    <div class="card" style="border-left: 5px solid var(--primary-blue);">
-                        <p><strong>挑戰項目：${q.question}</strong></p>
-                        <input type="text" id="sys-ans-${index}" placeholder="輸入答案..." style="padding:8px; width:60%; border-radius:5px; border:1px solid var(--border-color); display:inline-block;">
-                        <button class="btn btn-success" onclick="checkSystemAnswer(${index})">提交</button>
-                        <p id="sys-feedback-${index}" style="margin-top:5px; font-weight:bold; font-size:13px;"></p>
-                    </div>
-                `;
-            });
-        }
-
-        function checkSystemAnswer(index) {
-            const userAns = document.getElementById(`sys-ans-${index}`).value.trim();
-            const feedback = document.getElementById(`sys-feedback-${index}`);
-            const q = currentDailyQuizzes[index];
-            if(userAns === q.answer) {
-                feedback.innerHTML = "✅ 回回答正確，獲得 30 XP！"; feedback.style.color = "var(--success-green)"; gainXP(30);
-            } else {
-                feedback.innerHTML = `❌ 答錯囉！提示：${q.hint}`; feedback.style.color = "var(--danger-red)";
-            }
-        }
-
-        function renderCustomQuizzes() {
-            const tbody = document.getElementById('admin-quiz-tbody');
-            tbody.innerHTML = '';
-            customQuizzes.forEach((q, index) => {
-                tbody.innerHTML += `<tr><td>${q.question}</td><td><mark>${q.answer}</mark></td><td><button class="btn btn-danger" style="padding:2px 6px; font-size:12px;" onclick="deleteQuiz(${index})">刪</button></td></tr>`;
-            });
-        }
-
-        function handleQuizSubmit() {
-            const question = document.getElementById('form-question').value.trim();
-            const answer = document.getElementById('form-answer').value.trim();
-            if(!question || !answer) return;
-            customQuizzes.push({ question, answer, hint:'' });
-            localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes));
-            document.getElementById('form-question').value = '';
-            document.getElementById('form-answer').value = '';
-            renderCustomQuizzes();
-        }
-
-        function deleteQuiz(index) {
-            customQuizzes.splice(index, 1);
-            localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes));
-            renderCustomQuizzes();
-        }
-
-        function gainXP(amount) {
-            xp += amount;
-            if(xp >= 100) { xp -= 100; level += 1; alert(`🎉 恭喜升級到 Level ${level}！`); }
-            localStorage.setItem('ub_xp', xp);
-            localStorage.setItem('ub_lvl', level);
-            updateStatus();
-        }
-
-        function toggleTheme() {
-            document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
-        }
-
-        function changeLang(lang) {
-            alert('語言切換功能已與全新佈局完美同步映射！');
-        }
-
-        // 🚀 開機啟動引擎
-        updateStatus();
-        initDailySoup();
-        refreshVocab();
-        refreshDialogue();
-        refreshCulture();
-        checkDailyQuizCron();
-        renderCustomQuizzes();
-    </script>
-</body>
-</html>
+                    {role: "waiter", text: "歡迎光臨！入面坐，同人
