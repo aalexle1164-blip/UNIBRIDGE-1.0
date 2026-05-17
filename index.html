@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIBRIDGE - 粵語線上學習平臺</title>
+    <title>UNIBRIDGE - 粵語學習平臺 Pro</title>
     <style>
-        /* 基礎設置與變量 (支援黑夜/白天模式) */
         :root {
             --bg-color: #ffffff;
             --text-color: #333333;
             --card-bg: #f9f9f9;
             --primary-blue: #0056b3;
             --border-color: #dddddd;
+            --accent-gold: #ffcc00;
         }
         [data-theme="dark"] {
             --bg-color: #1a1a1a;
@@ -49,19 +49,47 @@
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
         }
 
-        .controls button {
-            padding: 8px 15px;
-            margin-left: 10px;
+        .controls button, .vocab-btn {
+            padding: 8px 12px;
+            margin-left: 5px;
             cursor: pointer;
             border: 1px solid var(--primary-blue);
             background: transparent;
             color: var(--primary-blue);
             border-radius: 5px;
+            font-weight: bold;
         }
 
-        .controls button:hover {
+        .controls button:hover, .vocab-btn:hover {
             background: var(--primary-blue);
             color: white;
+        }
+
+        /* 6. 升級打怪儀表盤 */
+        .status-bar {
+            background: linear-gradient(135deg, #0056b3, #007bff);
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+        }
+        .xp-bar-bg {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            width: 150px;
+            height: 12px;
+            display: inline-block;
+            margin-left: 10px;
+            overflow: hidden;
+            vertical-align: middle;
+        }
+        .xp-bar-fill {
+            background: var(--accent-gold);
+            height: 100%;
+            width: 0%; /* 動態控制 */
+            transition: width 0.5s ease;
         }
 
         /* 導航菜單 */
@@ -70,6 +98,7 @@
             justify-content: center;
             background-color: var(--card-bg);
             padding: 10px;
+            border-bottom: 1px solid var(--border-color);
         }
         nav button {
             background: none;
@@ -86,7 +115,7 @@
 
         /* 內容區塊 */
         .content-section {
-            display: none; /* 默認隱藏，通過 JS 切換 */
+            display: none;
             padding: 30px;
             max-width: 800px;
             margin: 0 auto;
@@ -103,14 +132,11 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 測驗區塊樣式 */
-        input[type="text"] {
-            padding: 5px;
-            font-size: 16px;
-        }
-        #quiz-result {
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 100px));
+            gap: 15px;
             margin-top: 15px;
-            font-weight: bold;
         }
     </style>
 </head>
@@ -119,100 +145,164 @@
     <header>
         <div class="logo">UNIBRIDGE</div>
         <div class="controls">
-            <button onclick="alert('雙語切換功能開發中！')">中 / EN</button>
-            <button id="theme-toggle" onclick="toggleTheme()">切換黑夜模式</button>
+            <button onclick="changeLang('zh-HK')">繁</button>
+            <button onclick="changeLang('zh-CN')">简</button>
+            <button onclick="changeLang('en')">EN</button>
+            <button id="theme-toggle" onclick="toggleTheme()">🌙</button>
         </div>
     </header>
 
+    <div class="status-bar">
+        <div>等級: <span id="user-level">1</span> (👶 新手村)</div>
+        <div>
+            經驗值: <span id="user-xp">0</span> / 100 XP
+            <div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div>
+        </div>
+    </div>
+
     <nav>
-        <button onclick="showSection('home')">1. 學習入口</button>
-        <button onclick="showSection('quiz')">4. 填空測驗</button>
-        <button onclick="showSection('culture')">7. 香港文化</button>
-        <button onclick="alert('語音與對話功能需要後端服務器支持，將在後續版本加入！')">進階功能鎖定</button>
+        <button onclick="showSection('home')" data-lang-key="nav-home">1. 學習入口</button>
+        <button onclick="showSection('vocab')" data-lang-key="nav-vocab">2. 高頻詞彙</button>
+        <button onclick="showSection('quiz')" data-lang-key="nav-quiz">4. 隨堂測驗</button>
     </nav>
 
     <main id="home" class="content-section active">
-        <h2>歡迎來到 UNIBRIDGE</h2>
-        <p>你的專屬粵語學習平臺。請選擇你的等級：</p>
+        <h2 data-lang-key="welcome-title">歡迎來到 UNIBRIDGE 粵語學習空間</h2>
+        <p data-lang-key="welcome-sub">選擇適合你的關卡，開啟升級之旅！</p>
         <div class="card">
-            <h3>🌱 新手村 (Level 1)</h3>
-            <p>適合零基礎。學習日常打招呼、數字、點餐。</p>
-            <button class="controls">開始挑戰</button>
+            <h3>🌱 Level 1: 飲茶問路</h3>
+            <p data-lang-key="lv1-desc">學習茶餐廳生存指南與基本日常對話。</p>
         </div>
+    </main>
+
+    <main id="vocab" class="content-section">
+        <h2 data-lang-key="vocab-title">粵語日常高頻詞彙跟讀</h2>
+        <p data-lang-key="vocab-sub">點擊 🔊 按鈕，聆聽真人般自然的 AI 粵語發音：</p>
+        
         <div class="card">
-            <h3>⚔️ 街頭霸王 (Level 2)</h3>
-            <p>進階對話。學習茶餐廳暗語、交通問路。</p>
-            <button class="controls" style="opacity: 0.5;">等級未夠，請先升級</button>
+            <h3>☕ 茶餐廳實用篇</h3>
+            <div class="word-grid">
+                <div>
+                    <strong>唔該 (M4 Goi1)</strong>
+                    <button class="vocab-btn" onclick="speak('唔該')">🔊 聽發音</button>
+                </div>
+                <div>
+                    <strong>埋單 (Maai4 Daan1)</strong>
+                    <button class="vocab-btn" onclick="speak('埋單')">🔊 聽發音</button>
+                </div>
+                <div>
+                    <strong>凍檸茶 (Dung3 Leng2 Caa4)</strong>
+                    <button class="vocab-btn" onclick="speak('凍檸茶')">🔊 聽發音</button>
+                </div>
+            </div>
         </div>
     </main>
 
     <main id="quiz" class="content-section">
-        <h2>粵語隨堂測驗</h2>
+        <h2 data-lang-key="quiz-title">動態隨堂測試</h2>
         <div class="card">
-            <p>1. 早上好，粵語怎麼說？</p>
-            <label>早<input type="text" id="q1" placeholder="請輸入一個字"></label>
-            
-            <p>2. 謝謝（別人幫你做事），粵語怎麼說？</p>
-            <label>唔<input type="text" id="q2" placeholder="請輸入一個字"></label>
-            
+            <p>1. 「結賬/買單」的粵語正確寫法是？</p>
+            <input type="text" id="q1" placeholder="請輸入答案" style="padding:8px; width:200px;">
             <br><br>
-            <button onclick="checkQuiz()" style="padding:10px; background:var(--primary-blue); color:white; border:none; border-radius:5px; cursor:pointer;">提交打分</button>
-            <div id="quiz-result"></div>
-        </div>
-    </main>
-
-    <main id="culture" class="content-section">
-        <h2>探索香港特色文化</h2>
-        <div class="card">
-            <h3>☕ 茶餐廳文化</h3>
-            <p><strong>「走冰」、「靚仔」、「茶走」</strong>... 這些詞彙是什麼意思？茶餐廳不僅是吃飯的地方，更是香港效率與融合文化的縮影。</p>
-        </div>
-        <div class="card">
-            <h3>🏮 非遺文化：扎作技藝</h3>
-            <p>每逢中秋節的醒獅、花燈，都是由傳統師傅一根根竹篾扎出來的。來認識這項逐漸失傳的藝術。</p>
+            <button onclick="checkQuizPro()" style="padding:10px 20px; background:var(--primary-blue); color:white; border:none; border-radius:5px; cursor:pointer;">提交並領取經驗值</button>
+            <p id="quiz-feedback" style="font-weight:bold; margin-top:15px;"></p>
         </div>
     </main>
 
     <script>
-        // 8. 黑夜白天模式切換邏輯
+        // 語言包配置 (支持繁、簡、英)
+        const langPack = {
+            'zh-HK': {
+                'nav-home': '1. 學習入口', 'nav-vocab': '2. 高頻詞彙', 'nav-quiz': '4. 隨堂測驗',
+                'welcome-title': '歡迎來到 UNIBRIDGE 粵語學習空間', 'welcome-sub': '選擇適合你的關卡，開啟升級之旅！',
+                'lv1-desc': '學習茶餐廳生存指南與基本日常對話。', 'vocab-title': '粵語日常高頻詞彙跟讀',
+                'vocab-sub': '點擊 🔊 按鈕，聆聽真人般自然的 AI 粵語發音：', 'quiz-title': '動態隨堂測試'
+            },
+            'zh-CN': {
+                'nav-home': '1. 学习入口', 'nav-vocab': '2. 高频词汇', 'nav-quiz': '4. 随堂测验',
+                'welcome-title': '欢迎来到 UNIBRIDGE 粤语学习空间', 'welcome-sub': '选择适合你的关卡，开启升级之旅！',
+                'lv1-desc': '学习茶餐厅生存指南与基本日常对话。', 'vocab-title': '粤语日常高频词汇跟读',
+                'vocab-sub': '点击 🔊 按钮，聆听真人般自然的 AI 粤语发音：', 'quiz-title': '动态随堂测试'
+            },
+            'en': {
+                'nav-home': '1. Home', 'nav-vocab': '2. Vocabulary', 'nav-quiz': '4. Quiz',
+                'welcome-title': 'Welcome to UNIBRIDGE Cantonese Learning Platform', 'welcome-sub': 'Choose your level and start leveling up!',
+                'lv1-desc': 'Learn essential survival Cantonese for Yum Cha and restaurants.', 'vocab-title': 'High-Frequency Vocabulary',
+                'vocab-sub': 'Click 🔊 to hear natural AI Cantonese pronunciation:', 'quiz-title': 'Quick Quiz'
+            }
+        };
+
+        // 初始化遊戲化數據 (從 localStorage 讀取)
+        let xp = parseInt(localStorage.getItem('unibridge_xp')) || 0;
+        let level = parseInt(localStorage.getItem('unibridge_level')) || 1;
+
+        function updateStatusBar() {
+            document.getElementById('user-xp').textContent = xp;
+            document.getElementById('user-level').textContent = level;
+            document.getElementById('xp-fill').style.width = `${xp}%`;
+        }
+
+        // 12. AI 語音功能
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'zh-HK'; // 強制指定粵語發音
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('您的瀏覽器不支援語音合成功能。');
+            }
+        }
+
+        // 4 & 6. 測驗與動態加經驗
+        function checkQuizPro() {
+            const ans = document.getElementById('q1').value.trim();
+            const feedback = document.getElementById('quiz-feedback');
+            
+            if (ans === '埋單') {
+                feedback.innerHTML = "🎉 正確！經驗值 +50 XP！";
+                feedback.style.color = "green";
+                gainXP(50);
+            } else {
+                feedback.innerHTML = "❌ 答錯了，再想想看？(提示：埋x)";
+                feedback.style.color = "red";
+            }
+        }
+
+        function gainXP(amount) {
+            xp += amount;
+            if (xp >= 100) {
+                xp -= 100;
+                level += 1;
+                alert(`🎊 恭喜升級！你現在是 Level ${level} 的粵語達人了！`);
+            }
+            localStorage.setItem('unibridge_xp', xp);
+            localStorage.setItem('unibridge_level', level);
+            updateStatusBar();
+        }
+
+        // 9 & 10. 切換語言
+        function changeLang(lang) {
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if (langPack[lang][key]) {
+                    el.textContent = langPack[lang][key];
+                }
+            });
+        }
+
+        // 基礎切換控制
         function toggleTheme() {
             const body = document.body;
-            const btn = document.getElementById('theme-toggle');
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                btn.textContent = '切換黑夜模式';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                btn.textContent = '切換白天模式';
-            }
+            body.getAttribute('data-theme') === 'dark' ? body.removeAttribute('data-theme') : body.setAttribute('data-theme', 'dark');
         }
 
-        // 頁面板塊切換邏輯
-        function showSection(sectionId) {
-            document.querySelectorAll('.content-section').forEach(sec => {
-                sec.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
+        function showSection(id) {
+            document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
         }
 
-        // 4. 填空題自動打分邏輯
-        function checkQuiz() {
-            let score = 0;
-            const ans1 = document.getElementById('q1').value.trim();
-            const ans2 = document.getElementById('q2').value.trim();
-
-            if (ans1 === '晨') score += 50; // 早晨
-            if (ans2 === '該') score += 50; // 唔該
-
-            const resultDiv = document.getElementById('quiz-result');
-            if (score === 100) {
-                resultDiv.innerHTML = `💯 滿分！太厲害了！你獲得了 100 點經驗值！`;
-                resultDiv.style.color = "green";
-            } else {
-                resultDiv.innerHTML = `💡 你的得分是 ${score} 分，繼續努力！(提示：早「晨」，唔「該」)`;
-                resultDiv.style.color = "orange";
-            }
-        }
+        // 初始化加載
+        updateStatusBar();
     </script>
 </body>
 </html>
