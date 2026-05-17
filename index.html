@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIBRIDGE - 粵語線上學習平臺</title>
+    <style>
+        /* 基礎設置與變量 (支援黑夜/白天模式) */
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --card-bg: #f9f9f9;
+            --primary-blue: #0056b3;
+            --border-color: #dddddd;
+        }
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --card-bg: #2d2d2d;
+            --primary-blue: #4da3ff;
+            --border-color: #444444;
+        }
+
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        /* 頂部導航與商標 */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        /* 13. UNIBRIDGE 藍色藝術字商標 */
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--primary-blue);
+            font-style: italic;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .controls button {
+            padding: 8px 15px;
+            margin-left: 10px;
+            cursor: pointer;
+            border: 1px solid var(--primary-blue);
+            background: transparent;
+            color: var(--primary-blue);
+            border-radius: 5px;
+        }
+
+        .controls button:hover {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        /* 導航菜單 */
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: var(--card-bg);
+            padding: 10px;
+        }
+        nav button {
+            background: none;
+            border: none;
+            font-size: 16px;
+            color: var(--text-color);
+            margin: 0 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        nav button:hover {
+            color: var(--primary-blue);
+        }
+
+        /* 內容區塊 */
+        .content-section {
+            display: none; /* 默認隱藏，通過 JS 切換 */
+            padding: 30px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .content-section.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* 測驗區塊樣式 */
+        input[type="text"] {
+            padding: 5px;
+            font-size: 16px;
+        }
+        #quiz-result {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">UNIBRIDGE</div>
+        <div class="controls">
+            <button onclick="alert('雙語切換功能開發中！')">中 / EN</button>
+            <button id="theme-toggle" onclick="toggleTheme()">切換黑夜模式</button>
+        </div>
+    </header>
+
+    <nav>
+        <button onclick="showSection('home')">1. 學習入口</button>
+        <button onclick="showSection('quiz')">4. 填空測驗</button>
+        <button onclick="showSection('culture')">7. 香港文化</button>
+        <button onclick="alert('語音與對話功能需要後端服務器支持，將在後續版本加入！')">進階功能鎖定</button>
+    </nav>
+
+    <main id="home" class="content-section active">
+        <h2>歡迎來到 UNIBRIDGE</h2>
+        <p>你的專屬粵語學習平臺。請選擇你的等級：</p>
+        <div class="card">
+            <h3>🌱 新手村 (Level 1)</h3>
+            <p>適合零基礎。學習日常打招呼、數字、點餐。</p>
+            <button class="controls">開始挑戰</button>
+        </div>
+        <div class="card">
+            <h3>⚔️ 街頭霸王 (Level 2)</h3>
+            <p>進階對話。學習茶餐廳暗語、交通問路。</p>
+            <button class="controls" style="opacity: 0.5;">等級未夠，請先升級</button>
+        </div>
+    </main>
+
+    <main id="quiz" class="content-section">
+        <h2>粵語隨堂測驗</h2>
+        <div class="card">
+            <p>1. 早上好，粵語怎麼說？</p>
+            <label>早<input type="text" id="q1" placeholder="請輸入一個字"></label>
+            
+            <p>2. 謝謝（別人幫你做事），粵語怎麼說？</p>
+            <label>唔<input type="text" id="q2" placeholder="請輸入一個字"></label>
+            
+            <br><br>
+            <button onclick="checkQuiz()" style="padding:10px; background:var(--primary-blue); color:white; border:none; border-radius:5px; cursor:pointer;">提交打分</button>
+            <div id="quiz-result"></div>
+        </div>
+    </main>
+
+    <main id="culture" class="content-section">
+        <h2>探索香港特色文化</h2>
+        <div class="card">
+            <h3>☕ 茶餐廳文化</h3>
+            <p><strong>「走冰」、「靚仔」、「茶走」</strong>... 這些詞彙是什麼意思？茶餐廳不僅是吃飯的地方，更是香港效率與融合文化的縮影。</p>
+        </div>
+        <div class="card">
+            <h3>🏮 非遺文化：扎作技藝</h3>
+            <p>每逢中秋節的醒獅、花燈，都是由傳統師傅一根根竹篾扎出來的。來認識這項逐漸失傳的藝術。</p>
+        </div>
+    </main>
+
+    <script>
+        // 8. 黑夜白天模式切換邏輯
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('theme-toggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.textContent = '切換黑夜模式';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.textContent = '切換白天模式';
+            }
+        }
+
+        // 頁面板塊切換邏輯
+        function showSection(sectionId) {
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+
+        // 4. 填空題自動打分邏輯
+        function checkQuiz() {
+            let score = 0;
+            const ans1 = document.getElementById('q1').value.trim();
+            const ans2 = document.getElementById('q2').value.trim();
+
+            if (ans1 === '晨') score += 50; // 早晨
+            if (ans2 === '該') score += 50; // 唔該
+
+            const resultDiv = document.getElementById('quiz-result');
+            if (score === 100) {
+                resultDiv.innerHTML = `💯 滿分！太厲害了！你獲得了 100 點經驗值！`;
+                resultDiv.style.color = "green";
+            } else {
+                resultDiv.innerHTML = `💡 你的得分是 ${score} 分，繼續努力！(提示：早「晨」，唔「該」)`;
+                resultDiv.style.color = "orange";
+            }
+        }
+    </script>
+</body>
+</html>
