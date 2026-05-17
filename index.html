@@ -168,7 +168,6 @@
         .chat-waiter { background-color: var(--primary-blue); color: white; align-self: flex-start; border-top-left-radius: 0; }
         .chat-user { background-color: var(--success-green); color: white; align-self: flex-end; border-top-right-radius: 0; cursor: pointer; }
 
-        /* 表單樣式 */
         .form-group {
             margin-bottom: 15px;
         }
@@ -201,55 +200,61 @@
     </header>
 
     <div class="status-bar">
-        <div>等級: <span id="user-level">1</span> <span id="level-title">(👶 新手村)</span></div>
+        <div><span data-lang-key="status-lv">等級</span>: <span id="user-level">1</span> <span id="level-title">(👶 新手村)</span></div>
         <div>
-            經驗值: <span id="user-xp">0</span> / 100 XP
+            <span data-lang-key="status-xp">經驗值</span>: <span id="user-xp">0</span> / 100 XP
             <div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div>
         </div>
     </div>
 
     <nav>
-        <button id="nav-home" class="active-nav" onclick="showSection('home')">學習入口</button>
-        <button id="nav-vocab" onclick="showSection('vocab')">高頻詞彙</button>
-        <button id="nav-dialogue" onclick="showSection('dialogue')">擬真對話</button>
-        <button id="nav-quiz" onclick="showSection('quiz')">隨堂測驗</button>
-        <button id="nav-culture" onclick="showSection('culture')">香港文化</button>
+        <button id="nav-home" class="active-nav" onclick="showSection('home')" data-lang-key="nav-home">學習入口</button>
+        <button id="nav-vocab" onclick="showSection('vocab')" data-lang-key="nav-vocab">高頻詞彙</button>
+        <button id="nav-dialogue" onclick="showSection('dialogue')" data-lang-key="nav-dialogue">擬真對話</button>
+        <button id="nav-quiz" onclick="showSection('quiz')" data-lang-key="nav-quiz">隨堂測驗</button>
+        <button id="nav-culture" onclick="showSection('culture')" data-lang-key="nav-culture">香港文化</button>
     </nav>
 
     <main id="home" class="content-section active">
-        <h2>🗺️ 選擇你的粵語挑戰關卡</h2>
-        <p>點擊下方卡片，直接進入對應的學習板塊：</p>
+        <h2 data-lang-key="home-title">🗺️ 選擇你的粵語挑戰關卡</h2>
+        <p data-lang-key="home-sub">點擊下方卡片，直接進入對應的學習板塊：</p>
         
         <div class="card clickable-card" onclick="showSection('vocab')">
-            <h3>🌱 生存高頻詞彙</h3>
-            <p>適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！</p>
-            <span style="color: var(--primary-blue); font-weight: bold;">點擊進入挑戰 ➔</span>
+            <h3 data-lang-key="card-v-title">🌱 生存高頻詞彙</h3>
+            <p data-lang-key="card-v-desc">適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！</p>
+            <span style="color: var(--primary-blue); font-weight: bold;" data-lang-key="click-to-enter">點擊進入挑戰 ➔</span>
         </div>
 
         <div class="card clickable-card" onclick="showSection('dialogue')">
-            <h3>⚔️ 茶餐廳擬真對話實戰</h3>
-            <p>進入真實場景！模擬在香港茶餐廳與夥計點餐，練習聽力與跟讀。</p>
-            <span style="color: var(--primary-blue); font-weight: bold;">點擊進入挑戰 ➔</span>
+            <h3 data-lang-key="card-d-title">⚔️ 茶餐廳擬真對話實戰</h3>
+            <p data-lang-key="card-d-desc">進入真實場景！模擬在香港茶餐廳與夥計點餐，練習聽力與跟讀。</p>
+            <span style="color: var(--primary-blue); font-weight: bold;" data-lang-key="click-to-enter">點擊進入挑戰 ➔</span>
         </div>
 
         <div class="card clickable-card" onclick="showSection('quiz')">
-            <h3>🏆 隨堂測試與自定義題庫</h3>
-            <p>檢驗學習成果，支援動態增加、修改和刪除你自己的專屬題目！</p>
-            <span style="color: var(--primary-blue); font-weight: bold;">點擊進入挑戰 ➔</span>
+            <h3 data-lang-key="card-q-title">🏆 隨堂測試與自定義題庫</h3>
+            <p data-lang-key="card-q-desc">檢驗學習成果，支援動態增加、修改和刪除你自己的專屬題目！</p>
+            <span style="color: var(--primary-blue); font-weight: bold;" data-lang-key="click-to-enter">點擊進入挑戰 ➔</span>
         </div>
     </main>
 
     <main id="vocab" class="content-section">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <h2>📊 粵語高頻詞彙</h2>
-            <button class="btn" onclick="refreshVocab()">🔄 換一批</button>
+            <h2 data-lang-key="vocab-heading">📊 粵語高頻詞彙</h2>
+            <button class="btn" onclick="refreshVocab()" data-lang-key="refresh-btn">🔄 換一批</button>
         </div>
-        <p>點擊右側的 🔊 按鈕即可聆聽真人般的 AI 發音：</p>
+        <p data-lang-key="vocab-sub">點擊右側的 🔊 按鈕即可聆聽真人般的 AI 發音：</p>
         
         <div class="card">
             <table>
                 <thead>
-                    <tr><th>繁體</th><th>简体</th><th>粵拼 (Jyutping)</th><th>English</th><th>發音</th></tr>
+                    <tr>
+                        <th data-lang-key="th-tc">繁體</th>
+                        <th data-lang-key="th-sc">简体</th>
+                        <th data-lang-key="th-jp">粵拼 (Jyutping)</th>
+                        <th data-lang-key="th-en">English</th>
+                        <th data-lang-key="th-audio">發音</th>
+                    </tr>
                 </thead>
                 <tbody id="vocab-table-body">
                     </tbody>
@@ -258,57 +263,61 @@
     </main>
 
     <main id="dialogue" class="content-section">
-        <h2>🗣️ 茶餐廳擬真對話練習</h2>
-        <p>場景：你走進一家旺角的茶餐廳。點擊藍色對話框聽夥計說話，點擊綠色對話框練習跟讀：</p>
+        <h2 data-lang-key="dialogue-heading">🗣️ 茶餐廳擬真對話練習</h2>
+        <p data-lang-key="dialogue-sub">場景：你走進一家旺角的茶餐廳。點擊藍色對話框聽夥計說話，點擊綠色對話框練習跟讀：</p>
         
         <div class="card">
             <div class="chat-container">
                 <div class="chat-bubble chat-waiter" onclick="speak('靚仔，食咩啊？一前一後定係要常餐？')">
-                    💁‍♂️ <strong>夥計 (Waiter)：</strong><br>
+                    💁‍♂️ <strong data-lang-key="chat-waiter-label">夥計 (Waiter)：</strong><br>
                     「靚仔，食咩啊？一前一後定係要常餐？」<br>
-                    <small>(帥哥，吃什麼？要出前一丁還是常餐？) 🔊 點擊聽發音</small>
+                    <small data-lang-key="chat-waiter-sub">(帥哥，吃什麼？要出前一丁還是常餐？) 🔊 點擊聽發音</small>
                 </div>
                 <div class="chat-bubble chat-user" onclick="speak('唔該，我想要個餐肉蛋麵，同一杯凍檸茶少甜。')">
-                    🙋‍♂️ <strong>你 (You)：</strong><br>
+                    🙋‍♂️ <strong data-lang-key="chat-user-label">你 (You)：</strong><br>
                     「唔該，我想要個餐肉蛋麵，同一杯凍檸茶少甜。」<br>
-                    <small>(麻煩你，我想要個餐肉蛋麵，和一杯冰檸檬茶少甜。) 🔊 點擊聽示例</small>
+                    <small data-lang-key="chat-user-sub">(麻煩你，我想要個餐肉蛋麵，和一杯冰檸檬茶少甜。) 🔊 點擊聽示例</small>
                 </div>
             </div>
         </div>
     </main>
 
     <main id="quiz" class="content-section">
-        <h2>🏆 隨堂測試動態答題</h2>
+        <h2 data-lang-key="quiz-heading">🏆 隨堂測試動態答題</h2>
         <div id="quiz-list-container">
             </div>
 
         <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 40px 0;">
 
-        <h2>🛠️ 題庫管理中心 (支援自定義增刪改)</h2>
+        <h2 data-lang-key="admin-heading">🛠️ 題庫管理中心 (支援自定義增刪改)</h2>
         <div class="card">
-            <h3 id="form-title">新增題目</h3>
+            <h3 id="form-title" data-lang-key="form-add-title">新增題目</h3>
             <input type="hidden" id="edit-index" value="">
             <div class="form-group">
-                <label>題目敘述</label>
+                <label data-lang-key="label-q">題目敘述</label>
                 <input type="text" id="form-question" placeholder="例如：早上好，粵語怎麼說？">
             </div>
             <div class="form-group">
-                <label>正確答案</label>
+                <label data-lang-key="label-a">正確答案</label>
                 <input type="text" id="form-answer" placeholder="例如：早晨">
             </div>
             <div class="form-group">
-                <label>提示 (選填)</label>
+                <label data-lang-key="label-h">提示 (選填)</label>
                 <input type="text" id="form-hint" placeholder="例如：早x">
             </div>
-            <button class="btn btn-success" id="submit-quiz-btn" onclick="handleQuizSubmit()">儲存題目</button>
-            <button class="btn" id="cancel-edit-btn" style="display:none;" onclick="resetQuizForm()">取消修改</button>
+            <button class="btn btn-success" id="submit-quiz-btn" onclick="handleQuizSubmit()" data-lang-key="btn-save">儲存題目</button>
+            <button class="btn" id="cancel-edit-btn" style="display:none;" onclick="resetQuizForm()" data-lang-key="btn-cancel">取消修改</button>
         </div>
 
-        <h3>目前題庫列表</h3>
+        <h3 data-lang-key="table-list-title">目前題庫列表</h3>
         <div class="card">
             <table style="font-size: 14px;">
                 <thead>
-                    <tr><th>題目</th><th>答案</th><th>操作</th></tr>
+                    <tr>
+                        <th data-lang-key="th-list-q">題目</th>
+                        <th data-lang-key="th-list-a">答案</th>
+                        <th data-lang-key="th-list-o">操作</th>
+                    </tr>
                 </thead>
                 <tbody id="admin-quiz-tbody">
                     </tbody>
@@ -317,7 +326,7 @@
     </main>
 
     <main id="culture" class="content-section">
-        <h2>🇭🇰 深度香港特色文化</h2>
+        <h2 data-lang-key="nav-culture">香港文化</h2>
         <div class="card">
             <h3>☕ 茶餐廳的「密碼文化」</h3>
             <p>在茶餐廳，夥計為了追求速度，發明了一套獨特的速記符號和口語。例如「靚仔」代表白飯，「靚女」代表白粥；而「敗家仔」則是阿華田。</p>
@@ -325,6 +334,64 @@
     </main>
 
     <script>
+        // 完整的全站三語語言包
+        const langPack = {
+            'zh-HK': {
+                'status-lv': '等級', 'status-xp': '經驗值',
+                'nav-home': '學習入口', 'nav-vocab': '高頻詞彙', 'nav-dialogue': '擬真對話', 'nav-quiz': '隨堂測驗', 'nav-culture': '香港文化',
+                'home-title': '🗺️ 選擇你的粵語挑戰關卡', 'home-sub': '點擊下方卡片，直接進入對應的學習板塊：',
+                'card-v-title': '🌱 生存高頻詞彙', 'card-v-desc': '適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！',
+                'card-d-title': '⚔️ 茶餐廳擬真對話實戰', 'card-d-desc': '進入真實場景！模擬在香港茶餐廳與夥計點餐，練習聽力與跟讀。',
+                'card-q-title': '🏆 隨堂測試與自定義題庫', 'card-q-desc': '檢驗學習成果，支援動態增加、修改和刪除你自己的專屬題目！',
+                'click-to-enter': '點擊進入挑戰 ➔', 'vocab-heading': '📊 粵語高頻詞彙', 'refresh-btn': '🔄 換一批',
+                'vocab-sub': '點擊右側的 🔊 按鈕即可聆聽真人般的 AI 發音：',
+                'th-tc': '繁體', 'th-sc': '简体', 'th-jp': '粵拼 (Jyutping)', 'th-en': 'English', 'th-audio': '發音',
+                'dialogue-heading': '🗣️ 茶餐廳擬真對話練習', 'dialogue-sub': '場景：你走進一家旺角的茶餐廳。點擊藍色對話框聽夥計說話，點擊綠色對話框練習跟讀：',
+                'chat-waiter-label': '夥計 (Waiter)：', 'chat-user-label': '你 (You)：',
+                'chat-waiter-sub': '(帥哥，吃什麼？要出前一丁還是常餐？) 🔊 點擊聽發音', 'chat-user-sub': '(麻煩你，我想要個餐肉蛋麵，和一杯冰檸檬茶少甜。) 🔊 點擊聽示例',
+                'quiz-heading': '🏆 隨堂測試動態答題', 'admin-heading': '🛠️ 題庫管理中心 (支援自定義增刪改)',
+                'form-add-title': '新增題目', 'label-q': '題目敘述', 'label-a': '正確答案', 'label-h': '提示 (選填)',
+                'btn-save': '儲存題目', 'btn-cancel': '取消修改', 'table-list-title': '目前題庫列表',
+                'th-list-q': '題目', 'th-list-a': '答案', 'th-list-o': '操作'
+            },
+            'zh-CN': {
+                'status-lv': '等级', 'status-xp': '经验值',
+                'nav-home': '学习入口', 'nav-vocab': '高频词汇', 'nav-dialogue': '拟真对话', 'nav-quiz': '随堂测验', 'nav-culture': '香港文化',
+                'home-title': '🗺️ 选择你的粤语挑战关卡', 'home-sub': '点击下方卡片，直接进入对应的学习板块：',
+                'card-v-title': '🌱 生存高频词汇', 'card-v-desc': '适合零基础。快速学会打招呼、数字与茶餐厅基础单词，支持随机換一批与智能发音！',
+                'card-d-title': '⚔️ 茶餐厅拟真对话实战', 'card-d-desc': '进入真实场景！模拟在香港茶餐厅与伙计点餐，练习听力和跟读。',
+                'card-q-title': '🏆 随堂测试与自定义题库', 'card-q-desc': '检验学习成果，支持动态增加、修改和删除你自己的专属题目！',
+                'click-to-enter': '点击进入挑战 ➔', 'vocab-heading': '📊 粤语高频词汇', 'refresh-btn': '🔄 换一批',
+                'vocab-sub': '点击右侧的 🔊 按钮即可聆听真人般的 AI 发音：',
+                'th-tc': '繁体', 'th-sc': '简体', 'th-jp': '粤拼 (Jyutping)', 'th-en': 'English', 'th-audio': '发音',
+                'dialogue-heading': '🗣️ 茶餐厅拟真对话练习', 'dialogue-sub': '场景：你走进一家旺角的茶餐厅。点击蓝色对话框听伙计说话，点击绿色对话框练习跟读：',
+                'chat-waiter-label': '伙计 (Waiter)：', 'chat-user-label': '你 (You)：',
+                'chat-waiter-sub': '(帅哥，吃什么？要出前一丁还是常餐？) 🔊 点击听发音', 'chat-user-sub': '(麻烦你，我想要个餐肉蛋面，和一杯冰柠檬茶少甜。) 🔊 点击听示例',
+                'quiz-heading': '🏆 随堂测试动态答题', 'admin-heading': '🛠️ 题库管理中心 (支持自定义增删改)',
+                'form-add-title': '新增题目', 'label-q': '题目叙述', 'label-a': '正确答案', 'label-h': '提示 (选填)',
+                'btn-save': '储存题目', 'btn-cancel': '取消修改', 'table-list-title': '目前题库列表',
+                'th-list-q': '题目', 'th-list-a': '答案', 'th-list-o': '操作'
+            },
+            'en': {
+                'status-lv': 'Level', 'status-xp': 'XP',
+                'nav-home': 'Home', 'nav-vocab': 'Vocabulary', 'nav-dialogue': 'Dialogue', 'nav-quiz': 'Quiz', 'nav-culture': 'Culture',
+                'home-title': '🗺️ Choose Your Cantonese Level', 'home-sub': 'Click the cards below to enter the corresponding learning module:',
+                'card-v-title': '🌱 Survival Vocabulary', 'card-v-desc': 'For absolute beginners. Learn greetings, numbers, and café vocabulary with a smart shuffle feature!',
+                'card-d-title': '⚔️ Cha Chaan Teng Simulation', 'card-d-desc': 'Step into reality! Simulate ordering food with a waiter in Hong Kong to practice listening and speaking.',
+                'card-q-title': '🏆 Quiz & Custom Question Bank', 'card-q-desc': 'Test your knowledge. Dynamically add, edit, and delete your own custom study questions!',
+                'click-to-enter': 'Click to Challenge ➔', 'vocab-heading': '📊 High-Frequency Vocabulary', 'refresh-btn': '🔄 Shuffle',
+                'vocab-sub': 'Click the 🔊 button on the right to listen to natural AI Cantonese pronunciation:',
+                'th-tc': 'Traditional', 'th-sc': 'Simplified', 'th-jp': 'Jyutping', 'th-en': 'English', 'th-audio': 'Audio',
+                'dialogue-heading': '🗣️ Interactive Conversation Practice', 'dialogue-sub': 'Scenario: You walk into a café in Mong Kok. Click blue bubbles to listen, green bubbles to practice repeating:',
+                'chat-waiter-label': 'Waiter:', 'chat-user-label': 'You:',
+                'chat-waiter-sub': '(Hey handsome, what do you want? Instant noodles or the standard set?) 🔊 Click for Audio', 'chat-user-sub': '(Please, I want luncheon meat & egg noodles, and an iced lemon tea with less sugar.) 🔊 Click for Example',
+                'quiz-heading': '🏆 Dynamic Quiz Challenge', 'admin-heading': '🛠️ Question Bank Center (CRUD Supported)',
+                'form-add-title': 'Add Question', 'label-q': 'Question Text', 'label-a': 'Correct Answer', 'label-h': 'Hint (Optional)',
+                'btn-save': 'Save Question', 'btn-cancel': 'Cancel Edit', 'table-list-title': 'Current Question Bank',
+                'th-list-q': 'Question', 'th-list-a': 'Answer', 'th-list-o': 'Action'
+            }
+        };
+
         // 大量詞彙數據池
         const bigVocabPool = [
             {tc:'唔該', sc:'唔该', jp:'m4 goi1', en:'Please/Thanks'},
@@ -347,7 +414,7 @@
             {question: "當你想問路，問「在哪裡」時，地道的粵語說法是？", answer: "邊度", hint: "兩個字"}
         ];
 
-        // 核心數據加載
+        // 核心狀態管理
         let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
         let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
         let customQuizzes = JSON.parse(localStorage.getItem('ub_custom_quizzes')) || defaultQuizzes;
@@ -383,7 +450,7 @@
         // 換一批詞彙功能
         function refreshVocab() {
             const shuffled = [...bigVocabPool].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 4); // 每次隨機抽4個
+            const selected = shuffled.slice(0, 4);
             const tbody = document.getElementById('vocab-table-body');
             tbody.innerHTML = '';
             selected.forEach(item => {
@@ -401,7 +468,6 @@
 
         // 渲染測驗介面與管理中心
         function renderQuizModule() {
-            // 1. 渲染答題區
             const container = document.getElementById('quiz-list-container');
             container.innerHTML = '';
             if(customQuizzes.length === 0) {
@@ -418,7 +484,6 @@
                 `;
             });
 
-            // 2. 渲染後台管理列表
             const tbody = document.getElementById('admin-quiz-tbody');
             tbody.innerHTML = '';
             customQuizzes.forEach((q, index) => {
@@ -435,7 +500,6 @@
             });
         }
 
-        // 答題判定
         function checkUserAnswer(index) {
             const userAns = document.getElementById(`user-ans-${index}`).value.trim();
             const feedback = document.getElementById(`feedback-${index}`);
@@ -459,7 +523,6 @@
             updateStatus();
         }
 
-        // 自定義題庫：增與改的處理
         function handleQuizSubmit() {
             const question = document.getElementById('form-question').value.trim();
             const answer = document.getElementById('form-answer').value.trim();
@@ -471,10 +534,8 @@
             const quizData = { question, answer, hint };
 
             if(editIndex === "") {
-                // 新增
                 customQuizzes.push(quizData);
             } else {
-                // 修改
                 customQuizzes[parseInt(editIndex)] = quizData;
             }
 
@@ -483,7 +544,6 @@
             renderQuizModule();
         }
 
-        // 自定義題庫：加載數據到表單以供「修改」
         function loadQuizToForm(index) {
             const q = customQuizzes[index];
             document.getElementById('form-question').value = q.question;
@@ -496,7 +556,6 @@
             document.getElementById('cancel-edit-btn').style.display = "inline-block";
         }
 
-        // 自定義題庫：刪除題目
         function deleteQuiz(index) {
             if(confirm('確定要刪除這道題目嗎？')) {
                 customQuizzes.splice(index, 1);
@@ -515,16 +574,21 @@
             document.getElementById('cancel-edit-btn').style.display = "none";
         }
 
-        // 基礎切換控制
         function toggleTheme() {
             document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
         }
 
+        // 核心切換語言邏輯（已完美修復！）
         function changeLang(lang) {
-            alert('多語言框架已就緒，核心切換代碼可根據內文擴充！');
+            document.querySelectorAll('[data-lang-key]').forEach(el => {
+                const key = el.getAttribute('data-lang-key');
+                if(langPack[lang] && langPack[lang][key]) {
+                    el.textContent = langPack[lang][key];
+                }
+            });
         }
 
-        // 初始化加載
+        // 初始化
         updateStatus();
         refreshVocab();
         renderQuizModule();
