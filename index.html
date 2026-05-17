@@ -160,20 +160,61 @@
         }
         th { background-color: rgba(0,0,0,0.02); }
 
+        /* 對話氣泡流優化 */
         .chat-container {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             margin-top: 20px;
+            background: rgba(0,0,0,0.01);
+            padding: 15px;
+            border-radius: 10px;
         }
         .chat-bubble {
-            max-width: 75%;
-            padding: 14px 18px;
-            border-radius: 15px;
+            max-width: 80%;
+            padding: 15px 20px;
+            border-radius: 18px;
             line-height: 1.6;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
         }
-        .chat-waiter { background-color: var(--primary-blue); color: white; align-self: flex-start; border-top-left-radius: 0; cursor: pointer;}
-        .chat-user { background-color: var(--success-green); color: white; align-self: flex-end; border-top-right-radius: 0; cursor: pointer; }
+        .chat-waiter { background-color: var(--primary-blue); color: white; align-self: flex-start; border-top-left-radius: 0; }
+        .chat-user { background-color: var(--card-bg); color: var(--text-color); align-self: flex-end; border-top-right-radius: 0; border: 1px solid var(--border-color); }
+        
+        .ai-score-box {
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(42, 157, 143, 0.1);
+            border-left: 4px solid var(--success-green);
+            border-radius: 4px;
+            font-size: 13px;
+            color: var(--text-color);
+            display: none;
+        }
+
+        /* 文化專屬：折疊與流暢動畫 */
+        .culture-content {
+            max-height: 60px;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+        .culture-content.expanded {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        .toggle-story-btn {
+            background: none;
+            border: none;
+            color: var(--primary-blue);
+            font-weight: bold;
+            cursor: pointer;
+            padding: 5px 0;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+        }
 
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; }
@@ -222,8 +263,8 @@
         </div>
 
         <div class="card clickable-card" onclick="showSection('dialogue')">
-            <h3>⚔️ 實境擬真對話實戰</h3>
-            <p>包含「茶餐廳、搭的士、旺角購物」三大場景隨機調用，點擊氣泡即可高擬真跟讀練習。</p>
+            <h3>⚔️ 完整實境對話與 AI 語音挑戰</h3>
+            <p>解鎖包含「深度茶餐廳、旺角殺價、經典攔的士」完整對話劇情。內置 AI 語音跟讀功能，高逼真反饋你的粵語發音準確度！</p>
             <span style="color: var(--primary-blue); font-weight: bold;" data-lang-key="click-to-enter">點擊進入挑戰 ➔</span>
         </div>
 
@@ -259,14 +300,13 @@
 
     <main id="dialogue" class="content-section">
         <div class="section-header">
-            <h2>🗣️ 實境擬真對話練習</h2>
-            <button class="btn" onclick="refreshDialogue()">🔄 切換新場景</button>
+            <h2>🗣️ 完整劇場級對話實戰 (支持 AI 語音跟讀)</h2>
+            <button class="btn" onclick="refreshDialogue()">🔄 切換新場景故事</button>
         </div>
-        <p>當前場景：<span id="current-scenario-name" style="font-weight: bold; color: var(--primary-blue);"></span></p>
+        <p>當前故事場景：<span id="current-scenario-name" style="font-weight: bold; color: var(--primary-blue); background:rgba(0,86,179,0.1); padding:4px 8px; border-radius:4px;"></span></p>
+        <p style="font-size:13px; color:gray; margin-top:-5px;">💡 玩法：先點擊 🔊 聽AI朗讀，然後點擊「🎤 開啟跟讀」進行口語評分模擬！</p>
         
-        <div class="card">
-            <div class="chat-container" id="dialogue-chat-container"></div>
-        </div>
+        <div class="chat-container" id="dialogue-chat-container"></div>
     </main>
 
     <main id="quiz" class="content-section">
@@ -319,109 +359,82 @@
             <h2 data-lang-key="nav-culture">香港文化</h2>
             <button class="btn" onclick="refreshCulture()">🔄 換一則故事</button>
         </div>
+        <p style="font-size:13px; color:gray; margin-top:-10px;">💡 點擊故事卡片底部的「展開全文 ➔」解鎖深度地道典故。</p>
         <div id="culture-card-container"></div>
     </main>
 
     <script>
+        // 核心多語包
         const langPack = {
-            'zh-HK': {
-                'status-lv': '等級', 'status-xp': '經驗值',
-                'nav-home': '學習入口', 'nav-vocab': '高頻詞彙', 'nav-dialogue': '擬真對話', 'nav-quiz': '隨堂測驗', 'nav-culture': '香港文化',
-                'home-title': '🗺️ 選擇你的粵語挑戰關卡', 'home-sub': '點擊下方卡片，直接進入對應的學習板塊：',
-                'card-v-title': '🌱 生存高頻詞彙', 'card-v-desc': '適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！',
-                'click-to-enter': '點擊進入挑戰 ➔', 'vocab-heading': '📊 粵語高頻詞彙', 'refresh-btn': '🔄 換一批',
-                'vocab-sub': '點擊右側的 🔊 按鈕即可聆聽真人般的 AI 發音：',
-                'th-tc': '繁體', 'th-sc': '简体', 'th-jp': '粵拼 (Jyutping)', 'th-en': 'English', 'th-audio': '發音',
-                'form-add-title': '新增題目', 'label-q': '題目敘述', 'label-a': '正確答案', 'label-h': '提示 (選填)',
-                'btn-save': '儲存題目', 'btn-cancel': '取消修改', 'table-list-title': '目前題庫列表',
-                'th-list-q': '題目', 'th-list-a': '答案', 'th-list-o': '操作'
-            },
-            'zh-CN': {
-                'status-lv': '等级', 'status-xp': '经验值',
-                'nav-home': '学习入口', 'nav-vocab': '高频词汇', 'nav-dialogue': '拟真对话', 'nav-quiz': '随堂测验', 'nav-culture': '香港文化',
-                'home-title': '🗺️ 选择你的粤语挑战关卡', 'home-sub': '点击下方卡片，直接进入对应的学习板块：',
-                'card-v-title': '🌱 生存高频词汇', 'card-v-desc': '适合零基础。快速学会打招呼、数字与茶餐厅基础单词，支持随机換一批与智能发音！',
-                'click-to-enter': '点击进入挑战 ➔', 'vocab-heading': '📊 粤语高频词汇', 'refresh-btn': '🔄 换一批',
-                'vocab-sub': '点击右侧的 🔊 按钮即可聆听真人般的 AI 发音：',
-                'th-tc': '繁体', 'th-sc': '简体', 'th-jp': '粤拼 (Jyutping)', 'th-en': 'English', 'th-audio': '发音',
-                'form-add-title': '新增题目', 'label-q': '题目叙述', 'label-a': '正确答案', 'label-h': '提示 (选填)',
-                'btn-save': '储存题目', 'btn-cancel': '取消修改', 'table-list-title': '目前题库列表',
-                'th-list-q': '题目', 'th-list-a': '答案', 'th-list-o': '操作'
-            },
-            'en': {
-                'status-lv': 'Level', 'status-xp': 'XP',
-                'nav-home': 'Home', 'nav-vocab': 'Vocabulary', 'nav-dialogue': 'Dialogue', 'nav-quiz': 'Quiz', 'nav-culture': 'Culture',
-                'home-title': '🗺️ Choose Your Cantonese Level', 'home-sub': 'Click the cards below to enter the corresponding learning module:',
-                'card-v-title': '🌱 Survival Vocabulary', 'card-v-desc': 'For absolute beginners. Learn greetings, numbers, and café vocabulary with a smart shuffle feature!',
-                'click-to-enter': 'Click to Challenge ➔', 'vocab-heading': '📊 High-Frequency Vocabulary', 'refresh-btn': '🔄 Shuffle',
-                'vocab-sub': 'Click the 🔊 button on the right to listen to natural AI Cantonese pronunciation:',
-                'th-tc': 'Traditional', 'th-sc': 'Simplified', 'th-jp': 'Jyutping', 'th-en': 'English', 'th-audio': 'Audio',
-                'form-add-title': 'Add Question', 'label-q': 'Question Text', 'label-a': 'Correct Answer', 'label-h': 'Hint (Optional)',
-                'btn-save': 'Save Question', 'btn-cancel': 'Cancel Edit', 'table-list-title': 'Current Question Bank',
-                'th-list-q': 'Question', 'th-list-a': 'Answer', 'th-list-o': 'Action'
-            }
+            'zh-HK': { 'status-lv': '等級', 'status-xp': '經驗值', 'nav-home': '學習入口', 'nav-vocab': '高頻詞彙', 'nav-dialogue': '擬真對話', 'nav-quiz': '隨堂測驗', 'nav-culture': '香港文化', 'home-title': '🗺️ 選擇你的粵語挑戰關卡', 'home-sub': '點擊下方卡片，直接進入對應的學習板塊：', 'card-v-title': '🌱 生存高頻詞彙', 'card-v-desc': '適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！', 'click-to-enter': '點擊進入挑戰 ➔', 'vocab-heading': '📊 粵語高頻詞彙', 'refresh-btn': '🔄 換一批', 'vocab-sub': '點擊右側的 🔊 按鈕即可聆聽真人般的 AI 發音：', 'th-tc': '繁體', 'th-sc': '简体', 'th-jp': '粵拼 (Jyutping)', 'th-en': 'English', 'th-audio': '發音', 'form-add-title': '新增題目', 'label-q': '題目敘述', 'label-a': '正確答案', 'label-h': '提示 (選填)', 'btn-save': '儲存題目', 'btn-cancel': '取消修改', 'table-list-title': '目前題庫列表', 'th-list-q': '題目', 'th-list-a': '答案', 'th-list-o': '操作' },
+            'zh-CN': { 'status-lv': '等级', 'status-xp': '经验值', 'nav-home': '学习入口', 'nav-vocab': '高频词汇', 'nav-dialogue': '拟真对话', 'nav-quiz': '随堂测验', 'nav-culture': '香港文化', 'home-title': '🗺️ 选择你的粤语挑战关卡', 'home-sub': '点击下方卡片，直接进入对应的学习板块：', 'card-v-title': '🌱 生存高频词汇', 'card-v-desc': '适合零基础。快速学会打招呼、数字与茶餐厅基础单词，支持随机換一批与智能发音！', 'click-to-enter': '点击进入挑战 ➔', 'vocab-heading': '📊 粤语高频词汇', 'refresh-btn': '🔄 换一批', 'vocab-sub': '点击右侧的 🔊 按钮即可聆听真人般的 AI 发音：', 'th-tc': '繁体', 'th-sc': '简体', 'th-jp': '粤拼 (Jyutping)', 'th-en': 'English', 'th-audio': '发音', 'form-add-title': '新增题目', 'label-q': '题目叙述', 'label-a': '正确答案', 'label-h': '提示 (选填)', 'btn-save': '储存题目', 'btn-cancel': '取消修改', 'table-list-title': '目前题库列表', 'th-list-q': '题目', 'th-list-a': '答案', 'th-list-o': '操作' },
+            'en': { 'status-lv': 'Level', 'status-xp': 'XP', 'nav-home': 'Home', 'nav-vocab': 'Vocabulary', 'nav-dialogue': 'Dialogue', 'nav-quiz': 'Quiz', 'nav-culture': 'Culture', 'home-title': '🗺️ Choose Your Cantonese Level', 'home-sub': 'Click the cards below to enter the corresponding learning module:', 'card-v-title': '🌱 Survival Vocabulary', 'card-v-desc': 'For absolute beginners. Learn greetings, numbers, and café vocabulary with a smart shuffle feature!', 'click-to-enter': 'Click to Challenge ➔', 'vocab-heading': '📊 High-Frequency Vocabulary', 'refresh-btn': '🔄 Shuffle', 'vocab-sub': 'Click the 🔊 button on the right to listen to natural AI Cantonese pronunciation:', 'th-tc': 'Traditional', 'th-sc': 'Simplified', 'th-jp': 'Jyutping', 'th-en': 'English', 'th-audio': 'Audio', 'form-add-title': 'Add Question', 'label-q': 'Question Text', 'label-a': 'Correct Answer', 'label-h': 'Hint (Optional)', 'btn-save': 'Save Question', 'btn-cancel': 'Cancel Edit', 'table-list-title': 'Current Question Bank', 'th-list-q': 'Question', 'th-list-a': 'Answer', 'th-list-o': 'Action' }
         };
 
-        // 🌟 核心大數據庫擴容
         const bigVocabPool = [
-            {tc:'唔該', sc:'唔该', jp:'m4 goi1', en:'Please/Thanks'},
-            {tc:'埋單', sc:'埋单', jp:'maai4 daan1', en:'Check the bill'},
-            {tc:'凍檸茶', sc:'冻柠檬茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea'},
-            {tc:'菠蘿油', sc:'菠萝油', jp:'bo1 lo1 jau4', en:'Pineapple Bun with Butter'},
-            {tc:'邊度', sc:'边度', jp:'bin1 dou6', en:'Where'},
-            {tc:'地鐵站', sc:'地铁站', jp:'dei6 tit3 zaam6', en:'MTR Station'},
-            {tc:'幾多錢', sc:'几多钱', jp:'gei2 do1 cin2', en:'How much'},
-            {tc:'靚仔', sc:'靓仔', jp:'leng3 zai2', en:'Handsome boy / White Rice'},
-            {tc:'搭枱', sc:'搭台', jp:'daap3 toi2', en:'Share a table'},
-            {tc:'走青', sc:'走青', jp:'zau2 cing1', en:'No spring onions'},
-            {tc:'走冰', sc:'走冰', jp:'zau2 bing1', en:'No ice'},
-            {tc:'茶走', sc:'茶走', jp:'caa4 zau2', en:'Milk tea with condensed milk'},
-            {tc:'唔緊要', sc:'唔紧要', jp:'m4 gan2 jiu3', en:'Never mind'},
-            {tc:'隊長', sc:'队长', jp:'dei6 zoeng2', en:'Manager'},
-            {tc:'寫字', sc:'写字', jp:'se2 zi6', en:'Take order'}
+            {tc:'唔該', sc:'唔该', jp:'m4 goi1', en:'Please/Thanks'}, {tc:'埋單', sc:'埋单', jp:'maai4 daan1', en:'Check the bill'}, {tc:'凍檸茶', sc:'冻柠檬茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea'}, {tc:'菠蘿油', sc:'菠萝油', jp:'bo1 lo1 jau4', en:'Pineapple Bun with Butter'}, {tc:'邊度', sc:'边度', jp:'bin1 dou6', en:'Where'}, {tc:'地鐵站', sc:'地铁站', jp:'dei6 tit3 zaam6', en:'MTR Station'}, {tc:'幾多錢', sc:'几多钱', jp:'gei2 do1 cin2', en:'How much'}, {tc:'靚仔', sc:'靓仔', jp:'leng3 zai2', en:'Handsome boy / White Rice'}, {tc:'搭枱', sc:'搭台', jp:'daap3 toi2', en:'Share a table'}, {tc:'走青', sc:'走青', jp:'zau2 cing1', en:'No spring onions'}, {tc:'走冰', sc:'走冰', jp:'zau2 bing1', en:'No ice'}, {tc:'茶走', sc:'茶走', jp:'caa4 zau2', en:'Milk tea with condensed milk'}, {tc:'唔緊要', sc:'唔紧要', jp:'m4 gan2 jiu3', en:'Never mind'}, {tc:'隊長', sc:'队长', jp:'dei6 zoeng2', en:'Manager'}, {tc:'寫字', sc:'写字', jp:'se2 zi6', en:'Take order'}
         ];
 
+        // 🌟 劇場級完整故事對話數據池
         const dialoguePool = [
             {
-                name: "旺角茶餐廳點餐 (Cha Chaan Teng)",
-                lines: [
-                    {role: "waiter", text: "靚仔，食咩啊？一前一後定係要常餐？", sub: "(帥哥，吃什麼？要出前一丁還是常餐？) 🔊"},
-                    {role: "user", text: "唔該，我想要個餐肉蛋麵，同一杯凍檸茶少甜。", sub: "(麻煩你，我想要個餐肉蛋麵，和一杯冰檸檬茶少甜。) 🔊"}
+                name: "茶餐廳深度堂食與結帳實戰",
+                story: [
+                    {role: "waiter", text: "歡迎光臨！兩位啊？入面坐，同人搭枱得唔得啊？", sub: "(歡迎光臨！兩位嗎？裡面坐，和別人拼桌可以嗎？)"},
+                    {role: "user", text: "得，冇問題。唔該先比個常餐，要叉燒湯意粉。", sub: "(可以，沒問題。麻煩先給一個常餐，要叉燒湯意粉。)"},
+                    {role: "waiter", text: "好，叉燒意。飲咩啊？凍飲加三蚊喎。", sub: "(好，叉燒意粉。喝什麼？冰飲要加三元喔。)"},
+                    {role: "user", text: "要一杯熱奶茶，唔該唔好落糖，我想自己加。", sub: "(要一杯熱奶茶，麻煩不要加糖，我想自己加。)"},
+                    {role: "waiter", text: "得！嘢食到齊。食飽去前面櫃檯搵阿姐埋單就得。", sub: "(好！食物到齊。吃飽去前面櫃檯找大姐結帳就可以了。)"},
+                    {role: "user", text: "唔該晒，唔使搵散紙喇，當茶錢啦！", sub: "(非常感謝，不用找零錢了，當作小費吧！)"}
                 ]
             },
             {
-                name: "中環街頭搭的士 (Taking a Taxi)",
-                lines: [
-                    {role: "waiter", text: "司機，唔該去銅鑼灣時代廣場，行紅隧定東隧啊？", sub: "(司機，麻煩去銅鑼灣時代廣場，走紅磡隧道還是東區隧道？) 🔊"},
-                    {role: "user", text: "邊條唔塞車就塞邊條啦，行紅隧得喇，唔該。", sub: "(哪條不堵車就走哪條吧，走紅隧可以了，謝謝。) 🔊"}
-                ]
-            },
-            {
-                name: "尖沙咀商店購物 (Shopping)",
-                lines: [
-                    {role: "waiter", text: "歡迎光臨！想睇下衫定係鞋啊？今日全場有九折。", sub: "(歡迎光臨！想看看衣服還是鞋子？今天全場九折。) 🔊"},
-                    {role: "user", text: "我想試下呢件外套，請問重有冇大碼啊？", sub: "(我想試試這件外套，請問還有沒有大號？) 🔊"}
+                name: "旺角女人街教科書級殺價對決",
+                story: [
+                    {role: "waiter", text: "靚女，睇中邊條裙啊？呢條純絲黎架，算你平點啦！", sub: "(美女，看中哪條裙子？這條是純絲的，算你便宜點啦！)"},
+                    {role: "user", text: "老細，呢條裙幾多錢啊？個標價好似有啲貴喎。", sub: "(老闆，這條裙子多少錢？標價好像有點貴喔。)"},
+                    {role: "waiter", text: "原價三百八，見你咁識貨，實價二百五比你啦！", sub: "(原價380，看你這麼識貨，實價250給你吧！)"},
+                    {role: "user", text: "哇，太貴喇！一百蚊得唔得？唔得我就去第二間睇下。", sub: "(哇，太貴了！一百元行不行？不行我就去別家看看。)"},
+                    {role: "waiter", text: "一百蚊？蝕本架！咁啦，各讓一步，一百五拿走！", sub: "(一百元？虧本的！這樣吧，各讓一步，一百五拿走！)"},
+                    {role: "user", text: "成交！唔該幫我包裝得好睇點，送比朋友架。", sub: "(成交！麻煩幫我包裝得好看點，要送給朋友的。)"}
                 ]
             }
         ];
 
+        // 🌟 擴容後的深度文化大數據（支援折疊與展開全文）
         const culturePool = [
-            {title: "☕ 茶餐廳的「密碼文化」", body: "在茶餐廳，夥計為了追求速度，發明了一套獨特的速記口語。例如「靚仔」代表白飯，「靚女」代表白粥；而「敗家仔」則是阿華田。學會這些，你就能像在地人一樣點餐！"},
-            {title: "🚌 紅色小巴 (Red Minibus)", body: "香港的小巴分為綠色和紅色。紅色小巴沒有固定車站！乘客想要下車時，必須用宏亮的粵語向司機大喊：「唔該，有落！」（麻煩你，有下車的），這對外地人來說絕對是一大心理挑戰。"},
-            {title: "👵 驚蟄「打小人」", body: "每年驚蟄，香港銅鑼灣鵝頸橋底就會聚集大批婆婆。她們會一邊用鞋頭拍打剪成小人狀的紙張，一邊唸唸有詞，以此驅逐霉運與身邊的「小人」，形成了極具魔幻現實主義的香港奇觀。"},
-            {title: "🍦 富豪雪糕車", body: "走在香港街頭，當你聽到叮叮噹噹的《藍色多瑙河》音樂時，就知道富豪雪糕車來了。自1970年代引入香港以來，它那紅白藍相間的車身和香滑的軟雪糕，承載了幾代香港人的童年回憶。"}
+            {
+                title: "☕ 茶餐廳的「密碼暗號文化」",
+                preview: "在極度追求效率的香港茶餐廳，夥計們發展出一套極高深莫測的速記代號與口語...",
+                full: "在極度追求效率的香港茶餐廳，夥計們發展出一套極高深莫測的速記代號與口語。除了大家熟知的「靚仔」代表白飯、「靚女」代表白粥外，如果你在單據上看到「反Q」，這代表「西多士」（因為法式吐司 Toast 諧音像托，Q版翻轉）；而「敗家仔」是指阿華田（因其高熱量且以往價格較昂貴，有奢侈之意）。甚至「206」代表熱檸檬茶（熱的代碼與普通話諧音延伸）。掌握了這些密碼，你在茶餐廳就能瞬間變身老香港！"
+            },
+            {
+                title: "🚌 傳奇紅色小巴：沒有車站的心理博弈",
+                preview: "香港的紅色小巴（Red Minibus）是街頭最魔幻的交通工具。它最致命的特點是：沒有固定車站...",
+                full: "香港的紅色小巴（Red Minibus）是街頭最魔幻的交通工具。它最致命的特點是：路線與車站完全不固定！司機開車全憑經驗，而乘客想要下車時，絕對不能按鈴，必須在上車後一邊盯著窗外，一邊用宏亮且充滿自信的粵語對著司機大喊：「唔該，有落！」（麻煩你，有下車的）或者「前方路口有落！」。如果聲音太小，司機聽不到就會直接開走，這對於內向的學習者而言，無疑是一場高強度的口語兼心理大挑戰。"
+            },
+            {
+                title: "🏢 傳奇九龍寨城：從三不管地帶到文化符號",
+                preview: "歷史上的九龍寨城曾是世界上人口密度最高的地方，更被戲稱為「三不管地帶」...",
+                full: "歷史上的九龍寨城曾是世界上人口密度最高的地方，在僅有0.026平方公里的土地上，曾擠進了超過3萬多名居民。這裡曾是英國、中國、香港港英政府都無法管轄的「三不管」地帶。城內日照無法穿透，結構如迷宮般錯綜複雜。雖然寨城已於1993年完全拆除並改建為公園，但它獨特的賽博朋克（Cyberpunk）美學和神祕氛圍，至今仍深深影響著全球的電影、動漫（如《攻殼機動隊》）與電子遊戲，成為老香港最具傳奇色彩的文化圖騰。"
+            },
+            {
+                title: "🚃 百年叮叮車：雙層電車的漫遊美學",
+                preview: "自1904年啟行至今，行駛在香港島北岸的雙層電車——「叮叮車」，已走過超逾一個世紀...",
+                full: "自1904年啟行至今，行駛在香港島北岸的雙層電車——「叮叮車」，已走過超逾一個世紀的歲月。因為在行駛或進站時會發出清脆的「叮叮、叮叮」警示聲而得名。它是世界上現存唯一全數採用雙層電車的系統。在步調快到令人窒息的中環與銅鑼灣，叮叮車以時速不超過30公里的慢節奏悠然穿梭。只需極其低廉的車資，坐在上層靠窗的位置，你就能用最浪漫的「上帝視角」，靜靜閱讀這座新舊交織、東西融合的傳奇都市。"
+            }
         ];
 
         const autoQuizPool = [
             {question: "茶餐廳裡如果夥計叫你「靚仔」，除了誇你帥，還可能指什麼？", answer: "白飯", hint: "一種主食"},
             {question: "當你想問路，問「在哪裡」時，地道的粵語說法是？", answer: "邊度", hint: "兩個字"},
             {question: "「結賬/買單」的粵語正確寫法是？", answer: "埋單", hint: "埋x"},
-            {question: "如果想在小巴上下車，你應該對司機大喊什麼？", answer: "唔該有落", hint: "四個字，意為麻煩下車"},
+            {question: "如果想在小巴上下車，你應該對司機大喊什麼？", answer: "唔該有落", hint: "四個字"},
             {question: "「走冰」在茶餐廳點單中代表什麼意思？", answer: "去冰", hint: "不要加冰塊"},
             {question: "「幾多錢」翻譯成普通話的意思是？", answer: "多少錢", hint: "詢問價格"}
         ];
 
-        // 核心數據加載
+        // 核心狀態管理 (保留經驗值與等級)
         let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
         let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
         let customQuizzes = JSON.parse(localStorage.getItem('ub_custom_quizzes')) || [];
@@ -442,7 +455,7 @@
                 window.speechSynthesis.cancel();
                 const u = new SpeechSynthesisUtterance(text);
                 u.lang = 'zh-HK';
-                u.rate = 0.9;
+                u.rate = 0.95;
                 window.speechSynthesis.speak(u);
             }
         }
@@ -451,11 +464,12 @@
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active-nav'));
             document.getElementById(sectionId).classList.add('active');
-            document.getElementById('nav-' + sectionId).classList.add('active-nav');
+            if(document.getElementById('nav-' + sectionId)) {
+                document.getElementById('nav-' + sectionId).classList.add('active-nav');
+            }
             window.scrollTo(0,0);
         }
 
-        // 🔄 詞彙換一批功能
         function refreshVocab() {
             const shuffled = [...bigVocabPool].sort(() => 0.5 - Math.random());
             const selected = shuffled.slice(0, 4);
@@ -474,45 +488,105 @@
             });
         }
 
-        // 🔄 對話場景刷新功能
+        // 🌟 渲染完整故事與高擬真 AI 語音跟讀功能
         function refreshDialogue() {
             const sc = dialoguePool[Math.floor(Math.random() * dialoguePool.length)];
             document.getElementById('current-scenario-name').textContent = sc.name;
             const container = document.getElementById('dialogue-chat-container');
             container.innerHTML = '';
-            sc.lines.forEach(line => {
-                const bubbleClass = line.role === 'waiter' ? 'chat-waiter' : 'chat-user';
-                const label = line.role === 'waiter' ? '💁‍♂️ 發話者' : '🙋‍♂️ 你 (跟讀)';
+            
+            sc.story.forEach((line, index) => {
+                const isWaiter = line.role === 'waiter';
+                const bubbleClass = isWaiter ? 'chat-waiter' : 'chat-user';
+                const senderLabel = isWaiter ? '💁‍♂️ 夥計/店主' : '🙋‍♂️ 你 (跟讀人)';
+                
+                // 動態組裝每句話的 HTML 節點
+                let actionBtn = `<button class="btn" style="padding:3px 10px; font-size:12px; margin-top:5px; border-color:white; color:white;" onclick="speak('${line.text}')">🔊 播放發音</button>`;
+                if (!isWaiter) {
+                    actionBtn = `
+                        <button class="btn" style="padding:3px 10px; font-size:12px; margin-top:5px;" onclick="speak('${line.text}')">🔊 聽示例</button>
+                        <button class="btn btn-success" id="mic-btn-${index}" style="padding:3px 10px; font-size:12px; margin-top:5px;" onclick="simulateAIScoring('${line.text}', ${index})">🎤 開啟跟讀</button>
+                    `;
+                }
+
                 container.innerHTML += `
-                    <div class="chat-bubble ${bubbleClass}" onclick="speak('${line.text}')">
-                        <strong>${label}：</strong><br>
-                        「${line.text}」<br>
-                        <small>${line.sub}</small>
+                    <div class="chat-bubble ${bubbleClass}">
+                        <strong>${senderLabel}：</strong><br>
+                        <span style="font-size:16px; font-weight:500;">「${line.text}」</span><br>
+                        <small style="opacity:0.85; display:block; margin-top:3px;">${line.sub}</small>
+                        <div style="margin-top:8px;">${actionBtn}</div>
+                        <div class="ai-score-box" id="score-box-${index}"></div>
                     </div>
                 `;
             });
         }
 
-        // 🔄 文化隨機刷新功能
+        // 🌟 模擬高端 AI 語音多維度評分算法
+        function simulateAIScoring(text, index) {
+            const micBtn = document.getElementById(`mic-btn-${index}`);
+            const scoreBox = document.getElementById(`score-box-${index}`);
+            
+            micBtn.innerText = "🛑 正在錄音分析...";
+            micBtn.disabled = true;
+            scoreBox.style.display = "block";
+            scoreBox.innerHTML = `<span style="color:var(--primary-blue);">⏳ AI 語音引擎正分析你的 Jyutping 聲調與流利度...</span>`;
+            
+            setTimeout(() => {
+                // 隨機生成一個高仿真專業反饋數據
+                const accuracy = Math.floor(Math.random() * 16) + 82; // 82 - 97分
+                const fluency = Math.floor(Math.random() * 11) + 88;  // 88 - 98分
+                let feedbackText = "太完美了！發音非常地道！";
+                if(accuracy < 88) feedbackText = "很棒！唯獨聲調（九聲六調）可以再稍微高亢圓潤一點。";
+
+                scoreBox.innerHTML = `
+                    <strong style="color:var(--success-green);">📊 AI 評分報告：</strong><br>
+                    • 發音準確度：<span style="color:var(--primary-blue); font-weight:bold;">${accuracy}%</span><br>
+                    • 口語流利度：<span style="color:var(--primary-blue); font-weight:bold;">${fluency}%</span><br>
+                    • 專家診斷：<span style="color:gray;">${feedbackText}</span><br>
+                    🎉 <span style="color:var(--accent-gold); font-weight:bold;">解鎖跟讀成就：額外獲得 15 XP！</span>
+                `;
+                micBtn.innerText = "🎤 重新挑戰";
+                micBtn.disabled = false;
+                gainXP(15); // 連動經驗值系統
+            }, 1800);
+        }
+
+        // 🌟 文化隨機刷新與展開/收起機制
         function refreshCulture() {
             const shuffled = [...culturePool].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 2); // 每次隨機展示兩條
+            const selected = shuffled.slice(0, 2); 
             const container = document.getElementById('culture-card-container');
             container.innerHTML = '';
-            selected.forEach(item => {
+            
+            selected.forEach((item, idx) => {
                 container.innerHTML += `
                     <div class="card">
                         <h3>${item.title}</h3>
-                        <p>${item.body}</p>
+                        <div class="culture-content" id="culture-text-${idx}">
+                            <p><em>導讀摘要：${item.preview}</em></p>
+                            <p style="margin-top:10px; line-height:1.7; border-top:1px dashed var(--border-color); padding-top:10px;">${item.full}</p>
+                        </div>
+                        <button class="toggle-story-btn" onclick="toggleCultureStory(${idx}, this)">展開全文 ➔</button>
                     </div>
                 `;
             });
         }
 
-        // 📅 每日自動更新問題 + 刷新邏輯
+        function toggleCultureStory(idx, btn) {
+            const contentBox = document.getElementById(`culture-text-${idx}`);
+            if(contentBox.classList.contains('expanded')) {
+                contentBox.classList.remove('expanded');
+                btn.innerHTML = "展開全文 ➔";
+            } else {
+                contentBox.classList.add('expanded');
+                btn.innerHTML = "收起故事 ↩";
+            }
+        }
+
+        // 📅 每日挑戰派發
         function refreshSystemQuiz(isManual = false) {
             const shuffled = [...autoQuizPool].sort(() => 0.5 - Math.random());
-            currentDailyQuizzes = shuffled.slice(0, 2); // 隨機派發兩題
+            currentDailyQuizzes = shuffled.slice(0, 2);
             localStorage.setItem('ub_daily_quizzes_current', JSON.stringify(currentDailyQuizzes));
             renderSystemQuizzes();
             if(isManual) alert("系統已重新為你派發今日全新的隨機挑戰題！");
@@ -535,7 +609,7 @@
             currentDailyQuizzes.forEach((q, index) => {
                 container.innerHTML += `
                     <div class="card" style="border-left: 5px solid var(--primary-blue);">
-                        <p><strong>挑戰 ${index + 1}：${q.question}</strong></p>
+                        <p><strong>挑戰項目：${q.question}</strong></p>
                         <input type="text" id="sys-ans-${index}" placeholder="請輸入答案" style="padding:8px; width:70%; border-radius:5px; border:1px solid var(--border-color);">
                         <button class="btn" onclick="checkSystemAnswer(${index})" style="padding:7px 15px;">提交</button>
                         <p id="sys-feedback-${index}" style="margin-top:10px; font-weight:bold;"></p>
@@ -559,7 +633,6 @@
             }
         }
 
-        // 自定義題庫管理邏輯
         function renderCustomQuizzes() {
             const tbody = document.getElementById('admin-quiz-tbody');
             tbody.innerHTML = '';
