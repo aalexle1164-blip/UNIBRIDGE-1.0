@@ -196,7 +196,7 @@
     </header>
 
     <div class="status-bar">
-        <div>🏅 <span id="lbl-level">等級</span>: <span id="user-level">1</span> <span id="level-title">(👶 新手村)</span></div>
+        <div>🏅 <span id="lbl-level">等級</span>: <span id="user-level">1</span> <span id="level-title">—— 新手村——初來步到</span></div>
         <div class="xp-container">✨ <span id="lbl-xp">經驗</span>: <span id="user-xp">0</span> / 100 XP <div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div></div>
     </div>
 
@@ -238,7 +238,7 @@
     <main id="dialogue" class="content-section">
         <div class="section-desc" id="dialogue-desc">⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！</div>
         <div class="card">
-            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換</h2>
+            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換 (標準 10 話輪)</h2>
             <select id="scene-selector" class="scene-select-dropdown" onchange="switchScene(this.value)"></select>
             <div class="chat-container" id="dialogue-chat-container"></div>
         </div>
@@ -300,7 +300,7 @@
                 'quiz-desc': '🏆 每日自动派发挑战，答对可稳步获得经验值。', 'quiz-title': '🎯 随堂实战测验', 'btn-refresh-quiz': '🔄 换一批题目',
                 'lbl-wrong-title': '❌ 我的错题簿', 'btn-clear-wrong': '🗑️ 清空',
                 'culture-desc': '🧳 探索老香港传奇故事。', 'btn-refresh-culture': '🔄 换一批故事',
-                'play-btn': '🔊 播放', 'mic-btn': '🎤 跟读', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑战', 'holder-ans': '键入答案...', 'holder-retry': '再次挑战输入答案...',
+                'play-btn': '🔊 播放', 'mic-btn': '🎤 跟读', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑战', 'holder-ans': '键入答案...', 'holder-retry': '键入答案...',
                 'alert-correct': '✅ 正确！恭喜获得 +8 XP！', 'alert-wrong': '❌ 答案不对喔！已自动记录至下方「错题簿」。', 'alert-retry-correct': '🎉 答对了！成功消灭错题！', 'alert-retry-wrong': '❌ 还是不对，再想想看！',
                 'no-wrong': '目前没有错题记录，表现绝佳！', 'meta-waiter': '主持 / 店员', 'meta-user': '您', 'btn-expand-story': '展开详尽历史典故 ➔', 'btn-collapse-story': '收起故事 ↩'
             },
@@ -381,8 +381,8 @@
                 title: { 'zh-HK': "🚌 紅色小巴：街頭心跳博弈", 'zh-CN': "🚌 红色小巴：街头心跳博弈", 'en': "🚌 Red Minibuses: Street Gambling of Bravery" }, 
                 preview: { 'zh-HK': "俗稱「紅VAN」的紅色小巴，是香港最魔幻且最考驗粵語膽量的交通工具...", 'zh-CN': "俗称“红VAN”的红色小巴，是香港最魔幻且最考验粤语胆量的交通工具...", 'en': "The iconic 'Red VANs' form Hong Kong's most surreal and linguistically daring public transit network..." },
                 full: {
-                    'zh-HK': "紅色非專線小巴（紅VAN）在香港的交通網絡中扮演著極其獨特的角色。它們沒有固定的法定站點 and 班次，車資與路線全由市場供需與司機之間的江湖默契決定。對於外地遊客或粵語初學者而言，搭乘紅VAN無疑是一場心跳加速的生存挑戰。\n\n因為紅色小巴是「隨叫隨停」的，當你想要下車時，車上並沒有任何下車鈴可以按。你必須在小巴快速穿梭於旺角或銅鑼灣狹窄街頭時，一邊緊盯窗外地標，一邊看準時機，鼓起全身勇氣用宏亮且道地的粵語對司機大喊：「唔該，有落！」或「唔該，前方街口有落！」如果喊得太小聲或發音不準，司機很可能直接呼嘯而過。這種獨特的互動，正是香港街頭文化中最具張力、也最有人情味的一幕。",
-                    'zh-CN': "红色非专线小巴（红VAN）在香港的交通网络中扮演着极其独特角色。它们没有固定的法定站点和班次，车资与路线全由市场供需与司机之间的江湖默契决定。对于外地游客或粤语初学者而言，搭乘红VAN无疑是一场心跳加速的生存挑战。\n\n因为红色小巴是“随叫随停”的，当你想要下车时，车上并没有任何下车铃可以按。你必须在小巴快速穿梭于旺角或铜锣湾狭窄街头时，一边紧盯窗外地标，一边看准时机，鼓起全身勇气用宏亮且道地的粤语对司机大喊：“唔该，有落！”或“唔该，前方街口有落！”如果喊得太小声或发音不准，司机很可能直接呼啸而过。这种独特的互动，正是香港街头文化中最具张力、也最有人情味的一幕。",
+                    'zh-HK': "紅色非專線小巴（紅VAN）在香港的交通網絡中扮演著極其獨特的角色。它們沒有固定的法定站點與班次，車資與路線全由市場供需與司機之間的江湖默契決定。對於外地遊客或粵語初學者而言，搭乘紅VAN無疑是一場心跳加速的生存挑戰。\n\n因為紅色小巴是「隨叫隨停」的，當你想要下車時，車上並沒有任何下車鈴可以按。你必須在小巴快速穿梭於旺角或銅鑼灣狹窄街頭時，一邊緊盯窗外地標，一邊看準時機，鼓起全身勇氣用宏亮且道地的粵語對司機大喊：「唔該，有落！」或「唔該，前方街口有落！」如果喊得太小聲或發音不準，司機很可能直接呼嘯而過。這種獨特的互動，正是香港街頭文化中最具張力、也最有人情味的一幕。",
+                    'zh-CN': "红色非专线小巴（红VAN）在香港的交通网络中扮演着极其独特角色。它们没有固定的法定站点和班次，车资与路线全由市场供需与司机之间的江湖默契决定。对于外地游客或粤语初学者而言，搭乘红VAN半无疑是一场心跳加速的生存挑战。\n\n因为红色小巴是“随叫随停”的，当你想要下车时，车上并没有任何下车铃可以按。你必须在小巴快速穿梭于旺角或铜锣湾狭窄街头时，一边紧盯窗外地标，一边看准时机，鼓起全身勇气用宏亮且道地的粤语对司机大喊：“唔该，有落！”或“唔该，前方街口有落！”如果喊得太小声或发音不准，司机很可能直接呼啸而过。这种独特的互动，正是香港街头文化中最具张力、也最有人情味的一幕。",
                     'en': "Red non-franchised minibuses (Red VANs) command a legendary niche in HK. Free from regular municipal routing, their fees and paths fluctuate entirely based on real-time demands and historical turf agreements. For learners, stepping inside is an adrenaline-inducing thrill.\n\nOperating on a wave-down and call-out scheme, there are no physical stop buttons on board. As the van careens through dense Mong Kok corridors, you must monitor your surroundings, calculate the distance, muster your absolute courage, and yell to the driver in impeccable Cantonese: 'M4 Goi1, Jau5 Lok6!' (Stop here, please!). A faint whisper means risking being carried away into the next district. It stands as an interactive, thrilling masterpiece of local street dynamics."
                 }
             },
@@ -415,10 +415,44 @@
             }
         ];
 
+        // 🎖️ 等級稱號配置（去除括號，改用破折號）
         const levelTitles = {
-            'zh-HK': { 1: "👶 新手村——初來步到", 2: "☕ 茶餐廳侍應——識聽靚仔靚女", 3: "🏘️ 街坊鄰里——熟路旺角深水埗", 4: "🚌 小巴司機——有落嗌得超大聲", 5: "💼 西裝白領——中環返工中英夾雜", 6: "🏪 老字號掌櫃——人情世故略知一二", 7: "👵 鵝頸橋大師——打小人手速極快", 8: "🐎 馬場大亨——獨贏位置瞭如指掌", 9: "🏙️ 九龍大班——呼風喚雨地道通", 10: "👑 👑 👑 煲匯橋橋幫主——粵語神功大完滿" },
-            'zh-CN': { 1: "👶 新手村——初来乍到", 2: "☕ 茶餐厅侍应——能听懂靓仔靓女", 3: "🏘️ 街坊邻里——熟路旺角深水埗", 4: "🚌 小巴司机——下车喊得超大声", 5: "💼 西装白领——中环上班中英夹杂", 6: "🏪 老字号掌柜——人情世故略知一二", 7: "👵 鹅颈桥大师——打小人手速极快", 8: "🐎 马场大亨——独赢位置了如指掌", 9: "🏙️ 九龙大班——呼风唤雨地道通", 10: "👑 👑 👑 煲汇桥桥帮主——粤语神功大完满" },
-            'en': { 1: "👶 Novice Village", 2: "☕ Café Waiter", 3: "🏘️ Local Neighbor", 4: "🚌 Minibus Driver", 5: "💼 Central White-Collar", 6: "🏪 Traditional Shopkeeper", 7: "👵 Flyover Shaman", 8: "🐎 Horse Racing Tycoon", 9: "🏙️ Kowloon Tai-Pan", 10: "👑 Max Level Master" }
+            'zh-HK': { 
+                1: "—— 新手村——初來步到", 
+                2: "—— 茶餐廳侍應——識聽靚仔靚女", 
+                3: "—— 街坊鄰里——熟路旺角深水埗", 
+                4: "—— 小巴司機——有落嗌得超大聲", 
+                5: "—— 西裝白領——中環返工中英夾雜", 
+                6: "—— 老字號掌櫃——人情世故略知一二", 
+                7: "—— 鵝頸橋大師——打小人手速極快", 
+                8: "—— 馬場大亨——獨贏位置瞭如指掌", 
+                9: "—— 九龍大班——呼風喚雨地道通", 
+                10: "—— 煲匯橋橋幫主——粵語神功大完滿" 
+            },
+            'zh-CN': { 
+                1: "—— 新手村——初来乍到", 
+                2: "—— 茶餐厅侍应——能听懂靓仔靓女", 
+                3: "—— 街坊邻里——熟路旺角随水步", 
+                4: "—— 小巴司机——下车喊得超大声", 
+                5: "—— 西装白领——中环上班中英夹杂", 
+                6: "—— 老字号掌柜——人情世故略知一二", 
+                7: "—— 鹅颈桥大师——打小人手速极快", 
+                8: "—— 马场大亨——独赢位置了如指掌", 
+                9: "—— 九龙大班——呼风唤雨地道通", 
+                10: "—— 煲汇桥桥帮主——粤语神功大完满" 
+            },
+            'en': { 
+                1: "—— Novice Village——Just Arrived", 
+                2: "—— Café Waiter——Recognizing Rice & Congee", 
+                3: "—— Local Neighbor——Familiar with Mong Kok", 
+                4: "—— Minibus Driver——Shouting Out Loud", 
+                5: "—— Central White-Collar——Mixing English & Cantonese", 
+                6: "—— Traditional Shopkeeper——Wise in Local Culture", 
+                7: "—— Flyover Shaman——Fast villain beating", 
+                8: "—— Racing Tycoon——Expertise in betting", 
+                9: "—— Kowloon Tai-Pan——Master of the City", 
+                10: "—— UniBridge Guild Master——Ultimate Cantonese Mastery" 
+            }
         };
 
         let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
@@ -677,7 +711,7 @@
 
         function clearWrongNotebook() { wrongNotebook = []; localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook)); renderWrongNotebook(); }
 
-        // 文化故事模組（多語言 + 深度擴寫保留）
+        // 文化故事模組
         function refreshCultureRand() {
             let indices = culturePool.map((_, i) => i).sort(() => 0.5 - Math.random()).slice(0, 2);
             const container = document.getElementById('culture-card-container');
@@ -695,6 +729,7 @@
             });
         }
 
+        // 展開與收回歷史典故控制
         function toggleCultureStory(idx) {
             const el = document.getElementById('culture-full-' + idx);
             const btn = document.getElementById('story-btn-' + idx);
@@ -708,7 +743,7 @@
             }
         }
 
-        // 經驗等級更新
+        // 經驗等級更新與動態稱號重設
         function gainXP(amt) { 
             if (level >= 10) { xp = 100; localStorage.setItem('ub_xp', xp); updateStatus(); return; }
             xp += amt; 
@@ -721,7 +756,7 @@
             document.getElementById('user-level').innerText = level; 
             document.getElementById('xp-fill').style.width = xp + '%'; 
             const titlesPool = levelTitles[currentLang] || levelTitles['zh-HK'];
-            document.getElementById('level-title').innerText = `(${titlesPool[level] || 'Novice'})`;
+            document.getElementById('level-title').innerText = `${titlesPool[level] || '—— Novice'}`;
         }
 
         function toggleTheme() { document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark'); }
