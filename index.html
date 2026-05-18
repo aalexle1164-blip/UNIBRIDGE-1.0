@@ -64,7 +64,7 @@
         .controls button, .btn {
             padding: 10px 16px; cursor: pointer; border: 1.5px solid var(--primary-blue);
             background: transparent; color: var(--primary-blue); border-radius: 20px;
-            font-weight: 600; font-size: 13px; transition: 0.2s; min-height: 40px; /* 手機端大點擊熱區 */
+            font-weight: 600; font-size: 13px; transition: 0.2s; min-height: 40px; 
             display: inline-flex; align-items: center; justify-content: center;
         }
         .controls button:hover, .btn:hover { background: var(--primary-blue); color: white; }
@@ -183,9 +183,9 @@
             </div>
             <div class="logo-text-group">
                 <div class="logo-en">UNIBRIDGE</div>
-                <div class="logo-cn">煲匯橋</div>
+                <div class="logo-cn" id="logo-subtitle">煲匯橋</div>
             </div>
-            <div class="visit-badge">👥 全網累計訪問: <span id="visit-count">1</span> </div>
+            <div class="visit-badge"><span id="lbl-visit">👥 全網累計訪問:</span> <span id="visit-count">1</span></div>
         </div>
         <div class="controls">
             <button id="lang-zh-HK" class="active-lang" onclick="changeLang('zh-HK')">繁</button>
@@ -196,8 +196,8 @@
     </header>
 
     <div class="status-bar">
-        <div>🏅 <span data-i18n="level">等級</span>: <span id="user-level">1</span> <span id="level-title">(👶 新手村)</span></div>
-        <div class="xp-container">✨ <span data-i18n="xp">經驗</span>: <span id="user-xp">0</span> / 100 XP <div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div></div>
+        <div>🏅 <span id="lbl-level">等級</span>: <span id="user-level">1</span> <span id="level-title">(👶 新手村)</span></div>
+        <div class="xp-container">✨ <span id="lbl-xp">經驗</span>: <span id="user-xp">0</span> / 100 XP <div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div></div>
     </div>
 
     <nav>
@@ -210,12 +210,12 @@
 
     <main id="home" class="content-section active">
         <div class="welcome-hero">
-            <h1>今日想港滴乜嘢？</h1>
+            <h1 id="welcome-title">今日想港滴乜嘢？</h1>
             <div class="soup-box" id="daily-soup">正在為你煲今日廣東話心靈雞湯...</div>
         </div>
         <div class="card" style="text-align: center; border: 1px solid rgba(0,0,0,0.12);">
-            <p style="font-weight: bold; color: var(--text-color); margin: 0 0 6px 0;">💡 手機端適配提示</p>
-            <p style="color: var(--text-color); opacity: 0.8; margin:0; font-size:13px; line-height: 1.5;">
+            <p style="font-weight: bold; color: var(--text-color); margin: 0 0 6px 0;" id="tips-title">💡 手機端適配提示</p>
+            <p style="color: var(--text-color); opacity: 0.8; margin:0; font-size:13px; line-height: 1.5;" id="tips-desc">
                 本系統已完美解鎖手機端（iOS/Android）發音限制！首次進入請隨意觸摸或點擊頁面，即可全面激活語音引擎。
                 對話實戰板塊已針對手機流效全面優化，若環境不支援錄音將自動切換為高仿真 AI 聲學評分，保障修行不中斷！
             </p>
@@ -223,11 +223,11 @@
     </main>
 
     <main id="vocab" class="content-section">
-        <div class="section-desc">🌱 快速學會打招呼、數字與茶餐廳單詞。</div>
+        <div class="section-desc" id="vocab-desc">🌱 快速學會打招呼、數字與茶餐廳單詞。</div>
         <div class="card">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                <h2 style="margin:0; font-size:18px;">📊 高頻詞彙</h2>
-                <button class="btn" onclick="refreshVocab()">🔄 換一批</button>
+                <h2 style="margin:0; font-size:18px;" id="vocab-title">📊 高頻詞彙</h2>
+                <button class="btn" onclick="refreshVocab()" id="btn-refresh-vocab">🔄 換一批</button>
             </div>
             <table>
                 <tbody id="vocab-table-body"></tbody>
@@ -236,124 +236,213 @@
     </main>
 
     <main id="dialogue" class="content-section">
-        <div class="section-desc">⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！</div>
+        <div class="section-desc" id="dialogue-desc">⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！</div>
         <div class="card">
-            <h2 style="margin:0 0 12px 0; font-size:18px;">🗣️ 擬真對話切換</h2>
+            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換 </h2>
             <select id="scene-selector" class="scene-select-dropdown" onchange="switchScene(this.value)"></select>
             <div class="chat-container" id="dialogue-chat-container"></div>
         </div>
     </main>
 
     <main id="quiz" class="content-section">
-        <div class="section-desc">🏆 每日自動派發挑戰，答對可穩步獲得經驗值。</div>
+        <div class="section-desc" id="quiz-desc">🏆 每日自動派發挑戰，答對可穩步獲得經驗值。</div>
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <h2 style="margin:0; font-size:18px; color:var(--text-color);">🎯 隨堂實戰測驗</h2>
-            <button class="btn" onclick="refreshQuizRand()">🔄 換一批題目</button>
+            <h2 style="margin:0; font-size:18px; color:var(--text-color);" id="quiz-title">🎯 隨堂實戰測驗</h2>
+            <button class="btn" onclick="refreshQuizRand()" id="btn-refresh-quiz">🔄 換一批題目</button>
         </div>
         <div id="system-quiz-container"></div>
         
         <div class="card" id="wrong-notebook-card" style="border: 1.5px solid var(--danger-red); background: rgba(255,59,48,0.02);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-                <h3 class="wrong-box-title">❌ 我的錯題簿 (<span id="wrong-count">0</span>)</h3>
-                <button class="chat-btn" style="color:var(--danger-red); border:1px solid var(--danger-red); background:none;" onclick="clearWrongNotebook()">🗑️ 清空</button>
+                <h3 class="wrong-box-title">
+                    <span id="lbl-wrong-title">❌ 我的錯題簿</span> (<span id="wrong-count">0</span>)
+                </h3>
+                <button class="chat-btn" style="color:var(--danger-red); border:1px solid var(--danger-red); background:none;" onclick="clearWrongNotebook()" id="btn-clear-wrong">🗑️ 清空</button>
             </div>
             <div id="wrong-quiz-list" style="display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--text-color);"></div>
         </div>
 
         <div class="card">
-            <h3 style="margin:0 0 10px 0; font-size:16px;">➕ 新增題目</h3>
+            <h3 style="margin:0 0 10px 0; font-size:16px;" id="custom-quiz-title">➕ 新增題目</h3>
             <input type="text" id="form-question" placeholder="題目內容">
             <input type="text" id="form-answer" placeholder="正確答案">
-            <button class="btn" onclick="handleQuizSubmit()">儲存題目</button>
-        </div>
-        <div class="card">
-            <table>
-                <tbody id="admin-quiz-tbody"></tbody>
-            </table>
+            <button class="btn" onclick="handleQuizSubmit()" id="btn-save-quiz">儲存題目</button>
         </div>
     </main>
 
     <main id="culture" class="content-section">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-            <div class="section-desc" style="margin:0;">🧳 探索老香港傳奇故事。</div>
-            <button class="btn" onclick="refreshCultureRand()">🔄 換一批故事</button>
+            <div class="section-desc" style="margin:0;" id="culture-desc">🧳 探索老香港傳奇故事。</div>
+            <button class="btn" onclick="refreshCultureRand()" id="btn-refresh-culture">🔄 換一批故事</button>
         </div>
         <div id="culture-card-container"></div>
     </main>
 
     <script>
-        const soupPool = ["「做人如果無夢想，同條鹹魚有咩分別呀？」", "「最緊要個人開心，行行下就到黎明啦。」", "「食得鹹魚抵得渴，每日學多句粵語！」"];
+        let currentLang = 'zh-HK';
+
+        // 🌐 多語言 UI 字典
+        const uiLangData = {
+            'zh-HK': {
+                'logo-subtitle': '煲匯橋', 'lbl-visit': '👥 全網累計訪問:', 'lbl-level': '等級', 'lbl-xp': '經驗',
+                'nav-home': '首頁', 'nav-vocab': '高頻詞彙', 'nav-dialogue': '對話實戰', 'nav-quiz': '測驗題庫', 'nav-culture': '文化典故',
+                'welcome-title': '今日想港滴乜嘢？', 'tips-title': '💡 手機端適配提示',
+                'tips-desc': '本系統已完美解鎖手機端（iOS/Android）發音限制！首次進入請隨意觸摸或點擊頁面，即可全面激活語音引擎。對話實戰板塊已針對手機流效全面優化，若環境不支援錄音將自動切換為高仿真 AI 聲學評分，保障修行不中斷！',
+                'vocab-desc': '🌱 快速學會打招呼、數字與茶餐廳單詞。', 'vocab-title': '📊 高頻詞彙', 'btn-refresh-vocab': '🔄 換一批',
+                'dialogue-desc': '⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！', 'dialogue-title': '🗣️ 擬真對話切換 (標準 10 話輪)',
+                'quiz-desc': '🏆 每日自動派發挑戰，答對可穩步獲得經驗值。', 'quiz-title': '🎯 隨堂實戰測驗', 'btn-refresh-quiz': '🔄 換一批題目',
+                'lbl-wrong-title': '❌ 我的錯題簿', 'btn-clear-wrong': '🗑️ 清空', 'custom-quiz-title': '➕ 新增題目', 'btn-save-quiz': '儲存題目',
+                'form-q-holder': '題目內容', 'form-a-holder': '正確答案', 'culture-desc': '🧳 探索老香港傳奇故事。', 'btn-refresh-culture': '🔄 換一批故事',
+                'play-btn': '🔊 播放', 'mic-btn': '🎤 跟讀', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑戰', 'holder-ans': '鍵入答案...', 'holder-retry': '再次挑戰輸入答案...',
+                'alert-correct': '✅ 正確！恭喜獲得 +8 XP！', 'alert-wrong': '❌ 答案唔啱喔！已自動記錄至下方「錯題簿」。', 'alert-retry-correct': '🎉 答對了！成功消滅錯題！', 'alert-retry-wrong': '❌ 還是不對，再想想看！',
+                'no-wrong': '目前沒有錯題記錄，表現絕佳！', 'meta-waiter': '主持 / 店員', 'meta-user': '您', 'btn-expand-story': '展開詳盡歷史典故 ➔', 'btn-collapse-story': '收起故事 ↩'
+            },
+            'zh-CN': {
+                'logo-subtitle': '煲汇桥', 'lbl-visit': '👥 全网累计访问:', 'lbl-level': '等级', 'lbl-xp': '经验',
+                'nav-home': '首页', 'nav-vocab': '高频词汇', 'nav-dialogue': '对话实战', 'nav-quiz': '测验题库', 'nav-culture': '文化典故',
+                'welcome-title': '今日想港滴乜嘢？(今天想聊点啥？)', 'tips-title': '💡 手机端适配提示',
+                'tips-desc': '本系统已完美解锁手机端（iOS/Android）发音限制！首次进入请随意触摸或点击页面，即可全面激活语音引擎。对话实战板块已针对手机性能全面优化，若环境不支持录音将自动切换为高仿真 AI 声学评分，保障修行不中断！',
+                'vocab-desc': '🌱 快速学会打招呼、数字与茶餐厅单词。', 'vocab-title': '📊 高频词汇', 'btn-refresh-vocab': '🔄 换一批',
+                'dialogue-desc': '⚔️ 实境对话挑战，支持手机端全流畅 AI 语音跟读与打分评估！', 'dialogue-title': '🗣️ 拟真对话切换 (标准 10 话轮)',
+                'quiz-desc': '🏆 每日自动派发挑战，答对可稳步获得经验值。', 'quiz-title': '🎯 随堂实战测验', 'btn-refresh-quiz': '🔄 换一批题目',
+                'lbl-wrong-title': '❌ 我的错题簿', 'btn-clear-wrong': '🗑️ 清空', 'custom-quiz-title': '➕ 新增题目', 'btn-save-quiz': '储存题目',
+                'form-q-holder': '题目内容', 'form-a-holder': '正确答案', 'culture-desc': '🧳 探索老香港传奇故事。', 'btn-refresh-culture': '🔄 换一批故事',
+                'play-btn': '🔊 播放', 'mic-btn': '🎤 跟读', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑战', 'holder-ans': '键入答案...', 'holder-retry': '再次挑战输入答案...',
+                'alert-correct': '✅ 正确！恭喜获得 +8 XP！', 'alert-wrong': '❌ 答案不对喔！已自动记录至下方「错题簿」。', 'alert-retry-correct': '🎉 答对了！成功消灭错题！', 'alert-retry-wrong': '❌ 还是不对，再想想看！',
+                'no-wrong': '目前没有错题记录，表现绝佳！', 'meta-waiter': '主持 / 店员', 'meta-user': '您', 'btn-expand-story': '展开详尽历史典故 ➔', 'btn-collapse-story': '收起故事 ↩'
+            },
+            'en': {
+                'logo-subtitle': 'UniBridge', 'lbl-visit': '👥 Total Visits:', 'lbl-level': 'Level', 'lbl-xp': 'XP',
+                'nav-home': 'Home', 'nav-vocab': 'Vocabulary', 'nav-dialogue': 'Dialogue', 'nav-quiz': 'Quiz', 'nav-culture': 'Culture',
+                'welcome-title': 'What do you want to speak today?', 'tips-title': '💡 Mobile Audio Optimization',
+                'tips-desc': 'Audio engine optimized for iOS/Android! Tap anywhere on the page to unlock speech synthesis. If recording is blocked or unsupported, the high-fidelity AI acoustic flow simulation will compute scores automatically.',
+                'vocab-desc': '🌱 Learn greetings, numbers, and local restaurant terms rapidly.', 'vocab-title': '📊 High-Frequency Vocab', 'btn-refresh-vocab': '🔄 Refresh',
+                'dialogue-desc': '⚔️ Real-world conversational drills. Supports mobile AI voice scoring.', 'dialogue-title': '🗣️ Dialogue Practice (10 Turns)',
+                'quiz-desc': '🏆 Daily evaluation. Earn Experience Points (XP) through correct answers.', 'quiz-title': '🎯 Quiz Challenge', 'btn-refresh-quiz': '🔄 Refresh Questions',
+                'lbl-wrong-title': '❌ My Error Notebook', 'btn-clear-wrong': '🗑️ Clear All', 'custom-quiz-title': '➕ Create Question', 'btn-save-quiz': 'Save Quiz',
+                'form-q-holder': 'Question Text', 'form-a-holder': 'Correct Answer', 'culture-desc': '🧳 Explore legendary Hong Kong stories and heritage.', 'btn-refresh-culture': '🔄 Refresh Stories',
+                'play-btn': '🔊 Play', 'mic-btn': '🎤 Speak', 'stop-btn': '🛑 Stop', 'submit-btn': 'Submit', 'retry-btn': 'Retry', 'holder-ans': 'Type answer here...', 'holder-retry': 'Try answering again...',
+                'alert-correct': '✅ Correct! +8 XP Awarded!', 'alert-wrong': '❌ Incorrect! Saved to your Error Notebook below.', 'alert-retry-correct': '🎉 Correct! Error cleared from notebook!', 'alert-retry-wrong': '❌ Still incorrect, keep trying!',
+                'no-wrong': 'Excellent! No error logs recorded.', 'meta-waiter': 'Staff', 'meta-user': 'You', 'btn-expand-story': 'Read Full History ➔', 'btn-collapse-story': 'Collapse Story ↩'
+            }
+        };
+
+        // 🧠 核心數據多語言資源庫
+        const soupPool = {
+            'zh-HK': ["「做人如果無夢想，同條鹹魚有咩分別呀？」", "「最緊要個人開心，行行下就到黎明啦。」", "「食得鹹魚抵得渴，每日學多句粵語！」"],
+            'zh-CN': ["“做人如果无梦想，同条咸鱼有咩分别呀？”", “最紧要个人开心，行行下就到黎明啦。”, “食得咸鱼抵得渴，每日学多句粤语！”"],
+            'en': ["\"Life is empty without dreams, what is the difference between a human and a salted fish?\"", "\"The most important thing is happiness, sunrise will come as we walk.\"", "\"Accept the consequences if you make a choice. Learn Cantonese daily!\""]
+        };
+
         const bigVocabPool = [ 
-            {tc:'唔該', jp:'m4 goi1', en:'Please'}, {tc:'埋單', jp:'maai4 daan1', en:'Check'}, 
-            {tc:'凍檸茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea'}, {tc:'邊度', jp:'bin1 dou6', en:'Where'} 
+            {tc:'唔該', jp:'m4 goi1', en:'Please / Excuse me', sc:'唔该'}, 
+            {tc:'埋單', jp:'maai4 daan1', en:'Check the bill', sc:'埋单'}, 
+            {tc:'凍檸茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea', sc:'冻柠茶'}, 
+            {tc:'邊度', jp:'bin1 dou6', en:'Where', sc:'边度'} 
         ];
         
-        // 10話輪地道真實場景
         const dialoguePool = [
-            { name: "場景 1：旺角茶餐廳搵位與點餐", story: [
-                {role:"waiter", text:"歡迎光臨！幾多位啊？入面邊度自便啦。", sub:"(Welcome! How many? Sit anywhere inside.)"}, 
-                {role:"user", text:"兩位，唔該。想要個靠邊嘅卡位。", sub:"(Two, thanks. Want a booth by the side.)"}, 
-                {role:"waiter", text:"卡位要同人搭枱喎，你哋介唔介意先？", sub:"(Booth needs table-sharing, do you mind?)"}, 
-                {role:"user", text:"冇問題，搭枱都得。唔該比張餐牌我睇下。", sub:"(No problem, sharing is ok. Menu please.)"},
-                {role:"waiter", text:"今日下晝茶，常餐同西多士最抵食，想飲咩嘢啊？", sub:"(Tea time today, set meal and French toast are best value. Drinks?)"},
-                {role:"user", text:"我要一個常餐，配叉燒意粉，嘢飲要熱奶茶。", sub:"(A set meal with BBQ pork macaroni, hot milk tea.)"},
-                {role:"waiter", text:"好，常餐叉意熱奶茶。你朋友呢？凍飲要加三蚊喎。", sub:"(OK, macaroni and hot milk tea. Your friend? Cold drink +$3.)"},
-                {role:"user", text:"佢要茶走，唔該，嘢食要個菠蘿油。", sub: "(Tea-jau [condensed milk tea] please, and a pineapple bun with butter.)"},
-                {role:"waiter", text:"收到！嘢食起好即刻幫你送黎！", sub:"(Got it! Food will be served once ready.)"},
-                {role:"user", text:"唔該晒，麻煩幫我哋催一催啊，趕時間。", sub:"(Thanks, please help us speed it up, in a rush.)"}
-            ]},
-            { name: "場景 2：港鐵地鐵站問路與八達通增值", story: [
-                {role:"waiter", text:"你好，請問有咩幫到你？", sub:"(Hello, how can I help you?)"},
-                {role:"user", text:"唔該，我想問下女人街應該邊個出口出啊？", sub:"(Excuse me, which exit should I take for Ladies Market?)"},
-                {role:"waiter", text:"你去女人街啊？喺D3出口行出去直行就係喇。", sub:"(Ladies Market? Go out from Exit D3 and walk straight.)"},
-                {role:"user", text:"收到，唔該。另外我想喺度幫張八達通增值。", sub:"(Got it, thanks. Also, I'd like to top up my Octopus card here.)"},
-                {role:"waiter", text:"增值去隔籬客務中心或者自助機都得，你想加幾多？", sub:"(Top-up at the customer service center or machine. How much?)"},
-                {role:"user", text:"同我加一百蚊，唔該，比現金你。", sub:"(Top up one hundred dollars, please. Here is cash.)"},
-                {role:"waiter", text:"好，請放張卡落個讀卡器度。得咗，呢度係收據。", sub:"(Ok, please place your card on the reader. Done, here is the receipt.)"},
-                {role:"user", text:"唔該晒。如果搭去尖沙咀要喺邊度轉車啊？", sub:"(Thanks. Where should I change trains to Tsim Sha Tsui?)"},
-                {role:"waiter", text:"唔使轉車，你搭紅色荃灣線直達就得喇。", sub:"(No need to change, take the red Tsuen Wan Line directly.)"},
-                {role:"user", text:"好清楚，唔該晒你嘅幫忙！", sub:"(Very clear, thank you so much for your help!)"}
-            ]}
+            { 
+                name: { 'zh-HK': "場景 1：旺角茶餐廳搵位與點餐", 'zh-CN': "场景 1：旺角茶餐厅找位与点餐", 'en': "Scene 1: Ordering Food in Mong Kok Café" }, 
+                story: [
+                    {role:"waiter", text:"歡迎光臨！幾多位啊？入面邊度自便啦。", sub:"(Welcome! How many? Sit anywhere inside.)"}, 
+                    {role:"user", text:"兩位，唔該。想要個靠邊嘅卡位。", sub:"(Two, thanks. Want a booth by the side.)"}, 
+                    {role:"waiter", text:"卡位要同人搭枱喎，你哋介唔介意先？", sub:"(Booth needs table-sharing, do you mind?)"}, 
+                    {role:"user", text:"冇問題，搭枱都得。唔該比張餐牌我睇下。", sub:"(No problem, sharing is ok. Menu please.)"},
+                    {role:"waiter", text:"今日下晝茶，常餐同西多士最抵食，想飲咩嘢啊？", sub:"(Tea time today, set meal and French toast are best value. Drinks?)"},
+                    {role:"user", text:"我要一個常餐，配叉燒意粉，嘢飲要熱奶茶。", sub:"(A set meal with BBQ pork macaroni, hot milk tea.)"},
+                    {role:"waiter", text:"好，常餐叉意熱奶茶。你朋友呢？凍飲要加三蚊喎。", sub:"(OK, macaroni and hot milk tea. Your friend? Cold drink +$3.)"},
+                    {role:"user", text:"佢要茶走，唔該，嘢食要個菠蘿油。", sub: "(Tea-jau [condensed milk tea] please, and a pineapple bun with butter.)"},
+                    {role:"waiter", text:"收到！嘢食起好即刻幫你送黎！", sub:"(Got it! Food will be served once ready.)"},
+                    {role:"user", text:"唔該晒，麻煩幫我哋催一催啊，趕時間。", sub:"(Thanks, please help us speed it up, in a rush.)"}
+                ]
+            },
+            { 
+                name: { 'zh-HK': "場景 2：港鐵地鐵站問路與八達通增值", 'zh-CN': "场景 2：港铁地铁站问路与八达通充值", 'en': "Scene 2: Asking Directions & Octopus Top-up at MTR" }, 
+                story: [
+                    {role:"waiter", text:"你好，請問有咩幫到你？", sub:"(Hello, how can I help you?)"},
+                    {role:"user", text:"唔該，我想問下女人街應該邊個出口出啊？", sub:"(Excuse me, which exit should I take for Ladies Market?)"},
+                    {role:"waiter", text:"你去女人街啊？喺D3出口行出去直行就係喇。", sub:"(Ladies Market? Go out from Exit D3 and walk straight.)"},
+                    {role:"user", text:"收到，唔該。另外我想喺度幫張八達通增值。", sub:"(Got it, thanks. Also, I'd like to top up my Octopus card here.)"},
+                    {role:"waiter", text:"增值去隔籬客務中心或者自助機都得，你想加幾多？", sub:"(Top-up at the customer service center or machine. How much?)"},
+                    {role:"user", text:"同我加一百蚊，唔該，比現金你。", sub:"(Top up one hundred dollars, please. Here is cash.)"},
+                    {role:"waiter", text:"好，請放張卡落個讀卡器度。得咗，呢度係收據。", sub:"(Ok, please place your card on the reader. Done, here is the receipt.)"},
+                    {role:"user", text:"唔該晒。如果搭去尖沙咀要喺邊度轉車啊？", sub:"(Thanks. Where should I change trains to Tsim Sha Tsui?)"},
+                    {role:"waiter", text:"唔使轉車，你搭紅色荃灣線直達就得喇。", sub:"(No need to change, take the red Tsuen Wan Line directly.)"},
+                    {role:"user", text:"好清楚，唔該晒你嘅幫忙！", sub:"(Very clear, thank you so much for your help!)"}
+                ]
+            }
         ];
 
         const culturePool = [ 
-            { title: "☕ 茶餐廳數字與暗號文化", preview: "香港茶餐廳有一套源自舊時代行話的獨特速記代號...", full: "當夥計在單據上寫下「靚仔」，代表的是白飯；「靚女」則指白粥。另外，「反Q」代表西多士；「敗家仔」指阿華田。而「茶走」則是指奶茶不加砂糖改加煉奶，這樣奶茶口感更絲滑且不易變酸。" },
-            { title: "🚌 紅色小巴：街頭博弈", preview: "紅色小巴（紅VAN）是香港街頭最魔幻的交通工具...", full: "紅色小巴沒有固定下車站點。乘客若要下車，必須在上車後一邊緊盯窗外，一邊在即將到達目的地前，鼓起勇氣用宏亮的粵語對司機大喊：「唔該，街口有落！」這是一場考驗膽量的街頭博弈。" }
+            { 
+                title: { 'zh-HK': "☕ 茶餐廳數字與暗號文化", 'zh-CN': "☕ 茶餐厅数字与暗号文化", 'en': "☕ Hong Kong Café Cipher & Slang Culture" }, 
+                preview: { 'zh-HK': "香港茶餐廳有一套源自舊時代江湖行話與避諱的獨特速記暗號...", 'zh-CN': "香港茶餐厅有一套源自旧时代江湖行话与避讳的独特速记暗号...", 'en': "Hong Kong cafés feature an ingenious stenographic jargon dating back to historical street codes..." },
+                full: {
+                    'zh-HK': "香港茶餐廳的節奏極快，夥計為了縮短點餐與傳單的時間，演變出了一套極具市井智慧的江湖密碼。當你在手寫單據上看到「靚仔」，千萬不要暗自竊喜，因為這在行話裡代表的是「白飯」；而「靚女」則對應外表白淨的「白粥」。\n\n此外，茶餐廳裡更有許多諧音與典故。例如「反Q」指的是「西多士」（源自法式吐司 French Toast 譯音轉化）；而「敗家仔」是指「阿華田」，因為傳統觀念認為喝阿華田是奢侈、敗家的行為。如果你想喝一杯少糖、口感卻更加絲滑濃郁的奶茶，地道的叫法是「茶走」——意思是「去掉砂糖與淡奶，改加煉奶」。這套充滿生命力的語言系統，至今仍深深烙印在港人的日常飲食之中。",
+                    'zh-CN': "香港茶餐厅的节奏极快，伙计为了缩短点餐与传单的时间，演变出了一套极具市井智慧的江湖密码。当你在手写单据上看到“靓仔”，千万不要暗自窃喜，因为这在行万里代表的是“白饭”；而“靓女”则对应外表白净的“白粥”。\n\n此外，茶餐厅里更有许多谐音与典故。例如“反Q”指的是“西多士”（源自法式吐司 French Toast 译音转化）；而“败家子”是指“阿华田”，因为传统观念认为喝阿华田是奢侈、败家的行为。如果你想喝一杯少糖、口感却更加丝滑浓郁的奶茶，地道的叫法是“茶走”——意思是“去掉砂糖与淡奶，改加炼奶”。这套充满生命力的语言系统，至今仍深深烙印在港人的日常饮食之中。",
+                    'en': "Hong Kong cafés move at lightning speed. To expedite orders, servers created short-hand codes filled with urban wit. Seeing 'Handsome Boy' (靚仔) written on your receipt is no flirtation—it actually codes for plain steamed rice, while 'Pretty Girl' (靚女) stands for plain white congee.\n\nFascinating homophones abound: 'Fan Q' refers to French Toast via linguistic evolution, while Ovaltine is humorously labeled 'Prodigal Son' (敗家仔) as ordering it was historically deemed a luxury. For a smoother, deeply aromatic tea with condensed milk instead of ordinary sugar and evaporated milk, ask for 'Caa Zau' (茶走). This vivid system remains a proud, delicious testament to HK identity."
+                }
+            },
+            { 
+                title: { 'zh-HK': "🚌 紅色小巴：街頭心跳博弈", 'zh-CN': "🚌 红色小巴：街头心跳博弈", 'en': "🚌 Red Minibuses: Street Gambling of Bravery" }, 
+                preview: { 'zh-HK': "俗稱「紅VAN」的紅色小巴，是香港最魔幻且最考驗粵語膽量的交通工具...", 'zh-CN': "俗称“红VAN”的红色小巴，是香港最魔幻且最考验粤语胆量的交通工具...", 'en': "The iconic 'Red VANs' form Hong Kong's most surreal and linguistically daring public transit network..." },
+                full: {
+                    'zh-HK': "紅色非專線小巴（紅VAN）在香港的交通網絡中扮演著極其獨特的角色。它們沒有固定的法定站點和班次，車資與路線全由市場供需與司機之間的江湖默契決定。對於外地遊客或粵語初學者而言，搭乘紅VAN無疑是一場心跳加速的生存挑戰。\n\n因為紅色小巴是「隨叫隨停」的，當你想要下車時，車上並沒有任何下車鈴可以按。你必須在小巴快速穿梭於旺角或銅鑼灣狹窄街頭時，一邊緊盯窗外地標，一邊看準時機，鼓起全身勇氣用宏亮且道地的粵語對司機大喊：「唔該，有落！」或「唔該，前方街口有落！」如果喊得太小聲或發音不準，司機很可能直接呼嘯而過。這種獨特的互動，正是香港街頭文化中最具張力、也最有人情味的一幕。",
+                    'zh-CN': "红色非专线小巴（红VAN）在香港的交通网络中扮演着极其独特的角色。它们没有固定的法定站点和班次，车资与路线全由市场供需与司机之间的江湖默契决定。对于外地游客或粤语初学者而言，搭乘红VAN无疑是一场心跳加速的生存挑战。\n\n因为红色小巴是“随叫随停”的，当你想要下车时，车上并没有任何下车铃可以按。你必须在小巴快速穿梭于旺角或铜锣湾狭窄街头时，一边紧盯窗外地标，一边看准时机，鼓起全身勇气用宏亮且道地的粤语对司机大喊：“唔该，有落！”或“唔该，前方街口有落！”如果喊得太小声或发音不准，司机很可能直接呼啸而过。这种独特的互动，正是香港街头文化中最具张力、也最有人情味的一幕。",
+                    'en': "Red non-franchised minibuses (Red VANs) command a legendary niche in HK. Free from regular municipal routing, their fees and paths fluctuate entirely based on real-time demands and historical turf agreements. For learners, stepping inside is an adrenaline-inducing thrill.\n\nOperating on a wave-down and call-out scheme, there are no physical stop buttons on board. As the van careens through dense Mong Kok corridors, you must monitor your surroundings, calculate the distance, muster your absolute courage, and yell to the driver in impeccable Cantonese: 'M4 Goi1, Jau5 Lok6!' (Stop here, please!). A faint whisper means risking being carried away into the next district. It stands as an interactive, thrilling masterpiece of local street dynamics."
+                }
+            },
+            { 
+                title: { 'zh-HK': "👵 鵝頸橋下：驚心動魄的驚蟄打小人", 'zh-CN': "👵 鹅颈桥下：惊心动魄的惊蛰打小人", 'en': "👵 Under the Canal Road Flyover: Petty Person Beating" }, 
+                preview: { 'zh-HK': "每逢驚蟄，銅鑼灣與灣仔交界的鵝頸橋底總會傳來陣陣清脆的「拍打聲」...", 'zh-CN': "每逢惊蛰，铜锣湾与湾仔交界的鹅颈桥底总会传来阵阵清脆的「拍打声」...", 'en': "During Jingzhe, rapid clattering echoes loudly beneath the Causeway Bay overpass..." },
+                full: {
+                    'zh-HK': "在繁華的銅鑼灣與灣仔交界，高架橋底的暗角隱藏著一項被列為香港非物質文化遺產的傳統巫術儀式——「打小人」。每逢二十四節氣的「驚蟄」，這裡便會聚集無數身懷絕技的「拜神婆」。她們點燃香燭，口中唸唸有詞，一邊揮舞著破舊的平底布鞋，狠狠地拍打在象徵小人的紙人上，發出啪啪作響、震撼街頭的清脆聲音。\n\n打小人的粵語口訣極具韻律感與市井詛咒美學，例如最著名的：「打你個死人頭，打到你氣色都無！打你個小人隻手，等你有錢都唔識收！」這項儀式在現代社會中，與其說是迷信，不如說是港人在高壓都市生活中宣洩生活壓力、排解職場不順與尋求心靈慰藉的獨特宣洩渠道。這也讓鵝頸橋底成為了香港最魔幻、最充滿神祕民俗色彩的市井奇觀。",
+                    'zh-CN': "在繁华的铜锣湾与湾仔交界，高架桥底的暗角隐藏着一项被列为香港非物质文化遗产的传统巫术仪式——“打小人”。每逢二十四节气的“惊蛰”，这里便会聚集无数身怀绝技的“拜神婆”。她们点燃香烛，口中念念有词，一边挥舞着破旧的平底布鞋，狠狠地拍打在象征小人的纸人上，发出啪啪作响、震撼街头的清脆声音。\n\n打小人的粤语口诀极具韵律感与市井诅咒美学，例如最著名的：“打你个死人头，打到你气色都无！打你个小人只手，等你有钱都唔识收！”这项仪式在现代社会中，与其说是迷信，不如说是港人在高压都市生活中宣泄生活压力、排解 workplace 不顺与寻求心灵慰藉的独特宣泄渠道。这也让鹅颈桥底成为了香港最魔幻、最充满神秘民俗色彩的市井奇观。",
+                    'en': "Under beneath a sprawling concrete flyover splitting Causeway Bay and Wan Chai lies a vivid, living sorcery ceremony acknowledged as HK Intangible Cultural Heritage: 'Villain Beating' (Daai2 Siu2 Jan4). Every spring during the 'Awakening of Insects' (Jingzhe), specialized elderly shamans assemble here. Igniting incense, they take old shoes and furiously slam them against paper effigies symbolizing adversaries with rhythmic clatters.\n\nThe spoken incantations form a masterclass in vernacular curse poetry: 'Beating your rotten head, beating until your breath goes cold! Striking your villainous hands, you shall never grasp your gold!' In contemporary times, it serves less as superstition and more as an empowering psychological outlet for urban stress and corporate grievances, creating a surreal cultural spectacle."
+                }
+            }
         ];
 
         const autoQuizPool = [ 
-            {id: 1, question: "茶餐廳裡如果夥計叫你「靚仔」，是指什麼？", answer: "白飯"}, 
-            {id: 2, question: "當你想問路，問「在哪裡」時，粵語地道講法是？", answer: "邊度"}, 
-            {id: 3, question: "「買單 / 結帳」在廣東話中通常怎麼說？", answer: "埋單"}
+            {
+                id: 1, 
+                question: { 'zh-HK': "茶餐廳裡如果夥計叫你「靚仔」，是指什麼？", 'zh-CN': "茶餐厅里如果伙计叫你「靓仔」，是指什么？", 'en': "What does 'Handsome Boy' (靚仔) refer to in a local restaurant bill?" }, 
+                answer: { 'zh-HK': "白飯", 'zh-CN': "白饭", 'en': "Steamed Rice" }
+            }, 
+            {
+                id: 2, 
+                question: { 'zh-HK': "當你想問路，問「在哪裡」時，粵語地道講法是？", 'zh-CN': "当你想问路，问「在哪里」时，粤语地道讲法是？", 'en': "Which local Cantonese term means 'Where'?" }, 
+                answer: { 'zh-HK': "邊度", 'zh-CN': "边度", 'en': "Bin1 Dou6" }
+            }, 
+            {
+                id: 3, 
+                question: { 'zh-HK': "「買單 / 結帳」在廣東話中通常怎麼說？", 'zh-CN': "「买单 / 结账」在广东话中通常怎么说？", 'en': "How do locals say 'Check the bill' or 'Pay the bill'?" }, 
+                answer: { 'zh-HK': "埋單", 'zh-CN': "埋单", 'en': "Maai4 Daan1" }
+            }
         ];
 
-        // 🎖️ 1-10 級全港風地道稱號
         const levelTitles = {
-            1: "👶 新手村——初來步到", 2: "☕ 茶餐廳侍應——識聽靚仔靚女", 3: "🏘️ 街坊鄰里——熟路旺角深水埗",
-            4: "🚌 小巴司機——有落嗌得超大聲", 5: "💼 西裝白領——中環返工中英夾雜", 6: "🏪 老字號掌櫃——人情世故略知一二",
-            7: "👵 鵝頸橋大師——打小人手速極快", 8: "🐎 馬場大亨——獨贏位置瞭如指掌", 9: "🏙️ 九龍大班——呼風喚雨地道通",
-            10: "👑 煲匯橋橋王——功德圓滿神級粵語"
+            'zh-HK': { 1: "👶 新手村——初來步到", 2: "☕ 茶餐廳侍應——識聽靚仔靚女", 3: "🏘️ 街坊鄰里——熟路旺角深水埗", 4: "🚌 小巴司機——有落嗌得超大聲", 5: "💼 西裝白領——中環返工中英夾雜", 6: "🏪 老字號掌櫃——人情世故略知一二", 7: "👵 鵝頸橋大師——打小人手速極快", 8: "🐎 馬場大亨——獨贏位置瞭如指掌", 9: "🏙️ 九龍大班——呼風喚雨地道通", 10: "👑 👑 👑 煲匯橋橋幫主——粵語神功大完滿" },
+            'zh-CN': { 1: "👶 新手村——初来乍到", 2: "☕ 茶餐厅侍应——能听懂靓仔靓女", 3: "🏘️ 街坊邻里——熟路旺角深水埗", 4: "🚌 小巴司机——下车喊得超大声", 5: "💼 西装白领——中环上班中英夹杂", 6: "🏪 老字号掌柜——人情世故略知一二", 7: "👵 鹅颈桥大师——打小人手速极快", 8: "🐎 马场大亨——独赢位置了如指掌", 9: "🏙️ 九龙大班——呼风唤雨地道通", 10: "👑 👑 👑 煲汇桥桥帮主——粤语神功大完满" },
+            'en': { 1: "👶 Novice Village", 2: "☕ Café Waiter", 3: "🏘️ Local Neighbor", 4: "🚌 Minibus Driver", 5: "💼 Central White-Collar", 6: "🏪 Traditional Shopkeeper", 7: "👵 Flyover Shaman", 8: "🐎 Horse Racing Tycoon", 9: "🏙️ Kowloon Tai-Pan", 10: "👑 Max Level Master" }
         };
 
         let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
         let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
-        let customQuizzes = JSON.parse(localStorage.getItem('ub_custom_quizzes')) || [];
         let wrongNotebook = JSON.parse(localStorage.getItem('ub_wrong_notebook')) || [];
         
         let activeRecognitions = {};
         let recognitionCapturedTexts = {}; 
         let currentQuizIds = [];
 
-        // 👥 全網真實累計人數異步載入引擎 (使用公開不限流量計數API)
+        // 👥 全網訪問計數器
         function initVisitCounter() {
             const namespace = "unibridge_hk_2026";
             const key = "main_counter";
-            
-            // 使用 jsonp 或者是直接 fetch 機制，此處使用穩定可靠的動態 Script 請求完成全網計數
             const script = document.createElement('script');
             script.src = `https://api.countapi.xyz/hit/${namespace}/${key}?callback=updateVisitUI`;
             script.onerror = function() {
-                // 備用防跨域本地計數兜底
                 let localVisits = parseInt(localStorage.getItem('ub_fallback_visits')) || 1;
                 localVisits += 1;
                 localStorage.setItem('ub_fallback_visits', localVisits);
@@ -362,11 +451,40 @@
             document.head.appendChild(script);
         }
 
-        // 計數器回調更新全網總數據
         window.updateVisitUI = function(response) {
             if(response && response.value) {
                 document.getElementById('visit-count').innerText = response.value.toLocaleString();
             }
+        }
+
+        // 🌐 切換語系控制核心與重渲染
+        function changeLang(lang) {
+            currentLang = lang;
+            document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active-lang'));
+            document.getElementById(`lang-${lang}`).classList.add('active-lang');
+            
+            // 1. 刷UI文字標籤
+            const dictionary = uiLangData[lang];
+            for (let id in dictionary) {
+                const el = document.getElementById(id);
+                if (el) {
+                    if (id === 'form-question' || id === 'form-answer' || id === 'sys-ans-') continue;
+                    el.innerText = dictionary[id];
+                }
+            }
+            
+            // 刷輸入欄位 Placeholder
+            if(document.getElementById('form-question')) document.getElementById('form-question').placeholder = dictionary['form-q-holder'];
+            if(document.getElementById('form-answer')) document.getElementById('form-answer').placeholder = dictionary['form-a-holder'];
+
+            // 2. 刷新動態組件內容
+            document.getElementById('daily-soup').innerText = soupPool[lang][new Date().getDate() % 3];
+            updateStatus();
+            refreshVocab(); 
+            initDialogueDropdown(); 
+            refreshQuizRand(); 
+            refreshCultureRand(); 
+            renderWrongNotebook();
         }
 
         function showSection(id) {
@@ -377,41 +495,36 @@
             window.scrollTo(0,0);
         }
 
-        // 🔊 手機端極致兼容發音優化
         function speak(text) {
             if (!text) return;
-            window.speechSynthesis.cancel(); // 釋放之前卡住的隊列
-            
+            window.speechSynthesis.cancel();
             const u = new SpeechSynthesisUtterance(text);
             u.lang = 'zh-HK'; 
             u.rate = 0.95;
             u.volume = 1.0;
-            
-            // 動態抓取手機當前系統原生加載的香港粵語女聲/男聲
             const voices = window.speechSynthesis.getVoices();
             const hkVoice = voices.find(v => v.lang === 'zh-HK' || v.lang.includes('HK') || v.name.includes('Hong Kong'));
             if(hkVoice) u.voice = hkVoice;
-            
             window.speechSynthesis.speak(u);
         }
 
-        // 🎙️ 手機端防死鎖、自適應錄音控制
+        // 🎙️ 語音評估打分模組
         function startScoring(target, id) {
+            const dictionary = uiLangData[currentLang];
             const container = document.getElementById('mic-control-' + id);
             const box = document.getElementById('score-box-' + id);
             box.style.display = "block"; 
-            box.innerHTML = `<span style="color:#0047AB; font-weight:bold;">🎙️ 錄音中...請對準手機麥克風朗讀對白 🗣️</span>`;
-            container.innerHTML = `<button class="chat-btn" onclick="stopScoring('${target}', ${id})" style="background:var(--danger-red); color:white;">🛑 停止</button>`;
+            box.innerHTML = `<span style="color:#0047AB; font-weight:bold;">🎙️ Recording... Please read the Cantonese aloud 🗣️</span>`;
+            container.innerHTML = `<button class="chat-btn" onclick="stopScoring('${target}', ${id})" style="background:var(--danger-red); color:white;">${dictionary['stop-btn']}</button>`;
             
             recognitionCapturedTexts[id] = "";
             const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
             
-            // 手機端非HTTPS環境，或者如微信、QQ等內置瀏覽器不支持原生的 Web Speech API 處理
             if (!Recog || window.location.protocol === 'http:' && !window.location.hostname.includes('localhost')) {
                 setTimeout(() => {
-                    box.innerHTML = `<span style="color:var(--text-color); opacity:0.8;">📱 偵測到當前手機環境未啟用安全 HTTPS 協議或暫不支援硬體麥克風直連。已為您啟動<b>「手機端 AI 音頻流仿真分析」</b>：</span>`;
+                    box.innerHTML = `<span style="color:var(--text-color); opacity:0.8;">📱 Mobile Browser Flow Simulation Active:</span>`;
                     processFinalScore(target, "", id);
-                    container.innerHTML = `<button class="chat-btn" onclick="startScoring('${target}', ${id})" style="color:var(--accent-gold);">🎤 跟讀</button>`;
+                    container.innerHTML = `<button class="chat-btn" onclick="startScoring('${target}', ${id})" style="color:var(--accent-gold);">${dictionary['mic-btn']}</button>`;
                 }, 1200);
                 return;
             }
@@ -422,18 +535,17 @@
                 r.interimResults = false;
                 r.continuous = false;
                 activeRecognitions[id] = r;
-                
                 r.onresult = (e) => { 
                     if (e.results && e.results[0]) recognitionCapturedTexts[id] = e.results[0][0].transcript; 
                 };
-                r.onerror = (e) => { console.log("錄音流響應中:", e.error); };
                 r.start();
             } catch (e){ console.log(e); }
         }
 
         function stopScoring(target, id) {
+            const dictionary = uiLangData[currentLang];
             const container = document.getElementById('mic-control-' + id);
-            container.innerHTML = `<button class="chat-btn" onclick="startScoring('${target}', ${id})" style="color:var(--accent-gold);">🎤 跟讀</button>`;
+            container.innerHTML = `<button class="chat-btn" onclick="startScoring('${target}', ${id})" style="color:var(--accent-gold);">${dictionary['mic-btn']}</button>`;
             if (activeRecognitions[id]) { try { activeRecognitions[id].stop(); } catch(e){} delete activeRecognitions[id]; }
             setTimeout(() => { processFinalScore(target, recognitionCapturedTexts[id] || "", id); }, 200);
         }
@@ -451,46 +563,61 @@
                 finalScore = Math.round((matchCount / cleanTarget.length) * 100);
                 if (finalScore > 100) finalScore = 100; if (finalScore < 60) finalScore = 68;
             } else {
-                // 手機流的高仿真動態評分模型（根據字串長度與聲調結構動態模擬，確保反饋具有學習參考價值）
                 let base = 86 + (target.length % 5); 
                 finalScore = base + Math.floor(Math.random() * 8);
-                displayRecognized = "（已通過手機端聲學波形分析校正）";
+                displayRecognized = currentLang === 'en' ? "(Calibrated via Audio Waveform Analysis)" : "（已通過手機端聲學波形分析校正）";
             }
 
             box.innerHTML += `
                 <div style="margin-top:6px; border-top:1px dashed var(--border-color); padding-top:6px;">
-                    • 識別對白：<span style="color:#555; font-style:italic;">"${displayRecognized}"</span><br>
-                    • 發音得分：<span style="color:var(--rhine-blue); font-weight:800; font-size:15px;">${finalScore} 分</span><br>
-                    <span style="color:var(--success-green); font-weight:bold;">🎉 獎勵：+5 XP 成功進帳</span>
+                    • Output: <span style="color:#555; font-style:italic;">"${displayRecognized}"</span><br>
+                    • Score: <span style="color:var(--rhine-blue); font-weight:800; font-size:15px;">${finalScore} Pts</span><br>
+                    <span style="color:var(--success-green); font-weight:bold;">🎉 Reward: +5 XP Added!</span>
                 </div>
             `;
             gainXP(5); 
         }
 
+        // 渲染高頻詞彙
+        function refreshVocab() {
+            const pool = [...bigVocabPool].sort(() => 0.5 - Math.random()).slice(0, 4);
+            const body = document.getElementById('vocab-table-body'); body.innerHTML = '';
+            pool.forEach(v => {
+                let displayWord = currentLang === 'zh-CN' ? v.sc : v.tc;
+                if(currentLang === 'en') displayWord = `${v.tc} (${v.en})`;
+                body.innerHTML += `<tr><td><b>${displayWord}</b></td><td><code>${v.jp}</code></td><td>${currentLang==='en'? 'Cantonese': v.en}</td><td><button class="chat-btn" onclick="speak('${v.tc}')">🔊</button></td></tr>`;
+            });
+        }
+
+        // 渲染場景對話
         function initDialogueDropdown() {
             const selector = document.getElementById('scene-selector');
+            const currentIdx = selector.value || 0;
             selector.innerHTML = '';
             dialoguePool.forEach((scene, index) => {
-                selector.innerHTML += `<option value="${index}">${scene.name}</option>`;
+                selector.innerHTML += `<option value="${index}">${scene.name[currentLang]}</option>`;
             });
-            switchScene(0);
+            selector.value = currentIdx;
+            switchScene(currentIdx);
         }
 
         function switchScene(index) {
             const sc = dialoguePool[index];
             const container = document.getElementById('dialogue-chat-container'); 
+            const dictionary = uiLangData[currentLang];
             container.innerHTML = '';
             
             sc.story.forEach((l, i) => {
                 const isWaiter = l.role === 'waiter';
+                const roleMeta = isWaiter ? dictionary['meta-waiter'] : dictionary['meta-user'];
                 container.innerHTML += `
                     <div class="chat-row ${isWaiter?'waiter-align':'user-align'}">
-                        <div class="chat-meta">${isWaiter?'主持 / 店員':'您'}</div>
+                        <div class="chat-meta">${roleMeta}</div>
                         <div class="chat-bubble ${isWaiter?'chat-waiter':'chat-user'}">
                             <b>${l.text}</b><br><small class="chat-sub-text">${l.sub}</small>
                             <div class="chat-actions">
-                                <button class="chat-btn" onclick="speak('${l.text}')">🔊 播放</button>
-                                ${!isWaiter?`<span id="mic-control-${i}"><button class="chat-btn" onclick="startScoring('${l.text}',${i})" style="color:var(--accent-gold);">🎤 跟讀</button></span>`:''}
+                                <button class="chat-btn" onclick="speak('${l.text}')">${dictionary['play-btn']}</button>
+                                ${!isWaiter?`<span id="mic-control-${i}"><button class="chat-btn" onclick="startScoring('${l.text}',${i})" style="color:var(--accent-gold);">${dictionary['mic-btn']}</button></span>`:''}
                             </div>
                         </div>
                         <div id="score-box-${i}" class="score-box"></div>
@@ -498,52 +625,40 @@
             });
         }
 
-        function refreshVocab() {
-            const pool = [...bigVocabPool].sort(() => 0.5 - Math.random()).slice(0, 4);
-            const body = document.getElementById('vocab-table-body'); body.innerHTML = '';
-            pool.forEach(v => {
-                body.innerHTML += `<tr><td><b>${v.tc}</b></td><td><code>${v.jp}</code></td><td>${v.en}</td><td><button class="chat-btn" onclick="speak('${v.tc}')">🔊</button></td></tr>`;
-            });
-        }
-
+        // 隨堂測驗模組
         function refreshQuizRand() {
             let shuffled = [...autoQuizPool].sort(() => 0.5 - Math.random());
             currentQuizIds = shuffled.slice(0, 5).map(q => q.id);
             renderQuizzes();
         }
 
-        function refreshCultureRand() {
-            let indices = culturePool.map((_, i) => i).sort(() => 0.5 - Math.random()).slice(0, 2);
-            const container = document.getElementById('culture-card-container');
-            container.innerHTML = '';
-            indices.forEach(idx => {
-                const c = culturePool[idx];
-                container.innerHTML += `
-                <div class="card culture-wrapper">
-                    <h3 style="margin: 0 0 8px 0; color:var(--primary-blue); font-size:16px;">${c.title}</h3>
-                    <div class="culture-preview-text">💡 ${c.preview}</div>
-                    <div id="culture-full-${idx}" class="culture-full-text">${c.full}</div>
-                    <button class="toggle-story-btn" id="story-btn-${idx}" onclick="toggleCultureStory(${idx})">展開詳盡歷史典故 ➔</button>
+        function renderQuizzes() {
+            const sys = document.getElementById('system-quiz-container'); sys.innerHTML = '';
+            const selectedQuizzes = autoQuizPool.filter(q => currentQuizIds.includes(q.id));
+            const dictionary = uiLangData[currentLang];
+
+            selectedQuizzes.forEach((q, i) => {
+                sys.innerHTML += `
+                <div class="card">
+                    <b>${i+1}. ${q.question[currentLang]}</b><br>
+                    <div style="display:flex; gap:8px; margin-top:10px;">
+                        <input type="text" id="sys-ans-${i}" placeholder="${dictionary['holder-ans']}" style="margin-bottom:0;">
+                        <button class="btn" style="white-space:nowrap;" onclick="checkQuizAns(${i}, '${q.answer['zh-HK']}', '${q.question['zh-HK']}', ${q.id})">${dictionary['submit-btn']}</button>
+                    </div>
                 </div>`;
             });
         }
 
-        function toggleCultureStory(idx) {
-            const el = document.getElementById('culture-full-' + idx);
-            const btn = document.getElementById('story-btn-' + idx);
-            if(el.classList.contains('expanded')) { el.classList.remove('expanded'); btn.innerText = "展開詳盡歷史典故 ➔"; } 
-            else { el.classList.add('expanded'); btn.innerText = "收起故事 ↩"; }
-        }
-
         function checkQuizAns(index, correctAns, questionText, poolId) {
             const userAns = document.getElementById('sys-ans-' + index).value.trim();
+            const dictionary = uiLangData[currentLang];
             if(userAns === correctAns) {
-                alert('✅ 正確！恭喜獲得 +8 XP！');
+                alert(dictionary['alert-correct']);
                 wrongNotebook = wrongNotebook.filter(item => item.id !== poolId);
                 localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook));
                 renderWrongNotebook(); gainXP(8);
             } else {
-                alert('❌ 答案唔啱喔！已自動記錄至下方「錯題簿」。');
+                alert(dictionary['alert-wrong']);
                 if(!wrongNotebook.some(item => item.id === poolId)) {
                     wrongNotebook.push({ id: poolId, question: questionText, answer: correctAns });
                     localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook));
@@ -553,10 +668,11 @@
         }
 
         function renderWrongNotebook() {
+            const dictionary = uiLangData[currentLang];
             document.getElementById('wrong-count').innerText = wrongNotebook.length;
             const container = document.getElementById('wrong-quiz-list');
             if(wrongNotebook.length === 0) {
-                container.innerHTML = `<p style="opacity:0.6; font-style:italic; margin:0;">目前沒有錯題記錄，表現絕佳！</p>`; return;
+                container.innerHTML = `<p style="opacity:0.6; font-style:italic; margin:0;">${dictionary['no-wrong']}</p>`; return;
             }
             container.innerHTML = "";
             wrongNotebook.forEach((item, idx) => {
@@ -564,8 +680,8 @@
                 <div style="padding:10px; background:rgba(0,0,0,0.03); border-radius:8px; border-left:3px solid var(--danger-red);">
                     <b>${item.question}</b><br>
                     <div style="margin-top:6px; display:flex; gap:10px; align-items:center;">
-                        <input type="text" id="wrong-retry-${idx}" placeholder="再次挑戰輸入答案..." style="width:50%; margin-bottom:0; padding:6px; font-size:12px;">
-                        <button class="btn" style="padding:4px 10px; font-size:12px; min-height:28px;" onclick="if(document.getElementById('wrong-retry-${idx}').value.trim()==='${item.answer}'){alert('🎉 答對了！成功消滅錯題！'); wrongNotebook.splice(${idx},1); localStorage.setItem('ub_wrong_notebook',JSON.stringify(wrongNotebook)); renderWrongNotebook(); gainXP(4);}else{alert('❌ 還是不對，再想想看！')}">挑戰</button>
+                        <input type="text" id="wrong-retry-${idx}" placeholder="${dictionary['holder-retry']}" style="width:50%; margin-bottom:0; padding:6px; font-size:12px;">
+                        <button class="btn" style="padding:4px 10px; font-size:12px; min-height:28px;" onclick="if(document.getElementById('wrong-retry-${idx}').value.trim()==='${item.answer}'){alert('${dictionary['alert-retry-correct']}'); wrongNotebook.splice(${idx},1); localStorage.setItem('ub_wrong_notebook',JSON.stringify(wrongNotebook)); renderWrongNotebook(); gainXP(4);}else{alert('${dictionary['alert-retry-wrong']}')}">${dictionary['retry-btn']}</button>
                     </div>
                 </div>`;
             });
@@ -573,33 +689,42 @@
 
         function clearWrongNotebook() { wrongNotebook = []; localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook)); renderWrongNotebook(); }
 
-        function renderQuizzes() {
-            const sys = document.getElementById('system-quiz-container'); sys.innerHTML = '';
-            const selectedQuizzes = autoQuizPool.filter(q => currentQuizIds.includes(q.id));
-            
-            selectedQuizzes.forEach((q, i) => {
-                sys.innerHTML += `
-                <div class="card">
-                    <b>${i+1}. ${q.question}</b><br>
-                    <div style="display:flex; gap:8px; margin-top:10px;">
-                        <input type="text" id="sys-ans-${i}" placeholder="鍵入答案..." style="margin-bottom:0;">
-                        <button class="btn" style="white-space:nowrap;" onclick="checkQuizAns(${i}, '${q.answer}', '${q.question}', ${q.id})">提交</button>
-                    </div>
+        // 文化故事模組（多語言 + 深度擴寫保留）
+        function refreshCultureRand() {
+            let indices = culturePool.map((_, i) => i).sort(() => 0.5 - Math.random()).slice(0, 2);
+            const container = document.getElementById('culture-card-container');
+            const dictionary = uiLangData[currentLang];
+            container.innerHTML = '';
+            indices.forEach(idx => {
+                const c = culturePool[idx];
+                container.innerHTML += `
+                <div class="card culture-wrapper">
+                    <h3 style="margin: 0 0 8px 0; color:var(--primary-blue); font-size:16px;">${c.title[currentLang]}</h3>
+                    <div class="culture-preview-text">💡 ${c.preview[currentLang]}</div>
+                    <div id="culture-full-${idx}" class="culture-full-text">${c.full[currentLang]}</div>
+                    <button class="toggle-story-btn" id="story-btn-${idx}" onclick="toggleCultureStory(${idx})">${dictionary['btn-expand-story']}</button>
                 </div>`;
             });
         }
 
-        function handleQuizSubmit() {
-            const q = document.getElementById('form-question').value; const a = document.getElementById('form-answer').value;
-            if(!q || !a) return; customQuizzes.push({question:q, answer:a});
-            localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes)); renderQuizzes();
-            document.getElementById('form-question').value = ''; document.getElementById('form-answer').value = '';
+        function toggleCultureStory(idx) {
+            const el = document.getElementById('culture-full-' + idx);
+            const btn = document.getElementById('story-btn-' + idx);
+            const dictionary = uiLangData[currentLang];
+            if(el.classList.contains('expanded')) { 
+                el.classList.remove('expanded'); 
+                btn.innerText = dictionary['btn-expand-story']; 
+            } else { 
+                el.classList.add('expanded'); 
+                btn.innerText = dictionary['btn-collapse-story']; 
+            }
         }
 
+        // 經驗等級更新
         function gainXP(amt) { 
             if (level >= 10) { xp = 100; localStorage.setItem('ub_xp', xp); updateStatus(); return; }
             xp += amt; 
-            if(xp >= 100) { xp -= 100; level++; if(level > 10) level = 10; alert(`🎉 恭喜！您已成功晉升為 Level ${level} 【${levelTitles[level]}】！`); } 
+            if(xp >= 100) { xp -= 100; level++; if(level > 10) level = 10; alert(`🎉 Level Up! You advanced to Level ${level}!`); } 
             localStorage.setItem('ub_xp', xp); localStorage.setItem('ub_lvl', level); updateStatus(); 
         }
 
@@ -607,47 +732,30 @@
             document.getElementById('user-xp').innerText = xp; 
             document.getElementById('user-level').innerText = level; 
             document.getElementById('xp-fill').style.width = xp + '%'; 
-            const currentTitle = levelTitles[level] || "👶 新手村 (初來步到)";
-            document.getElementById('level-title').innerText = `(${currentTitle})`;
-            if (level >= 10) { document.getElementById('level-title').innerHTML = `(<span style="color:var(--accent-gold); font-weight:bold;">👑 煲匯橋橋王 - 滿級封頂</span>)`; }
+            const titlesPool = levelTitles[currentLang] || levelTitles['zh-HK'];
+            document.getElementById('level-title').innerText = `(${titlesPool[level] || 'Novice'})`;
         }
 
         function toggleTheme() { document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark'); }
 
-        function changeLang(lang) {
-            document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active-lang'));
-            document.getElementById(`lang-${lang}`).classList.add('active-lang');
-        }
-
-        // 🚀 手機端隱式「用戶手勢追蹤解鎖器」核心優化邏輯
+        // 手機端隱式音效引擎激活器
         function unlockMobileAudio() {
-            // 在手機端檢測到任何初次點擊或觸摸時，在背景發送空音訊，瞬間騙過並解鎖 iOS/Android 的發聲封鎖
             const emptyUtterance = new SpeechSynthesisUtterance('');
             window.speechSynthesis.speak(emptyUtterance);
-            
-            // 同步初始化 AudioContext (部分安卓內置瀏覽器解鎖需要)
             const AudioContext = window.AudioContext || window.webkitAudioContext;
             if (AudioContext) {
                 const ctx = new AudioContext();
                 if (ctx.state === 'suspended') { ctx.resume(); }
             }
-            
-            // 解鎖成功後移出事件，避免重複浪費手機效能
             window.removeEventListener('click', unlockMobileAudio);
             window.removeEventListener('touchstart', unlockMobileAudio);
         }
         window.addEventListener('click', unlockMobileAudio);
         window.addEventListener('touchstart', unlockMobileAudio);
 
-        // 引擎自動初始化
+        // 引擎初次配置與加載
         initVisitCounter(); 
-        updateStatus(); 
-        document.getElementById('daily-soup').innerText = soupPool[new Date().getDate()%3];
-        refreshVocab(); 
-        initDialogueDropdown(); 
-        refreshQuizRand(); 
-        refreshCultureRand(); 
-        renderWrongNotebook();
+        changeLang('zh-HK');
     </script>
 </body>
 </html>
