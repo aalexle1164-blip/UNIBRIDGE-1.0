@@ -6,61 +6,78 @@
     <title>UNIBRIDGE 煲匯橋 - 粵語學習空間</title>
     <style>
         :root {
-            --bg-color: #f1f4f9; 
-            --text-color: #1d1d1f; /* 蘋果經典深黑 */
-            --card-bg: rgba(255, 255, 255, 0.65); /* ✨ 蘋果毛玻璃通透基底 */
-            --nav-bg: rgba(245, 245, 247, 0.75);
-            --primary-blue: #0047AB; /* 💙 完美回歸：經典萊茵藍 */
-            --logo-blue: #0047AB;    /* 💙 完美回歸：經典萊茵藍 */
-            --border-color: rgba(0, 0, 0, 0.08);
+            /* 💙 核心主題色：萊茵藍 Rhine Blue */
+            --rhine-blue: #0047AB; 
+            
+            --bg-color: #f0f2f6; 
+            --text-color: #1d1d1f;
+            --card-bg: rgba(255, 255, 255, 0.65); /* 蘋果毛玻璃基底 */
+            --nav-bg: rgba(245, 245, 247, 0.8);
+            --primary-blue: var(--rhine-blue); /* 主題色使用萊茵藍 */
+            --logo-blue: var(--rhine-blue);
+            --border-color: rgba(0, 0, 0, 0.1);
             --accent-gold: #ff9f0a;
             --success-green: #34c759;
             --danger-red: #ff3b30;
-            --glass-blur: blur(20px); /* ✨ 經典 Apple Blur 參數 */
+            --glass-blur: blur(20px);
         }
         [data-theme="dark"] {
-            --bg-color: #0d1117;
+            --bg-color: #000000;
             --text-color: #f5f5f7;
-            --card-bg: rgba(22, 27, 34, 0.75); 
-            --nav-bg: rgba(22, 27, 34, 0.8);
-            --primary-blue: #58a6ff;
-            --logo-blue: #58a6ff;
-            --border-color: rgba(255, 255, 255, 0.12);
+            --card-bg: rgba(28, 28, 30, 0.7); 
+            --nav-bg: rgba(28, 28, 30, 0.85);
+            --primary-blue: #2997ff;
+            --logo-blue: #4da3ff;
+            --border-color: rgba(255, 255, 255, 0.15);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            margin: 0; padding: 0; transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+            margin: 0; padding: 0; transition: all 0.5s cubic-bezier(0.28, 0.11, 0.32, 1);
             -webkit-font-smoothing: antialiased; background-color: var(--bg-color);
             background-attachment: fixed; background-position: center bottom; background-repeat: no-repeat;
         }
 
-        /* 🌆 ✨ 每一頁專屬的香港風格大氣背景 (動態切換 Class) */
+        /* ============================================================
+           🌆 ✨ 修正：港風簡約大氣背景設定 (提高不透明度以確保顯示)
+           ============================================================ */
+        
+        /* 1. 首頁背景：港式幾何天際線 (Rhine Blue 粗線條) */
         body.bg-home {
-            background-image: linear-gradient(180deg, transparent 50%, rgba(255,255,255,0.3) 100%),
-                url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" opacity="0.04"><path d="M0 380 L1600 380 M50 380 L50 200 L120 200 L120 380 M150 380 L150 150 L200 150 L200 380 M300 380 L300 100 Q350 50 400 100 L400 380 M430 380 L430 180 L490 180 Q520 120 550 18 L580 180 L640 180 L640 380 M670 380 L670 20 L730 20 L730 380 M760 380 L760 120 L800 120 L800 380 M830 380 L830 200 L870 200 L870 380 M900 380 L900 30 Q1000 80 1100 30 L1100 380 M1130 380 L1130 150 L1170 150 L1170 380 M1200 380 L1200 180 L1260 180 L1260 380 L1600 380" fill="none" stroke="%230047AB" stroke-width="2"/></svg>');
+            background-image: linear-gradient(180deg, rgba(240,242,246,0) 50%, rgba(240,242,246,1) 100%),
+                url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" opacity="0.15"><path d="M0 380 L1600 380 M50 380 L50 200 L120 200 L120 380 M150 380 L150 150 L200 150 L200 380 M300 380 L300 100 Q350 50 400 100 L400 380 M430 380 L430 180 L490 180 Q520 120 550 18 L580 180 L640 180 L640 380 M670 380 L670 20 L730 20 L730 380 M760 380 L760 120 L800 120 L800 380 M830 380 L830 200 L870 200 L870 380 M900 380 L900 30 Q1000 80 1100 30 L1100 380 M1130 380 L1130 150 L1170 150 L1170 380 M1200 380 L1200 180 L1260 180 L1260 380 L1600 380" fill="none" stroke="%230047AB" stroke-width="3"/></svg>');
             background-size: cover, auto 28%; background-position: center bottom; background-repeat: no-repeat, repeat-x;
         }
+
+        /* 2. 詞彙頁背景：復古霓虹燈圖騰 (幾何重複) */
         body.bg-vocab {
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" opacity="0.02"><text x="10" y="40" font-family="sans-serif" font-size="10" fill="%230047AB" font-weight="bold">粤</text><text x="40" y="70" font-family="sans-serif" font-size="10" fill="%230047AB" font-weight="bold">港</text><line x1="0" y1="0" x2="80" y2="80" stroke="%230047AB" stroke-width="0.5" stroke-dasharray="2,2"/></svg>');
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80" opacity="0.1"><path d="M10 10 L70 10 L70 70 L10 70 Z M20 20 L60 20 L60 60 L20 60 Z M30 30 L50 30 L50 50 L30 50 Z" fill="none" stroke="%230047AB" stroke-width="1.5"/><circle cx="40" cy="40" r="5" fill="%230047AB"/></svg>');
             background-repeat: repeat; background-size: 80px 80px;
         }
+
+        /* 3. 對話頁背景：茶餐廳經典幾何馬賽克花磚 */
         body.bg-dialogue {
-            /* 港式茶餐廳傳統馬賽克幾何花磚背景 */
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" opacity="0.025"><rect width="30" height="30" fill="none" stroke="%230047AB" stroke-width="1"/><rect x="30" y="30" width="30" height="30" fill="none" stroke="%230047AB" stroke-width="1"/><circle cx="15" cy="15" r="4" fill="%230047AB"/><circle cx="45" cy="45" r="4" fill="%230047AB"/></svg>');
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 60 60" opacity="0.12"><rect width="30" height="30" fill="none" stroke="%230047AB" stroke-width="1"/><rect x="30" y="30" width="30" height="30" fill="none" stroke="%230047AB" stroke-width="1"/><circle cx="15" cy="15" r="3" fill="%230047AB"/><circle cx="45" cy="45" r="3" fill="%230047AB"/></svg>');
             background-repeat: repeat; background-size: 40px 40px;
         }
+
+        /* 4. 測驗頁背景：港式窗櫺幾何圖案 */
         body.bg-quiz {
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" opacity="0.02"><circle cx="50" cy="50" r="40" fill="none" stroke="%230047AB" stroke-width="1"/><polygon points="50,20 80,70 20,70" fill="none" stroke="%230047AB" stroke-width="1"/></svg>');
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" opacity="0.1"><path d="M0 50 L100 50 M50 0 L50 100 M10 10 L90 90 M90 10 L10 90" fill="none" stroke="%230047AB" stroke-width="1"/></svg>');
             background-repeat: repeat; background-size: 100px 100px;
         }
+
+        /* 5. 文化頁背景：經典當舖精神標誌線條剪影 */
         body.bg-culture {
-            /* 經典港式當舖/復古窗櫺線條剪影 */
-            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" opacity="0.02"><path d="M20,20 H100 V100 H20 Z M20,60 H100 M60,20 V100" fill="none" stroke="%230047AB" stroke-width="1.5"/><circle cx="60" cy="60" r="15" fill="none" stroke="%230047AB" stroke-width="1"/></svg>');
+            background-image: url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" opacity="0.1"><path d="M60 10 L110 50 L90 110 L30 110 L10 50 Z M60 30 A 20 20 0 1 1 60 70 A 20 20 0 1 1 60 30 Z M60 45 L60 55 M55 50 L65 50" fill="none" stroke="%230047AB" stroke-width="2"/></svg>');
             background-repeat: repeat; background-size: 90px 90px;
         }
 
-        /* 頂部 Header & 導航列：極致毛玻璃 */
+        /* Dark Mode背景修正 (降低SVG亮度) */
+        [data-theme="dark"] body.bg-home { background-image: none; background-color: #000; }
+        [data-theme="dark"] body { background-image: none !important; }
+
+        /* 頂部 Header：蘋果毛玻璃 */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 14px 6%; border-bottom: 1px solid var(--border-color);
@@ -69,11 +86,8 @@
         }
 
         .brand-container { display: flex; align-items: center; gap: 12px; }
-        
-        /* 🎨 第一版完美保留：精緻藍色煲仔人物IP形象 */
         .ip-char { width: 42px; height: 42px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06)); }
         .ip-char svg { width: 100%; height: 100%; }
-        
         .logo-text-group { display: flex; flex-direction: column; line-height: 1.1; }
         .logo-en { font-size: 24px; font-weight: 800; color: var(--logo-blue); font-style: italic; letter-spacing: 0.5px; margin: 0; }
         .logo-cn { font-size: 15px; font-weight: 700; color: var(--logo-blue); letter-spacing: 2px; margin-top: 1px; }
@@ -86,9 +100,6 @@
         }
         .controls button:hover, .btn:hover { background: var(--primary-blue); color: white; transform: scale(1.02); }
         .controls button.active-lang { background: var(--primary-blue); color: white; }
-        .btn-success { border-color: var(--success-green); color: var(--success-green); }
-        .btn-success:hover { background: var(--success-green); color: white; }
-        .btn-danger { border-color: var(--danger-red); color: var(--danger-red); }
 
         .status-bar {
             background: rgba(0, 71, 171, 0.04); color: var(--text-color); padding: 10px 6%;
@@ -99,6 +110,7 @@
         [data-theme="dark"] .xp-bar-bg { background: rgba(255,255,255,0.1); }
         .xp-bar-fill { background: var(--accent-gold); height: 100%; width: 0%; transition: width 0.4s ease; }
 
+        /* 導航列：蘋果毛玻璃 */
         nav {
             display: flex; justify-content: center; border-bottom: 1px solid var(--border-color);
             overflow-x: auto; scrollbar-width: none; background-color: var(--nav-bg); 
@@ -108,16 +120,17 @@
         nav::-webkit-scrollbar { display: none; }
         nav button {
             background: none; border: none; padding: 14px 16px; font-size: 14px; color: var(--text-color);
-            cursor: pointer; font-weight: 600; white-space: nowrap; opacity: 0.7; transition: all 0.2s;
+            cursor: pointer; font-weight: 600; white-space: nowrap; flex-shrink: 0;
+            border-bottom: 3px solid transparent; transition: all 0.2s;
         }
         nav button.active-nav { color: var(--primary-blue); opacity: 1; border-bottom: 2px solid var(--primary-blue); }
 
-        /* ✨ 升級：蘋果風精緻毛玻璃卡片切換 UI 動態特效 */
+        /* ✨ 修正：板塊切換時的流暢半透明動畫效果 */
         .content-section { display: none; padding: 25px 4%; max-width: 720px; margin: 0 auto; box-sizing: border-box; }
-        .content-section.active { display: block; animation: appleSwitchEffect 0.5s cubic-bezier(0.25, 1, 0.2, 1); }
+        .content-section.active { display: block; animation: appleSwitchEffect 0.4s cubic-bezier(0.25, 1, 0.2, 1); }
         @keyframes appleSwitchEffect { 
-            from { opacity: 0; transform: scale(0.98) translateY(12px); backdrop-filter: blur(0px); } 
-            to { opacity: 1; transform: scale(1) translateY(0); backdrop-filter: var(--glass-blur); } 
+            from { opacity: 0; transform: scale(0.99) translateY(8px); } 
+            to { opacity: 1; transform: scale(1) translateY(0); } 
         }
         
         .section-desc {
@@ -125,7 +138,7 @@
             padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.5; margin-bottom: 22px; color: var(--text-color);
         }
 
-        /* 蘋果風高通透卡片 */
+        /* 蘋果風高通透毛玻璃卡片 */
         .card {
             background-color: var(--card-bg); padding: 20px; border-radius: 16px; margin-bottom: 18px;
             border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.02); box-sizing: border-box;
@@ -144,9 +157,7 @@
         th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border-color); font-size: 14px; }
         th { font-weight: 600; opacity: 0.6; }
 
-        /* =========================================
-           ✨ 第一版核心排版：iMessage風格智能對話串流區塊布局 
-           ========================================= */
+        /* iMessage風格智能對話串流區塊布局 */
         .chat-layout-wrapper {
             background: rgba(255,255,255,0.3); border: 1px solid var(--border-color);
             border-radius: 24px; padding: 20px; box-shadow: inset 0 0 20px rgba(0,0,0,0.01);
@@ -164,10 +175,8 @@
             max-width: 82%; padding: 12px 18px; border-radius: 20px;
             line-height: 1.5; font-size: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative;
         }
-        /* 店員：洗鍊雅緻灰 */
         .chat-waiter { background-color: rgba(230, 230, 235, 0.9); color: #000000; border-top-left-radius: 4px; }
         [data-theme="dark"] .chat-waiter { background-color: rgba(44, 44, 46, 0.9); color: #ffffff; }
-        /* 用戶：經典 萊茵藍 */
         .chat-user { background-color: var(--primary-blue); color: #ffffff; border-top-right-radius: 4px; }
 
         .chat-sub-text { display: block; font-size: 12px; margin-top: 4px; opacity: 0.75; font-weight: 400; }
@@ -192,7 +201,6 @@
         .culture-content.expanded { max-height: 600px; }
         .toggle-story-btn { background: none; border: none; color: var(--primary-blue); font-weight: 600; cursor: pointer; padding: 4px 0; margin-top: 6px; font-size: 12px; }
 
-        .form-group input { width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 8px; background-color: rgba(255,255,255,0.5); color: var(--text-color); box-sizing: border-box; }
         input[type="text"] { width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 8px; background-color: rgba(255,255,255,0.5); color: var(--text-color); box-sizing: border-box; }
 
         @media (max-width: 600px) {
@@ -330,7 +338,7 @@
     </main>
 
     <script>
-        // 🗂️ 完整保留：第一版龐大的多語言本地化字典
+        // 保留：第一版完整的本地化字典
         const i18nDict = {
             'zh-HK': {
                 'level':'等級', 'xp':'經驗值', 'nav-home':'首頁', 'nav-vocab':'生存高頻詞彙', 'nav-dialogue':'擬真對話實戰', 'nav-quiz':'智能測驗題庫', 'nav-culture':'香港文化典故',
@@ -373,7 +381,7 @@
             {tc:'幾多錢', jp:'gei2 do1 cin2', en:'How much'}, {tc:'搭枱', jp:'daap3 toi2', en:'Share a table'}
         ];
 
-        // 💬 完整保留：核心 10 話輪深度茶餐廳實境劇情數據
+        // 保留：10 話輪實境劇情數據
         const dialoguePool = [
             {
                 name: "香港深度茶餐廳點餐挑戰 (10話輪完整劇本)",
@@ -395,7 +403,7 @@
         const culturePool = [
             { title: "☕ 茶餐廳的「密碼暗號」", preview: "除了「靚仔」指白飯外，夥計單據上的「反Q」其實代表...", full: "在極度追求效率的香港茶餐廳，夥計們發展出一套極高深莫測的速記代號。除了大家熟知的「靚仔」代表白飯、「靚女」代表白粥外，單據上寫「反Q」代表「西多士」；而「敗家仔」是指阿華田。掌握了這些密碼，你在茶餐廳就能瞬間變身老香港！" },
             { title: "🚌 紅色小巴：沒有車站的心理博弈", preview: "紅色小巴路線與車站不固定！下車不能按鈴，必須大喊...", full: "香港的紅色小巴是街頭最魔幻的交通工具。它最致命的特點是：路線與車站完全不固定！司機開車全憑經驗，而乘客想要下車時，絕對不能按鈴，必須在上車後一邊盯著窗外，一邊大喊：「唔該，有落！」" },
-            { title: "👵 驚蟄「打小人」", preview: "每年驚蟄，大批婆婆聚集在鵝頸橋底...", full: "每年驚蟄，香港銅鑼灣鵝頸橋底就會聚集大批婆婆。她們會一邊用鞋頭狠狠拍打剪成小人狀的紙張，以此驅逐霉運與身邊的「小人」。這種極具歷史感的地道民俗，已經成為香港非物質文化遺產之一。" }
+            { title: "👵 驚蟄「打小人」", preview: "每年驚蟄，大批婆婆聚集在鵝頸橋底...", full: "每年驚蟄，香港銅鑼灣鵝頸橋底就會聚集大批婆婆。她們會一邊用鞋頭狠狠拍打剪成小人狀的紙張，以此驅逐霉運與身邊的「小人」。這種極具歷史感與魔幻現實主義的地道民俗，已經成為香港非物質文化遺產之一。" }
         ];
 
         const autoQuizPool = [
@@ -409,7 +417,7 @@
         let customQuizzes = JSON.parse(localStorage.getItem('ub_custom_quizzes')) || [];
         let currentDailyQuizzes = JSON.parse(localStorage.getItem('ub_daily_quizzes_current')) || [];
 
-        // 🌍 完整語系核心切換引擎
+        // 保留：多語系核心切換引擎
         function changeLang(lang) {
             currentLang = lang;
             localStorage.setItem('ub_lang', lang);
@@ -441,7 +449,7 @@
             }
         }
 
-        // 🗺️ 切換板塊 + 同步更新港風大氣背景樣式
+        // 🗺️ 切換板塊 + 同步更新港風顯性背景樣式
         function showSection(sectionId) {
             document.querySelectorAll('.content-section').forEach(sec => sec.classList.remove('active'));
             document.querySelectorAll('nav button').forEach(btn => btn.classList.remove('active-nav'));
@@ -449,7 +457,7 @@
             document.getElementById(sectionId).classList.add('active');
             document.getElementById('nav-' + sectionId).classList.add('active-nav');
             
-            // 更換 Body 的港風背景樣式
+            // 更換 Body 的港風背景樣式 Class
             document.body.className = 'bg-' + sectionId;
             window.scrollTo(0,0);
         }
@@ -467,7 +475,6 @@
             });
         }
 
-        // 💬 渲染對話：iMessage 擬真風格排版
         function refreshDialogue() {
             const sc = dialoguePool[Math.floor(Math.random() * dialoguePool.length)];
             document.getElementById('current-scenario-name').textContent = sc.name;
@@ -540,7 +547,7 @@
             scoreBox.style.display = "block"; scoreBox.innerHTML = "⏳ 智能分析中...";
             setTimeout(() => {
                 const score = Math.floor(Math.random() * 12) + 85;
-                scoreBox.innerHTML = `<strong>📊 模擬評分系統：</strong>匹配度: ${score}%<br><small style="opacity:0.6;">(當前環境不支援原生 API，已啟用仿真分析引擎)</small><br>🎉 +15 XP`;
+                scoreBox.innerHTML = `<strong>📊 模擬評分系統：</strong>匹配度: ${score}%<br><small style="opacity:0.6;">(不支援原生 API，已啟用仿真分析引擎)</small><br>🎉 +15 XP`;
                 gainXP(15);
             }, 800);
         }
@@ -619,7 +626,7 @@
 
         function toggleTheme() { document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark'); }
 
-        // 🚀 啟動引擎
+        // 🚀 開機啟動引擎
         updateStatus(); changeLang(currentLang); initDailySoup(); refreshVocab(); 
         refreshDialogue(); refreshCulture(); checkDailyQuizCron(); renderCustomQuizzes();
     </script>
