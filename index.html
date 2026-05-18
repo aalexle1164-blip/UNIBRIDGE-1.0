@@ -50,7 +50,6 @@
         .logo-en { font-size: 24px; font-weight: 800; color: var(--logo-blue); font-style: italic; margin: 0; line-height: 1.1; }
         .logo-cn { font-size: 14px; font-weight: 700; color: var(--logo-blue); letter-spacing: 2px; }
         
-        /* 訪問人數徽章樣式 */
         .visit-badge {
             margin-left: 15px; background: rgba(0, 71, 171, 0.08); padding: 4px 10px; 
             border-radius: 12px; font-size: 11px; font-weight: 700; color: var(--primary-blue);
@@ -180,7 +179,7 @@
                 <div class="logo-en">UNIBRIDGE</div>
                 <div class="logo-cn">煲匯橋</div>
             </div>
-            <div class="visit-badge">👥 累計訪問人數: <span id="visit-count">1,208</span></div>
+            <div class="visit-badge">👥 累計訪問人數: <span id="visit-count">1</span></div>
         </div>
         <div class="controls">
             <button id="lang-zh-HK" class="active-lang" onclick="changeLang('zh-HK')">繁</button>
@@ -230,7 +229,7 @@
     <main id="dialogue" class="content-section">
         <div class="section-desc" data-i18n="desc-dialogue">⚔️ 實境對話挑戰，支持 AI 語音精準打分！</div>
         <div class="card">
-            <h2 style="margin:0 0 15px 0;" data-i18n="title-dialogue">🗣️ 擬真對話切換 (標準 10 話輪)</h2>
+            <h2 style="margin:0 0 15px 0;" data-i18n="title-dialogue">🗣️ 擬真對話切換</h2>
             <select id="scene-selector" class="scene-select-dropdown" onchange="switchScene(this.value)"></select>
             <div class="chat-container" id="dialogue-chat-container"></div>
         </div>
@@ -284,6 +283,7 @@
         const soupPool = ["「做人如果無夢想，同條鹹魚有咩分別呀？」", "「最緊要個人開心，行行下就到黎明啦。」", "「食得鹹魚抵得渴，每日學多句粵語！」"];
         const bigVocabPool = [ {tc:'唔該', jp:'m4 goi1', en:'Please'}, {tc:'埋單', jp:'maai4 daan1', en:'Check'}, {tc:'凍檸茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea'}, {tc:'邊度', jp:'bin1 dou6', en:'Where'} ];
         
+        // 10大地道場景保持不變
         const dialoguePool = [
             { name: "場景 1：旺角茶餐廳搵位與點餐", story: [
                 {role:"waiter", text:"歡迎光臨！幾多位啊？入面邊度自便啦。", sub:"(Welcome! How many? Sit anywhere inside.)"}, 
@@ -318,11 +318,11 @@
                 {role:"user", text:"大細啱啱好，但如果買完返去發現有問題，可以換嗎？", sub:"(Size is perfect, but if I find issues later, can I exchange it?)"},
                 {role:"waiter", text:"七日之內帶埋單據，無剪牌都可以返嚟換碼。", sub:"(Within 7 days with the receipt and tag intact, you can exchange.)"},
                 {role:"user", text:"咁好啦，我要呢件。請問可以用支付寶埋單嗎？", sub:"(Alright, I'll take it. Can I pay with Alipay?)"},
-                {role:"waiter", text:"暗以，人民幣會自動折算港幣。請刷呢度。", sub:"(Yes, RMB will automatically convert to HKD. Scan here.)"},
+                {role:"waiter", text:"可以，人民幣會自動折算港幣。請刷呢度。", sub:"(Yes, RMB will automatically convert to HKD. Scan here.)"},
                 {role:"user", text:"得咗，麻煩幫我用個漂亮的袋裝住，唔該。", sub:"(Done, please wrap it in a nice bag, thanks.)"}
             ]},
             { name: "場景 4：中環街市買餸與討價還價", story: [
-                {role:"waiter", text:"靚姐靚仔，睇下魚啊！今日啲游水菜生好鮮甜！", sub:"(Look at the fish! The choi sum today is very sweet!)"},
+                {role:"waiter", text:"靚姐靚仔，睇下魚啊！今日啲菜心好鮮甜！", sub:"(Look at the fish! The choi sum today is very sweet!)"},
                 {role:"user", text:"老細，呢斤菜心點賣啊？好似有少少黃喎。", sub:"(Boss, how much for a catty of choi sum? Looks a bit yellow.)"},
                 {role:"waiter", text:"邊度黃啊？今朝早剛到貨！算你十二蚊一斤啦。", sub:"(Where is it yellow? Just arrived this morning! $12 for you.)"},
                 {role:"user", text:"十蚊斤啦，我買夠兩斤，再買埋你啲番茄。", sub:"($10 a catty! I'll buy two catties, and also your tomatoes.)"},
@@ -330,10 +330,10 @@
                 {role:"user", text:"要三個大番茄，用嚟滾湯。唔該秤一秤。", sub:"(Three big tomatoes for soup. Please weigh them.)"},
                 {role:"waiter", text:"一條龍一共二十五蚊。收你張五十，找返二十五。", sub:"(Total is twenty-five dollars. Out of $50, change is $25.)"},
                 {role:"user", text:"老細，搭幾條葱比我得唔得啊？做生意外賣送葱啦。", sub:"(Boss, can you throw in a few scallions? Give some free scallions.)"},
-                {role:"waiter", text:"快哈，你真識數！拿，送兩條大葱比你！", sub:"(Haha, you really know how to bargain! Here, two big ones for you!)"},
+                {role:"waiter", text:"哈哈，你真識數！拿，送兩條大葱比你！", sub:"(Haha, you really know how to bargain! Here, two big ones for you!)"},
                 {role:"user", text:"多謝晒老細，下次再幫襯你！", sub:"(Thanks a lot boss, will patronize you next time!)"}
             ]},
-            { name: "場景 5：搭的士的士司機與路線溝通", story: [
+            { name: "場景 5：搭的士與司機路線溝通", story: [
                 {role:"waiter", text:"去邊度啊，老細？", sub:"(Where to, boss?)"},
                 {role:"user", text:"唔該去銅鑼灣時代廣場，唔好行紅隧啊，驚塞車。", sub:"(To Causeway Bay Times Square, don't take Cross-Harbour Tunnel, fear traffic.)"},
                 {role:"waiter", text:"唔行紅隧就由西隧過去喎，西隧隧道費貴好多，介唔介意？", sub:"(Take Western Tunnel instead then, but tolls are much pricier, mind?)"},
@@ -352,7 +352,7 @@
                 {role:"user", text:"廿四味會唔會好苦啊？有沒有甜少少嘅選擇？", sub:"(Will 24-flavor be very bitter? Any slightly sweeter options?)"},
                 {role:"waiter", text:"咁飲五花茶啦，清甜祛濕，男女老幼都啱飲。", sub:"(Drink Five-Flower tea then, sweet and expels dampness, fits everyone.)"},
                 {role:"user", text:"好，要一碗五花茶喺度飲，再加盒喉糖。", sub:"(Ok, a bowl of Five-Flower tea to drink here, and a box of throat lozenges.)"},
-                {role:"waiter", text:"喉糖喺呢度，一共八十五蚊。涼茶請趁熱一啖夾起佢。", sub:"(Lozenges here, total $85. Please drink the herbal tea while hot.)"},
+                {role:"waiter", text:"喉糖喺呢度，一共八十五蚊。涼茶請趁熱一啖過起咗佢。", sub:"(Lozenges here, total $85. Please drink the herbal tea while hot.)"},
                 {role:"user", text:"哇，飲完舒服好多。活絡油係正品正貨嗎？", sub:"(Wow, feels much better after drinking. Is the oil authentic?)"},
                 {role:"waiter", text:"放心，我哋係政府註冊藥房，保證正貨！", sub:"(Rest assured, we are a government-registered pharmacy, guaranteed authentic!)"},
                 {role:"user", text:"咁就好，唔該晒，單據幫我放落袋度。", sub:"(Great, thanks, please put the receipt in the bag.)"}
@@ -386,7 +386,7 @@
                 {role:"user", text:"唔該，想要一杯生啤酒，另外有無特別嘅雞尾酒推薦？", sub:"(A draft beer please, and any special cocktail recommendations?)"},
                 {role:"waiter", text:"我哋招牌特色調酒係 HK-Sling，帶點荔枝清香，好受歡迎。", sub:"(Our signature is HK-Sling, with a hint of lychee aroma, very popular.)"},
                 {role:"user", text:"聽落唔錯，咁我要一杯生啤同埋一杯 HK-Sling。", sub:"(Sounds good, I'll have a draft beer and an HK-Sling then.)"},
-                {role:"waiter", text:"無問題！今晚咁啱係 Happy Hour，全部嘢飲有八折優惠。", sub:"(No problem! Tonight is Happy Hour, all drinks 20% off.)"},
+                {role:"waiter", text:"無問題！今晚咁貼心係 Happy Hour，全部嘢飲有八折優惠。", sub:"(No problem! Tonight is Happy Hour, all drinks 20% off.)"},
                 {role:"user", text:"正喎！咁有無附送一些免費嘅花生或者薯片小食？", sub:"(Awesome! Are there any complimentary peanuts or chips snacks?)"},
                 {role:"waiter", text:"有，呢盤爆穀係免費送比你哋嘅。請慢用！", sub:"(Yes, this popcorn is free for you guys. Enjoy!)"},
                 {role:"user", text:"蘭桂坊真係好熱鬧，越夜越精彩。", sub:"(Lan Kwai Fong is really lively, the night is still young.)"},
@@ -408,7 +408,7 @@
         ];
 
         const culturePool = [ 
-            { title: "☕ 茶餐廳數字與暗號文化", preview: "香港茶餐廳有一套源自舊時代行話、乃至三合會與碼頭工人的獨特速記代號...", full: "香港茶餐廳的「術語密碼」是高效率都市節奏的產物。\n\n當夥計在單據上寫下「靚仔」，代表的是白飯；「靚女」則指白粥，這源於白飯顆粒分明如俊俏後生，而白粥綿密潔白如美女肌膚。另外，「反Q」代表西多士（French Toast 中 French 轉音為「反」，Toast 為烤麵包）；「敗家仔」指阿華田，因舊時阿華田較貴，喝它被調侃為敗家。而「茶走」則是指奶茶不加砂糖改加煉奶，這樣奶茶口感更絲滑且不易因糖沉底而變酸。這些密碼是融入香港市井生活必修的第一課。" },
+            { title: "☕ 茶餐廳數字與暗號文化", preview: "香港茶餐廳有一套源自舊時代行話、乃至碼頭工人的獨特速記代號...", full: "香港茶餐廳的「術語密碼」是高效率都市節奏的產物。\n\n當夥計在單據上寫下「靚仔」，代表的是白飯；「靚女」則指白粥，這源於白飯顆粒分明如俊俏後生，而白粥綿密潔白如美女肌膚。另外，「反Q」代表西多士（French Toast）；「敗家仔」指阿華田。而「茶走」則是指奶茶不加砂糖改加煉奶，這樣奶茶口感更絲滑且不易因糖沉底而變酸。這些密碼是融入香港市井生活必修的第一課。" },
             { title: "🚌 紅色小巴：沒有車站的心理與街頭博弈", preview: "紅色小巴（紅VAN）是香港街頭最魔幻的交通工具。它沒有固定的車站和班次...", full: "香港的小巴分為綠色 and 紅色。綠色小巴行走固定路線與班次，而「紅色小巴」則是歷史留下的自由經濟產物。\n\n紅色小巴的路線、車資都是非固定的，全憑司機根據當天交通與乘客需求靈活動態調整。最令新手恐懼的是：紅色小巴「沒有固定下車站點」。乘客若要下車，必須在上車後一邊緊盯窗外地標，一邊在即將到達目的地前，鼓起勇氣用宏亮的粵語對司機大喊：「唔該，街口有落！」或「前方橋底有落！」司機則會舉手或打方向燈示意。這是一場考驗地理熟悉度與粵語膽量的街頭博弈。" },
             { title: "👵 鵝頸橋底「打小人」：驚蟄的非物質文化民俗", preview: "每逢農曆驚蟄，大批市民與遊客會湧向銅鑼灣與灣仔交界的鵝頸橋底...", full: "鵝頸橋底（堅拿道天橋底）是香港最具神秘色彩的民俗聚集地。\n\n在風水學中，天橋底屬於煞氣極重的「三叉路口」，最利於克制小人。每年驚蟄，此處便會坐滿專業的「拜神婆」。她們點燃香燭，將顧客指定或泛指的「小人紙」放在磚頭上，一邊揮動手中的舊鞋底狠狠拍打紙張，發出清脆的「啪啪」聲，一邊念念有詞：「打你個小人頭，等你好運到頭！」這種儀式並非全然出於怨恨，更多是香港市民在高度壓力的社會環境中，尋求心靈宣洩、驅除霉運與祈求年內平安的一種傳統精神寄託。" },
             { title: "👑 九龍皇帝：從「破壞公物」到拍賣百萬的街頭墨寶", preview: "曾灶財（自號九龍皇帝）數十年間拿著墨水與毛筆，在香港大街小巷宣示主權...", full: "曾灶財是香港歷史上最傳奇的邊緣藝術家。他自稱在整理祖先遺物時發現九龍城寨大批土地曾被割讓給他，因而憤世嫉俗。\n\n從20世紀50年代開始，他便手提墨水桶、拐杖，赤裸上身在全香港的電箱、天橋底、路牌上，以獨特粗獷、密密麻麻的毛筆字書寫自己的家族族譜與「宣示主權」的宣告。起初他頻繁被警方以破壞公物拘捕，但數十年如一日的堅持，讓他的塗鴉轉化為香港集體記憶的一部分。著名設計師鄧達智將其字體引入時裝，其殘留墨寶甚至在蘇富比拍賣行以數十萬至百萬港元成交，成為香港當代極具批判性本土文化符號。" },
@@ -422,6 +422,20 @@
             {id: 16, question: "想要一份「菠蘿麵包夾冰奶油」，茶餐廳術語是？", answer: "菠蘿油"}, {id: 17, question: "如果你想稱讚這個人「非常厲害」，地道口語是？", answer: "好犀利"}, {id: 18, question: "香港傳統習俗中，驚蟄時去鵝頸橋底做什麼？", answer: "打小人"}, {id: 19, question: "粵語常說的「巴絲打」，是由英文Brother和Sister演變來的，意思是？", answer: "巴打絲打"}, {id: 20, question: "茶餐廳單據寫「靚女」，默認是指端上什麼？", answer: "白粥"}
         ];
 
+        // 🎖️ 1-10 級全港風地道稱號對應矩陣表
+        const levelTitles = {
+            1: "👶 新手村 (初來步到)",
+            2: "☕ 茶餐廳侍應 (識聽靚仔靚女)",
+            3: "🏘️ 街坊鄰里 (熟路旺角深水埗)",
+            4: "🚌 小巴司機 (有落嗌得超大聲)",
+            5: "💼 西裝白領 (中環返工中英夾雜)",
+            6: "🏪 老字號掌櫃 (人情世故略知一二)",
+            7: "👵 鵝頸橋大師 (打小人手速極快)",
+            8: "🐎 馬場大亨 (獨贏位置瞭如指掌)",
+            9: "🏙️ 九龍大班 (呼風喚雨地道通)",
+            10: "👑 煲匯橋橋王 (功德圓滿神級粵語)"
+        };
+
         let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
         let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
         let currentLang = localStorage.getItem('ub_lang') || 'zh-HK';
@@ -432,14 +446,15 @@
         let recognitionCapturedTexts = {}; 
         let currentQuizIds = [];
 
-        // ✨ 累計訪問人數自增儲存引擎
+        // 👥 訪問人數安全重算設定（真實計數）
         function initVisitCounter() {
-            let visits = parseInt(localStorage.getItem('ub_visits'));
-            if (!visits) {
-                visits = Math.floor(Math.random() * 500) + 1200; // 賦予一個擬真的起始基礎訪問值
+            let visits = parseInt(localStorage.getItem('ub_real_visits'));
+            if (!visits || isNaN(visits)) {
+                visits = 1; // 從1重新計算，拒絕浮誇虛假
+            } else {
+                visits += 1;
             }
-            visits += 1;
-            localStorage.setItem('ub_visits', visits);
+            localStorage.setItem('ub_real_visits', visits);
             document.getElementById('visit-count').innerText = visits.toLocaleString();
         }
 
@@ -512,9 +527,9 @@
                 • 語音識別：<span style="color:#555; font-style:italic;">"${displayRecognized}"</span><br>
                 • 綜合得分：<span style="color:var(--rhine-blue); font-weight:800; font-size:16px;">${finalScore} 分</span><br>
                 • 導師評語：${evalText}<br>
-                <span style="color:var(--success-green); font-weight:bold;">🎉 修行獎勵：+20 XP已進帳</span>
+                <span style="color:var(--success-green); font-weight:bold;">🎉 修行獎勵：+5 XP已進帳</span>
             `;
-            gainXP(20);
+            gainXP(5); // ⚖️ 調低對話獲得：從 20 降至 5 XP
         }
 
         function initDialogueDropdown() {
@@ -588,10 +603,10 @@
         function checkQuizAns(index, correctAns, questionText, poolId) {
             const userAns = document.getElementById('sys-ans-' + index).value.trim();
             if(userAns === correctAns) {
-                alert('✅ 正確！真係好叻！恭喜獲得 +30 XP！');
+                alert('✅ 正確！真係好叻！恭喜獲得 +8 XP！');
                 wrongNotebook = wrongNotebook.filter(item => item.id !== poolId);
                 localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook));
-                renderWrongNotebook(); gainXP(30);
+                renderWrongNotebook(); gainXP(8); // ⚖️ 調低答對獲得：從 30 降至 8 XP
             } else {
                 alert('❌ 答案唔啱喔！這題已被自動記錄至下方「錯題簿」，再接再厲！');
                 if(!wrongNotebook.some(item => item.id === poolId)) {
@@ -615,21 +630,20 @@
                     <b>${item.question}</b><br>
                     <div style="margin-top:6px; display:flex; gap:10px; align-items:center;">
                         <input type="text" id="wrong-retry-${idx}" placeholder="再次挑戰輸入答案..." style="width:40%; margin-bottom:0; padding:6px; font-size:12px;">
-                        <button class="btn" style="padding:4px 10px; font-size:12px;" onclick="if(document.getElementById('wrong-retry-${idx}').value.trim()==='${item.answer}'){alert('🎉 答對了！成功消滅錯題！'); wrongNotebook.splice(${idx},1); localStorage.setItem('ub_wrong_notebook',JSON.stringify(wrongNotebook)); renderWrongNotebook(); gainXP(15);}else{alert('❌ 還是不對，再想想看！')}">重新挑戰</button>
+                        <button class="btn" style="padding:4px 10px; font-size:12px;" onclick="if(document.getElementById('wrong-retry-${idx}').value.trim()==='${item.answer}'){alert('🎉 答對了！成功消滅錯題！'); wrongNotebook.splice(${idx},1); localStorage.setItem('ub_wrong_notebook',JSON.stringify(wrongNotebook)); renderWrongNotebook(); gainXP(4);}else{alert('❌ 還是不對，再想想看！')}">重新挑戰</button>
                     </div>
-                </div>`;
+                </div>`; // ⚖️ 重新消滅錯題調低：獲得 +4 XP
             });
         }
 
         function clearWrongNotebook() { wrongNotebook = []; localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook)); renderWrongNotebook(); }
 
-        // ✨ 核心修正：動態對選中的隨機題目重置為正確的 1. 至 5. 編號
         function renderQuizzes() {
             const sys = document.getElementById('system-quiz-container'); sys.innerHTML = '';
             const selectedQuizzes = autoQuizPool.filter(q => currentQuizIds.includes(q.id));
             
             selectedQuizzes.forEach((q, i) => {
-                const dynamicIndex = i + 1; // 1, 2, 3, 4, 5 動態索引
+                const dynamicIndex = i + 1; 
                 sys.innerHTML += `
                 <div class="card">
                     <b>${dynamicIndex}. ${q.question}</b><br>
@@ -651,14 +665,52 @@
             document.getElementById('form-question').value = ''; document.getElementById('form-answer').value = '';
         }
 
-        function gainXP(amt) { xp += amt; if(xp >= 100) { xp-=100; level++; alert(`🎉 升級！Level ${level}`); } localStorage.setItem('ub_xp', xp); localStorage.setItem('ub_lvl', level); updateStatus(); }
-        function updateStatus() { document.getElementById('user-xp').innerText = xp; document.getElementById('user-level').innerText = level; document.getElementById('xp-fill').style.width = xp + '%'; }
+        // 🎖️ 完美修正：升級、讀取時動態封裝，稱號與等級綁定，滿級限制為 10 級
+        function gainXP(amt) { 
+            if (level >= 10) {
+                xp = 100; // 達到滿級 10 級後，經驗條全滿封頂
+                localStorage.setItem('ub_xp', xp);
+                updateStatus();
+                return;
+            }
+            xp += amt; 
+            if(xp >= 100) { 
+                xp -= 100; 
+                level++; 
+                if(level > 10) level = 10;
+                alert(`🎉 恭喜發財！您已成功晉升為 Level ${level} 【${levelTitles[level] || '修行者'}】！`); 
+            } 
+            localStorage.setItem('ub_xp', xp); 
+            localStorage.setItem('ub_lvl', level); 
+            updateStatus(); 
+        }
+
+        function updateStatus() { 
+            document.getElementById('user-xp').innerText = xp; 
+            document.getElementById('user-level').innerText = level; 
+            document.getElementById('xp-fill').style.width = xp + '%'; 
+            
+            // ✨ 修正動態渲染，確保刷新網頁時頭銜絕對與等級保持合一
+            const currentTitle = levelTitles[level] || "👶 新手村 (初來步到)";
+            document.getElementById('level-title').innerText = `(${currentTitle})`;
+            
+            if (level >= 10) {
+                document.getElementById('level-title').innerHTML = `(<span style="color:var(--accent-gold); font-weight:bold;">👑 煲匯橋橋王 - 功德圓滿</span>)`;
+            }
+        }
+
         function toggleTheme() { document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark'); }
 
-        // 啟動全套核心引擎
+        // 啟動全套優化核心引擎
         initVisitCounter();
-        updateStatus(); changeLang(currentLang); document.getElementById('daily-soup').innerText = soupPool[new Date().getDate()%3];
-        refreshVocab(); initDialogueDropdown(); refreshQuizRand(); refreshCultureRand(); renderWrongNotebook();
+        updateStatus(); 
+        changeLang(currentLang); 
+        document.getElementById('daily-soup').innerText = soupPool[new Date().getDate()%3];
+        refreshVocab(); 
+        initDialogueDropdown(); 
+        refreshQuizRand(); 
+        refreshCultureRand(); 
+        renderWrongNotebook();
     </script>
 </body>
 </html>
