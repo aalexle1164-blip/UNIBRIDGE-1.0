@@ -238,7 +238,7 @@
     <main id="dialogue" class="content-section">
         <div class="section-desc" id="dialogue-desc">⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！</div>
         <div class="card">
-            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換 </h2>
+            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換</h2>
             <select id="scene-selector" class="scene-select-dropdown" onchange="switchScene(this.value)"></select>
             <div class="chat-container" id="dialogue-chat-container"></div>
         </div>
@@ -260,13 +260,6 @@
                 <button class="chat-btn" style="color:var(--danger-red); border:1px solid var(--danger-red); background:none;" onclick="clearWrongNotebook()" id="btn-clear-wrong">🗑️ 清空</button>
             </div>
             <div id="wrong-quiz-list" style="display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--text-color);"></div>
-        </div>
-
-        <div class="card">
-            <h3 style="margin:0 0 10px 0; font-size:16px;" id="custom-quiz-title">➕ 新增題目</h3>
-            <input type="text" id="form-question" placeholder="題目內容">
-            <input type="text" id="form-answer" placeholder="正確答案">
-            <button class="btn" onclick="handleQuizSubmit()" id="btn-save-quiz">儲存題目</button>
         </div>
     </main>
 
@@ -291,8 +284,8 @@
                 'vocab-desc': '🌱 快速學會打招呼、數字與茶餐廳單詞。', 'vocab-title': '📊 高頻詞彙', 'btn-refresh-vocab': '🔄 換一批',
                 'dialogue-desc': '⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！', 'dialogue-title': '🗣️ 擬真對話切換 (標準 10 話輪)',
                 'quiz-desc': '🏆 每日自動派發挑戰，答對可穩步獲得經驗值。', 'quiz-title': '🎯 隨堂實戰測驗', 'btn-refresh-quiz': '🔄 換一批題目',
-                'lbl-wrong-title': '❌ 我的錯題簿', 'btn-clear-wrong': '🗑️ 清空', 'custom-quiz-title': '➕ 新增題目', 'btn-save-quiz': '儲存題目',
-                'form-q-holder': '題目內容', 'form-a-holder': '正確答案', 'culture-desc': '🧳 探索老香港傳奇故事。', 'btn-refresh-culture': '🔄 換一批故事',
+                'lbl-wrong-title': '❌ 我的錯題簿', 'btn-clear-wrong': '🗑️ 清空',
+                'culture-desc': '🧳 探索老香港傳奇故事。', 'btn-refresh-culture': '🔄 換一批故事',
                 'play-btn': '🔊 播放', 'mic-btn': '🎤 跟讀', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑戰', 'holder-ans': '鍵入答案...', 'holder-retry': '再次挑戰輸入答案...',
                 'alert-correct': '✅ 正確！恭喜獲得 +8 XP！', 'alert-wrong': '❌ 答案唔啱喔！已自動記錄至下方「錯題簿」。', 'alert-retry-correct': '🎉 答對了！成功消滅錯題！', 'alert-retry-wrong': '❌ 還是不對，再想想看！',
                 'no-wrong': '目前沒有錯題記錄，表現絕佳！', 'meta-waiter': '主持 / 店員', 'meta-user': '您', 'btn-expand-story': '展開詳盡歷史典故 ➔', 'btn-collapse-story': '收起故事 ↩'
@@ -300,13 +293,13 @@
             'zh-CN': {
                 'logo-subtitle': '煲汇桥', 'lbl-visit': '👥 全网累计访问:', 'lbl-level': '等级', 'lbl-xp': '经验',
                 'nav-home': '首页', 'nav-vocab': '高频词汇', 'nav-dialogue': '对话实战', 'nav-quiz': '测验题库', 'nav-culture': '文化典故',
-                'welcome-title': '今日想港滴乜嘢？(今天想聊点啥？)', 'tips-title': '💡 手机端适配提示',
+                'welcome-title': '今日想港滴乜嘢？', 'tips-title': '💡 手机端适配提示',
                 'tips-desc': '本系统已完美解锁手机端（iOS/Android）发音限制！首次进入请随意触摸或点击页面，即可全面激活语音引擎。对话实战板块已针对手机性能全面优化，若环境不支持录音将自动切换为高仿真 AI 声学评分，保障修行不中断！',
                 'vocab-desc': '🌱 快速学会打招呼、数字与茶餐厅单词。', 'vocab-title': '📊 高频词汇', 'btn-refresh-vocab': '🔄 换一批',
                 'dialogue-desc': '⚔️ 实境对话挑战，支持手机端全流畅 AI 语音跟读与打分评估！', 'dialogue-title': '🗣️ 拟真对话切换 (标准 10 话轮)',
                 'quiz-desc': '🏆 每日自动派发挑战，答对可稳步获得经验值。', 'quiz-title': '🎯 随堂实战测验', 'btn-refresh-quiz': '🔄 换一批题目',
-                'lbl-wrong-title': '❌ 我的错题簿', 'btn-clear-wrong': '🗑️ 清空', 'custom-quiz-title': '➕ 新增题目', 'btn-save-quiz': '储存题目',
-                'form-q-holder': '题目内容', 'form-a-holder': '正确答案', 'culture-desc': '🧳 探索老香港传奇故事。', 'btn-refresh-culture': '🔄 换一批故事',
+                'lbl-wrong-title': '❌ 我的错题簿', 'btn-clear-wrong': '🗑️ 清空',
+                'culture-desc': '🧳 探索老香港传奇故事。', 'btn-refresh-culture': '🔄 换一批故事',
                 'play-btn': '🔊 播放', 'mic-btn': '🎤 跟读', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑战', 'holder-ans': '键入答案...', 'holder-retry': '再次挑战输入答案...',
                 'alert-correct': '✅ 正确！恭喜获得 +8 XP！', 'alert-wrong': '❌ 答案不对喔！已自动记录至下方「错题簿」。', 'alert-retry-correct': '🎉 答对了！成功消灭错题！', 'alert-retry-wrong': '❌ 还是不对，再想想看！',
                 'no-wrong': '目前没有错题记录，表现绝佳！', 'meta-waiter': '主持 / 店员', 'meta-user': '您', 'btn-expand-story': '展开详尽历史典故 ➔', 'btn-collapse-story': '收起故事 ↩'
@@ -319,8 +312,8 @@
                 'vocab-desc': '🌱 Learn greetings, numbers, and local restaurant terms rapidly.', 'vocab-title': '📊 High-Frequency Vocab', 'btn-refresh-vocab': '🔄 Refresh',
                 'dialogue-desc': '⚔️ Real-world conversational drills. Supports mobile AI voice scoring.', 'dialogue-title': '🗣️ Dialogue Practice (10 Turns)',
                 'quiz-desc': '🏆 Daily evaluation. Earn Experience Points (XP) through correct answers.', 'quiz-title': '🎯 Quiz Challenge', 'btn-refresh-quiz': '🔄 Refresh Questions',
-                'lbl-wrong-title': '❌ My Error Notebook', 'btn-clear-wrong': '🗑️ Clear All', 'custom-quiz-title': '➕ Create Question', 'btn-save-quiz': 'Save Quiz',
-                'form-q-holder': 'Question Text', 'form-a-holder': 'Correct Answer', 'culture-desc': '🧳 Explore legendary Hong Kong stories and heritage.', 'btn-refresh-culture': '🔄 Refresh Stories',
+                'lbl-wrong-title': '❌ My Error Notebook', 'btn-clear-wrong': '🗑️ Clear All',
+                'culture-desc': '🧳 Explore legendary Hong Kong stories and heritage.', 'btn-refresh-culture': '🔄 Refresh Stories',
                 'play-btn': '🔊 Play', 'mic-btn': '🎤 Speak', 'stop-btn': '🛑 Stop', 'submit-btn': 'Submit', 'retry-btn': 'Retry', 'holder-ans': 'Type answer here...', 'holder-retry': 'Try answering again...',
                 'alert-correct': '✅ Correct! +8 XP Awarded!', 'alert-wrong': '❌ Incorrect! Saved to your Error Notebook below.', 'alert-retry-correct': '🎉 Correct! Error cleared from notebook!', 'alert-retry-wrong': '❌ Still incorrect, keep trying!',
                 'no-wrong': 'Excellent! No error logs recorded.', 'meta-waiter': 'Staff', 'meta-user': 'You', 'btn-expand-story': 'Read Full History ➔', 'btn-collapse-story': 'Collapse Story ↩'
@@ -330,7 +323,7 @@
         // 🧠 核心數據多語言資源庫
         const soupPool = {
             'zh-HK': ["「做人如果無夢想，同條鹹魚有咩分別呀？」", "「最緊要個人開心，行行下就到黎明啦。」", "「食得鹹魚抵得渴，每日學多句粵語！」"],
-            'zh-CN': ["“做人如果无梦想，同条咸鱼有咩分别呀？”", “最紧要个人开心，行行下就到黎明啦。”, “食得咸鱼抵得渴，每日学多句粤语！”"],
+            'zh-CN': ["\"做人如果无梦想，同条咸鱼有咩分别呀？\"", "\"最紧要个人开心，行行下就到黎明啦。\"", "\"食得咸鱼抵得渴，每日学多句粤语！\""],
             'en': ["\"Life is empty without dreams, what is the difference between a human and a salted fish?\"", "\"The most important thing is happiness, sunrise will come as we walk.\"", "\"Accept the consequences if you make a choice. Learn Cantonese daily!\""]
         };
 
@@ -380,7 +373,7 @@
                 preview: { 'zh-HK': "香港茶餐廳有一套源自舊時代江湖行話與避諱的獨特速記暗號...", 'zh-CN': "香港茶餐厅有一套源自旧时代江湖行话与避讳的独特速记暗号...", 'en': "Hong Kong cafés feature an ingenious stenographic jargon dating back to historical street codes..." },
                 full: {
                     'zh-HK': "香港茶餐廳的節奏極快，夥計為了縮短點餐與傳單的時間，演變出了一套極具市井智慧的江湖密碼。當你在手寫單據上看到「靚仔」，千萬不要暗自竊喜，因為這在行話裡代表的是「白飯」；而「靚女」則對應外表白淨的「白粥」。\n\n此外，茶餐廳裡更有許多諧音與典故。例如「反Q」指的是「西多士」（源自法式吐司 French Toast 譯音轉化）；而「敗家仔」是指「阿華田」，因為傳統觀念認為喝阿華田是奢侈、敗家的行為。如果你想喝一杯少糖、口感卻更加絲滑濃郁的奶茶，地道的叫法是「茶走」——意思是「去掉砂糖與淡奶，改加煉奶」。這套充滿生命力的語言系統，至今仍深深烙印在港人的日常飲食之中。",
-                    'zh-CN': "香港茶餐厅的节奏极快，伙计为了缩短点餐与传单的时间，演变出了一套极具市井智慧的江湖密码。当你在手写单据上看到“靓仔”，千万不要暗自窃喜，因为这在行万里代表的是“白饭”；而“靓女”则对应外表白净的“白粥”。\n\n此外，茶餐厅里更有许多谐音与典故。例如“反Q”指的是“西多士”（源自法式吐司 French Toast 译音转化）；而“败家子”是指“阿华田”，因为传统观念认为喝阿华田是奢侈、败家的行为。如果你想喝一杯少糖、口感却更加丝滑浓郁的奶茶，地道的叫法是“茶走”——意思是“去掉砂糖与淡奶，改加炼奶”。这套充满生命力的语言系统，至今仍深深烙印在港人的日常饮食之中。",
+                    'zh-CN': "香港茶餐厅的节奏极快，伙计为了缩短点餐与传单的时间，演变出了一套极具市井智慧的江湖密码。当你在手写单据上看到“靓仔”，千万不要暗自窃喜，因为这在行话里代表的是“白饭”；而“靓女”则对应外表白净的“白粥”。\n\n此外，茶餐厅里更有许多谐音与典故。例如“反Q”指的是“西多士”（源自法式吐司 French Toast 译音转化）；而“败家子”是指“阿华田”，因为传统观念认为喝阿华田是奢侈、败家的行为。如果你想喝一杯少糖、口感却更加丝滑浓郁的奶茶，地道的叫法是“茶走”——意思是“去掉砂糖与淡奶，改加炼奶”。这套充满生命力的语言系统，至今仍深深烙印在港人的日常饮食之中。",
                     'en': "Hong Kong cafés move at lightning speed. To expedite orders, servers created short-hand codes filled with urban wit. Seeing 'Handsome Boy' (靚仔) written on your receipt is no flirtation—it actually codes for plain steamed rice, while 'Pretty Girl' (靚女) stands for plain white congee.\n\nFascinating homophones abound: 'Fan Q' refers to French Toast via linguistic evolution, while Ovaltine is humorously labeled 'Prodigal Son' (敗家仔) as ordering it was historically deemed a luxury. For a smoother, deeply aromatic tea with condensed milk instead of ordinary sugar and evaporated milk, ask for 'Caa Zau' (茶走). This vivid system remains a proud, delicious testament to HK identity."
                 }
             },
@@ -388,8 +381,8 @@
                 title: { 'zh-HK': "🚌 紅色小巴：街頭心跳博弈", 'zh-CN': "🚌 红色小巴：街头心跳博弈", 'en': "🚌 Red Minibuses: Street Gambling of Bravery" }, 
                 preview: { 'zh-HK': "俗稱「紅VAN」的紅色小巴，是香港最魔幻且最考驗粵語膽量的交通工具...", 'zh-CN': "俗称“红VAN”的红色小巴，是香港最魔幻且最考验粤语胆量的交通工具...", 'en': "The iconic 'Red VANs' form Hong Kong's most surreal and linguistically daring public transit network..." },
                 full: {
-                    'zh-HK': "紅色非專線小巴（紅VAN）在香港的交通網絡中扮演著極其獨特的角色。它們沒有固定的法定站點和班次，車資與路線全由市場供需與司機之間的江湖默契決定。對於外地遊客或粵語初學者而言，搭乘紅VAN無疑是一場心跳加速的生存挑戰。\n\n因為紅色小巴是「隨叫隨停」的，當你想要下車時，車上並沒有任何下車鈴可以按。你必須在小巴快速穿梭於旺角或銅鑼灣狹窄街頭時，一邊緊盯窗外地標，一邊看準時機，鼓起全身勇氣用宏亮且道地的粵語對司機大喊：「唔該，有落！」或「唔該，前方街口有落！」如果喊得太小聲或發音不準，司機很可能直接呼嘯而過。這種獨特的互動，正是香港街頭文化中最具張力、也最有人情味的一幕。",
-                    'zh-CN': "红色非专线小巴（红VAN）在香港的交通网络中扮演着极其独特的角色。它们没有固定的法定站点和班次，车资与路线全由市场供需与司机之间的江湖默契决定。对于外地游客或粤语初学者而言，搭乘红VAN无疑是一场心跳加速的生存挑战。\n\n因为红色小巴是“随叫随停”的，当你想要下车时，车上并没有任何下车铃可以按。你必须在小巴快速穿梭于旺角或铜锣湾狭窄街头时，一边紧盯窗外地标，一边看准时机，鼓起全身勇气用宏亮且道地的粤语对司机大喊：“唔该，有落！”或“唔该，前方街口有落！”如果喊得太小声或发音不准，司机很可能直接呼啸而过。这种独特的互动，正是香港街头文化中最具张力、也最有人情味的一幕。",
+                    'zh-HK': "紅色非專線小巴（紅VAN）在香港的交通網絡中扮演著極其獨特的角色。它們沒有固定的法定站點 and 班次，車資與路線全由市場供需與司機之間的江湖默契決定。對於外地遊客或粵語初學者而言，搭乘紅VAN無疑是一場心跳加速的生存挑戰。\n\n因為紅色小巴是「隨叫隨停」的，當你想要下車時，車上並沒有任何下車鈴可以按。你必須在小巴快速穿梭於旺角或銅鑼灣狹窄街頭時，一邊緊盯窗外地標，一邊看準時機，鼓起全身勇氣用宏亮且道地的粵語對司機大喊：「唔該，有落！」或「唔該，前方街口有落！」如果喊得太小聲或發音不準，司機很可能直接呼嘯而過。這種獨特的互動，正是香港街頭文化中最具張力、也最有人情味的一幕。",
+                    'zh-CN': "红色非专线小巴（红VAN）在香港的交通网络中扮演着极其独特角色。它们没有固定的法定站点和班次，车资与路线全由市场供需与司机之间的江湖默契决定。对于外地游客或粤语初学者而言，搭乘红VAN无疑是一场心跳加速的生存挑战。\n\n因为红色小巴是“随叫随停”的，当你想要下车时，车上并没有任何下车铃可以按。你必须在小巴快速穿梭于旺角或铜锣湾狭窄街头时，一边紧盯窗外地标，一边看准时机，鼓起全身勇气用宏亮且道地的粤语对司机大喊：“唔该，有落！”或“唔该，前方街口有落！”如果喊得太小声或发音不准，司机很可能直接呼啸而过。这种独特的互动，正是香港街头文化中最具张力、也最有人情味的一幕。",
                     'en': "Red non-franchised minibuses (Red VANs) command a legendary niche in HK. Free from regular municipal routing, their fees and paths fluctuate entirely based on real-time demands and historical turf agreements. For learners, stepping inside is an adrenaline-inducing thrill.\n\nOperating on a wave-down and call-out scheme, there are no physical stop buttons on board. As the van careens through dense Mong Kok corridors, you must monitor your surroundings, calculate the distance, muster your absolute courage, and yell to the driver in impeccable Cantonese: 'M4 Goi1, Jau5 Lok6!' (Stop here, please!). A faint whisper means risking being carried away into the next district. It stands as an interactive, thrilling masterpiece of local street dynamics."
                 }
             },
@@ -418,7 +411,7 @@
             {
                 id: 3, 
                 question: { 'zh-HK': "「買單 / 結帳」在廣東話中通常怎麼說？", 'zh-CN': "「买单 / 结账」在广东话中通常怎么说？", 'en': "How do locals say 'Check the bill' or 'Pay the bill'?" }, 
-                answer: { 'zh-HK': "埋單", 'zh-CN': "埋单", 'en': "Maai4 Daan1" }
+                answer: { 'zh-HK': "買單", 'zh-CN': "买单", 'en': "Maai4 Daan1" }
             }
         ];
 
@@ -463,21 +456,16 @@
             document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active-lang'));
             document.getElementById(`lang-${lang}`).classList.add('active-lang');
             
-            // 1. 刷UI文字標籤
+            // 刷UI文字標籤
             const dictionary = uiLangData[lang];
             for (let id in dictionary) {
                 const el = document.getElementById(id);
                 if (el) {
-                    if (id === 'form-question' || id === 'form-answer' || id === 'sys-ans-') continue;
                     el.innerText = dictionary[id];
                 }
             }
             
-            // 刷輸入欄位 Placeholder
-            if(document.getElementById('form-question')) document.getElementById('form-question').placeholder = dictionary['form-q-holder'];
-            if(document.getElementById('form-answer')) document.getElementById('form-answer').placeholder = dictionary['form-a-holder'];
-
-            // 2. 刷新動態組件內容
+            // 刷新動態組件內容
             document.getElementById('daily-soup').innerText = soupPool[lang][new Date().getDate() % 3];
             updateStatus();
             refreshVocab(); 
@@ -514,7 +502,7 @@
             const container = document.getElementById('mic-control-' + id);
             const box = document.getElementById('score-box-' + id);
             box.style.display = "block"; 
-            box.innerHTML = `<span style="color:#0047AB; font-weight:bold;">🎙️ Recording... Please read the Cantonese aloud 🗣️</span>`;
+            box.innerHTML = `<span style="color:#0047AB; font-weight:bold;">🎙️ Recording... Please read aloud 🗣️</span>`;
             container.innerHTML = `<button class="chat-btn" onclick="stopScoring('${target}', ${id})" style="background:var(--danger-red); color:white;">${dictionary['stop-btn']}</button>`;
             
             recognitionCapturedTexts[id] = "";
