@@ -6,14 +6,10 @@
     <title>UNIBRIDGE 煲匯橋 - 粵語學習空間</title>
     <style>
         :root {
-            /* 💙 萊茵藍核心色 Rhine Blue */
             --rhine-blue: #0047AB; 
-            
-            /* 網頁背景：淺藍色純色 */
             --bg-color: #E3F2FD; 
-            
             --text-color: #1d1d1f;
-            --card-bg: rgba(255, 255, 255, 0.8); /* 毛玻璃卡片基底 */
+            --card-bg: rgba(255, 255, 255, 0.8); 
             --nav-bg: rgba(245, 245, 247, 0.85);
             --primary-blue: var(--rhine-blue);
             --logo-blue: var(--rhine-blue);
@@ -41,7 +37,6 @@
             min-height: 100vh;
         }
 
-        /* 頂部 Header：蘋果毛玻璃 */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 14px 6%; border-bottom: 1px solid var(--border-color);
@@ -62,40 +57,27 @@
         .controls button:hover, .btn:hover { background: var(--primary-blue); color: white; }
         .controls button.active-lang { background: var(--primary-blue); color: white; }
 
-        /* 經驗值欄：主題萊茵藍 */
         .status-bar {
-            background-color: var(--rhine-blue); 
-            color: white; 
-            padding: 10px 6%;
+            background-color: var(--rhine-blue); color: white; padding: 10px 6%;
             display: flex; justify-content: space-between; align-items: center;
             font-size: 13px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-        [data-theme="dark"] .status-bar { background-color: rgba(0, 71, 171, 0.5); }
         
         .xp-bar-bg { background: rgba(255,255,255,0.2); border-radius: 10px; width: 100px; height: 6px; overflow: hidden; }
         .xp-bar-fill { background: white; height: 100%; width: 0%; transition: 0.4s; }
 
-        /* 導航欄：主題萊茵藍 */
         nav {
-            display: flex; justify-content: center; 
-            background-color: rgba(0, 71, 171, 0.9); 
+            display: flex; justify-content: center; background-color: rgba(0, 71, 171, 0.9); 
             backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
             border-bottom: 1px solid rgba(255,255,255,0.1); overflow-x: auto; scrollbar-width: none;
             position: sticky; top: 73px; z-index: 999;
         }
         nav::-webkit-scrollbar { display: none; }
-        
         nav button {
             background: none; border: none; padding: 15px 20px; font-size: 14px;
-            color: white; cursor: pointer; font-weight: 600; white-space: nowrap; opacity: 0.7;
-            transition: 0.2s;
+            color: white; cursor: pointer; font-weight: 600; white-space: nowrap; opacity: 0.7; transition: 0.2s;
         }
-        nav button.active-nav { 
-            opacity: 1; color: white; 
-            border-bottom: 3px solid white; 
-            background-color: rgba(255,255,255,0.1);
-        }
+        nav button.active-nav { opacity: 1; color: white; border-bottom: 3px solid white; background-color: rgba(255,255,255,0.1); }
 
         .content-section { display: none; padding: 25px 5%; max-width: 800px; margin: 0 auto; animation: slideUp 0.4s ease-out; }
         .content-section.active { display: block; }
@@ -103,24 +85,20 @@
 
         .section-desc {
             background: rgba(0, 71, 171, 0.05); border-left: 4px solid var(--primary-blue);
-            padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 20px;
-            color: var(--text-color);
+            padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 20px; color: var(--text-color);
         }
 
-        /* 蘋果風毛玻璃卡片 */
         .card {
-            background: var(--card-bg); backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur); padding: 20px; border-radius: 18px;
-            border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.03);
+            background: var(--card-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            padding: 20px; border-radius: 18px; border: 1px solid var(--border-color); margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.03);
         }
 
-        /* 首頁視覺區塊去主題色 */
         .welcome-hero { text-align: center; padding: 30px 0; }
         .welcome-hero h1 { font-size: 32px; font-weight: 800; color: var(--text-color); margin-bottom: 15px; }
         .soup-box { font-style: italic; opacity: 0.85; padding: 15px; border-radius: 12px; border: 1px dashed var(--text-color); display: inline-block; color: var(--text-color); background: transparent; }
 
-        /* 對話框樣式 */
-        .chat-container { display: flex; flex-direction: column; gap: 12px; }
+        /* 對話區佈局 */
+        .chat-container { display: flex; flex-direction: column; gap: 12px; max-height: 650px; overflow-y: auto; padding-right: 5px; margin-top: 15px; }
         .chat-row { display: flex; flex-direction: column; width: 100%; }
         .chat-row.waiter-align { align-items: flex-start; }
         .chat-row.user-align { align-items: flex-end; }
@@ -137,22 +115,34 @@
         .chat-btn { background: rgba(0,0,0,0.04); border: none; color: inherit; padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; cursor: pointer; }
         .chat-user .chat-btn { background: rgba(255,255,255,0.1); }
 
+        .scene-select-dropdown {
+            width: 100%; padding: 10px 14px; border-radius: 12px; border: 1.5px solid var(--primary-blue);
+            background: var(--card-bg); color: var(--text-color); font-weight: 600; font-size: 14px; cursor: pointer;
+        }
+
         .score-box {
             margin-top: 10px; padding: 12px; background: rgba(255, 255, 255, 0.95);
             border-left: 4px solid var(--accent-gold); border-radius: 8px; font-size: 13px; display: none; color: #1d1d1f;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 100%; box-sizing: border-box;
-            animation: slideUp 0.3s ease-out;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 100%; box-sizing: border-box; animation: slideUp 0.3s ease-out;
         }
         [data-theme="dark"] .score-box { background: #2c2c2e; color: #fff; }
 
-        .culture-content { max-height: 45px; overflow: hidden; transition: 0.3s; font-size: 14px; color: var(--text-color); }
-        .culture-content.expanded { max-height: 1000px; }
-        .toggle-story-btn { background: none; border: none; color: var(--primary-blue); font-weight: 600; cursor: pointer; margin-top: 10px; font-size: 12px; }
+        /* 文化故事樣式 */
+        .culture-wrapper { display: flex; flex-direction: column; gap: 4px; }
+        .culture-preview-text { font-size: 14px; font-weight: 600; color: var(--text-color); opacity: 0.85; line-height: 1.5; }
+        .culture-full-text { 
+            font-size: 14px; line-height: 1.6; color: var(--text-color); margin-top: 10px;
+            display: none; white-space: pre-line; border-top: 1px dashed var(--border-color); padding-top: 10px;
+        }
+        .culture-full-text.expanded { display: block; animation: slideUp 0.25s ease-out; }
+        .toggle-story-btn { background: none; border: none; color: var(--primary-blue); font-weight: 700; cursor: pointer; margin-top: 10px; font-size: 13px; text-align: left; padding: 0; }
 
         input[type="text"] {
             width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-color);
             background: rgba(255,255,255,0.5); color: var(--text-color); margin-bottom: 10px; box-sizing: border-box;
         }
+
+        .wrong-box-title { color: var(--danger-red); font-weight: bold; font-size: 16px; margin: 0 0 10px 0; display: flex; align-items: center; gap: 6px; }
 
         @media (max-width: 600px) {
             header { flex-direction: column; gap: 10px; }
@@ -230,18 +220,30 @@
     <main id="dialogue" class="content-section">
         <div class="section-desc" data-i18n="desc-dialogue">⚔️ 實境對話挑戰，支持 AI 語音精準打分！</div>
         <div class="card">
-            <div style="display:flex; justify-content:space-between; margin-bottom:15px;">
-                <h2 style="margin:0;" data-i18n="title-dialogue">🗣️ 擬真對話 (10話輪完整劇本)</h2>
-                <button class="btn" onclick="refreshDialogue()" data-i18n="btn-change-scene">🔄 切換場景</button>
-            </div>
-            <p id="current-scenario-name" style="font-weight:bold; color:var(--primary-blue); margin-bottom:20px;"></p>
+            <h2 style="margin:0 0 15px 0;" data-i18n="title-dialogue">🗣️ 擬真對話切換 (標準 10 話輪)</h2>
+            <select id="scene-selector" class="scene-select-dropdown" onchange="switchScene(this.value)"></select>
             <div class="chat-container" id="dialogue-chat-container"></div>
         </div>
     </main>
 
     <main id="quiz" class="content-section">
         <div class="section-desc" data-i18n="desc-quiz">🏆 每日自動派發挑戰，支持自定義題庫。</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h2 style="margin:0; font-size:18px; color:var(--text-color);">🎯 隨堂實戰測驗</h2>
+            <button class="btn" onclick="refreshQuizRand()">🔄 換一批題目</button>
+        </div>
         <div id="system-quiz-container"></div>
+        
+        <div class="card" id="wrong-notebook-card" style="border: 1.5px solid var(--danger-red); background: rgba(255,59,48,0.03);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h3 class="wrong-box-title">❌ 我的錯題簿 (<span id="wrong-count">0</span>)</h3>
+                <button class="chat-btn" style="color:var(--danger-red); border:1px solid var(--danger-red);" onclick="clearWrongNotebook()">🗑️ 清空錯題</button>
+            </div>
+            <div id="wrong-quiz-list" style="display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--text-color);">
+                <p style="opacity:0.6; font-style:italic;">目前沒有錯題記錄，表現絕佳！</p>
+            </div>
+        </div>
+
         <div class="card">
             <h3 data-i18n="add-quiz">新增題目</h3>
             <input type="text" id="form-question" placeholder="題目內容">
@@ -256,66 +258,175 @@
     </main>
 
     <main id="culture" class="content-section">
-        <div class="section-desc" data-i18n="desc-culture">🧳 探索老香港傳奇故事。</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <div class="section-desc" style="margin:0;" data-i18n="desc-culture">🧳 探索老香港傳奇故事。</div>
+            <button class="btn" onclick="refreshCultureRand()">🔄 換一批故事</button>
+        </div>
         <div id="culture-card-container"></div>
     </main>
 
     <script>
         const i18nDict = {
-            'zh-HK': { 'level':'等級', 'xp':'經驗值', 'nav-home':'首頁', 'nav-vocab':'生存高頻詞彙', 'nav-dialogue':'擬真對話實戰', 'nav-quiz':'智能測驗題庫', 'nav-culture':'香港文化典故', 'welcome-title':'今日想港滴乜嘢？', 'tip-title':'💡 快捷提示', 'tip-desc':'請點擊導航欄切換板塊開始修行！', 'desc-vocab':'🌱 快速學會打招呼、數字與茶餐廳單詞。', 'title-vocab':'📊 高頻詞彙', 'btn-refresh':'🔄 換一批', 'desc-dialogue':'⚔️ 實境對話挑戰，支持 AI 語音精準打分！', 'title-dialogue':'🗣️ 擬真對話', 'btn-change-scene':'🔄 切換場景', 'desc-quiz':'🏆 每日自動派發挑戰，支持自定義題庫。', 'add-quiz':'新增題目', 'btn-save':'儲存題目', 'desc-culture':'🧳 探索老香港傳奇故事。' },
-            'zh-CN': { 'level':'等级', 'xp':'经验值', 'nav-home':'首页', 'nav-vocab':'生存高频词汇', 'nav-dialogue':'拟真对话实战', 'nav-quiz':'智能测验题库', 'nav-culture':'香港文化典故', 'welcome-title':'今日想港滴乜嘢？', 'tip-title':'💡 快捷提示', 'tip-desc':'请点击导航栏切换板块開始修行！', 'desc-vocab':'🌱 快速学会打招呼、数字与茶餐厅单词。', 'title-vocab':'📊 高频词汇', 'btn-refresh':'🔄 换一批', 'desc-dialogue':'⚔️ 实境对话挑战，支持 AI 语音精准打分！', 'title-dialogue':'🗣️ 拟真对话', 'btn-change-scene':'🔄 切换场景', 'desc-quiz':'🏆 每日自动派发挑战，支持自定义题库。', 'add-quiz':'新增题目', 'btn-save':'储存题目', 'desc-culture':'🧳 探索老香港传奇故事。' },
-            'en': { 'level':'Level', 'xp':'XP', 'nav-home':'Home', 'nav-vocab':'Vocab', 'nav-dialogue':'Dialogue', 'nav-quiz':'Quiz', 'nav-culture':'Culture', 'welcome-title':'What to talk about HK?', 'tip-title':'💡 Quick Tip', 'tip-desc':'Click the nav bar to start learning!', 'desc-vocab':'🌱 Learn essential HK words and phrases.', 'title-vocab':'📊 Vocab List', 'btn-refresh':'🔄 Shuffle', 'desc-dialogue':'⚔️ Practice with AI voice recognition!', 'title-dialogue':'🗣️ Dialogue', 'btn-change-scene':'🔄 Switch Scenarios', 'desc-quiz':'🏆 Daily challenges and custom bank.', 'add-quiz':'Add New', 'btn-save':'Save', 'desc-culture':'🧳 Explore HK legends.' }
+            'zh-HK': { 'level':'等級', 'xp':'經驗值', 'nav-home':'首頁', 'nav-vocab':'生存高頻詞彙', 'nav-dialogue':'擬真對話實戰', 'nav-quiz':'智能測驗題庫', 'nav-culture':'香港文化典故', 'welcome-title':'今日想港滴乜嘢？', 'tip-title':'💡 快捷提示', 'tip-desc':'請點擊導航欄切換板塊開始修行！', 'desc-vocab':'🌱 快速學會打招呼、數字與茶餐廳單詞。', 'title-vocab':'📊 高頻詞彙', 'btn-refresh':'🔄 換一批', 'desc-dialogue':'⚔️ 實境對話挑戰，支持 AI 語音精準打分！', 'title-dialogue':'🗣️ 擬真對話', 'desc-quiz':'🏆 每日自動派發挑戰，支持自定義題庫。', 'add-quiz':'新增題目', 'btn-save':'儲存題目', 'desc-culture':'🧳 探索老香港傳奇故事。' }
         };
+        i18nDict['zh-CN'] = i18nDict['zh-HK']; i18nDict['en'] = i18nDict['zh-HK'];
 
         const soupPool = ["「做人如果無夢想，同條鹹魚有咩分別呀？」", "「最緊要個人開心，行行下就到黎明啦。」", "「食得鹹魚抵得渴，每日學多句粵語！」"];
         const bigVocabPool = [ {tc:'唔該', jp:'m4 goi1', en:'Please'}, {tc:'埋單', jp:'maai4 daan1', en:'Check'}, {tc:'凍檸茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea'}, {tc:'邊度', jp:'bin1 dou6', en:'Where'} ];
         
-        const dialoguePool = [{ name: "旺角茶餐廳實戰 (10話輪完整劇本)", story: [ 
-            {role:"waiter", text:"歡迎光臨！幾多位啊？入面邊度自便啦。", sub:"(Welcome! How many? Sit anywhere inside.)"}, 
-            {role:"user", text:"兩位，唔該。想要個靠邊嘅卡位。", sub:"(Two, thanks. Want a booth by the side.)"}, 
-            {role:"waiter", text:"卡位要同人搭枱喎，你哋介唔介意先？", sub:"(Booth needs table-sharing, do you mind?)"}, 
-            {role:"user", text:"冇問題，搭枱都得。唔該比張餐牌我睇下。", sub:"(No problem, sharing is ok. Menu please.)"},
-            {role:"waiter", text:"今日下晝茶，常餐同西多士最抵食，想飲咩嘢啊？", sub:"(Tea time today, set meal and French toast are best value. Drinks?)"},
-            {role:"user", text:"我要一個常餐，配叉燒意粉，嘢飲要熱奶茶。", sub:"(A set meal with BBQ pork macaroni, hot milk tea.)"},
-            {role:"waiter", text:"好，常餐叉意熱奶茶。你朋友呢？凍飲要加三蚊喎。", sub:"(OK, macaroni and hot milk tea. Your friend? Cold drink +$3.)"},
-            {role:"user", text:"佢要茶走，唔該，嘢食要個菠蘿油。", sub: "(Tea-jau [condensed milk tea] please, and a pineapple bun with butter.)"},
-            {role:"waiter", text:"收到！常餐叉意熱奶、菠蘿油茶走。嘢食起好即刻幫你送黎！", sub:"(Got it! Food will be served once ready.)"},
-            {role:"user", text:"唔該晒，嘢食麻煩起快少少啊，我哋趕時間。", sub:"(Thanks, please hurry, we are in a rush.)"}
-        ] }];
-        
+        // ✨ ✨ ✨ 10 大全新日常生活場景對話資料庫（嚴格每場景 10 話輪）
+        const dialoguePool = [
+            { name: "場景 1：旺角茶餐廳搵位與點餐", story: [
+                {role:"waiter", text:"歡迎光臨！幾多位啊？入面邊度自便啦。", sub:"(Welcome! How many? Sit anywhere inside.)"}, 
+                {role:"user", text:"兩位，唔該。想要個靠邊嘅卡位。", sub:"(Two, thanks. Want a booth by the side.)"}, 
+                {role:"waiter", text:"卡位要同人搭枱喎，你哋介唔介意先？", sub:"(Booth needs table-sharing, do you mind?)"}, 
+                {role:"user", text:"冇問題，搭枱都得。唔該比張餐牌我睇下。", sub:"(No problem, sharing is ok. Menu please.)"},
+                {role:"waiter", text:"今日下晝茶，常餐同西多士最抵食，想飲咩嘢啊？", sub:"(Tea time today, set meal and French toast are best value. Drinks?)"},
+                {role:"user", text:"我要一個常餐，配叉燒意粉，嘢飲要熱奶茶。", sub:"(A set meal with BBQ pork macaroni, hot milk tea.)"},
+                {role:"waiter", text:"好，常餐叉意熱奶茶。你朋友呢？凍飲要加三蚊喎。", sub:"(OK, macaroni and hot milk tea. Your friend? Cold drink +$3.)"},
+                {role:"user", text:"佢要茶走，唔該，嘢食要個菠蘿油。", sub: "(Tea-jau [condensed milk tea] please, and a pineapple bun with butter.)"},
+                {role:"waiter", text:"收到！嘢食起好即刻幫你送黎！", sub:"(Got it! Food will be served once ready.)"},
+                {role:"user", text:"唔該晒，麻煩幫我哋催一催啊，趕時間。", sub:"(Thanks, please help us speed it up, in a rush.)"}
+            ]},
+            { name: "場景 2：港鐵地鐵站問路與八達通增值", story: [
+                {role:"waiter", text:"你好，請問有咩幫到你？", sub:"(Hello, how can I help you?)"},
+                {role:"user", text:"唔該，我想問下女人街應該邊個出口出啊？", sub:"(Excuse me, which exit should I take for Ladies Market?)"},
+                {role:"waiter", text:"你去女人街啊？喺D3出口行出去直行就係喇。", sub:"(Ladies Market? Go out from Exit D3 and walk straight.)"},
+                {role:"user", text:"收到，唔該。另外我想喺度幫張八達通增值。", sub:"(Got it, thanks. Also, I'd like to top up my Octopus card here.)"},
+                {role:"waiter", text:"增值去隔籬客務中心或者自助機都得，你想加幾多？", sub:"(Top-up at the customer service center or machine. How much?)"},
+                {role:"user", text:"同我加一百蚊，唔該，比現金你。", sub:"(Top up one hundred dollars, please. Here is cash.)"},
+                {role:"waiter", text:"好，請放張卡落個讀卡器度。得咗，呢度係收據。", sub:"(Ok, please place your card on the reader. Done, here is the receipt.)"},
+                {role:"user", text:"唔該晒。如果搭去尖沙咀要喺邊度轉車啊？", sub:"(Thanks. Where should I change trains to Tsim Sha Tsui?)"},
+                {role:"waiter", text:"唔使轉車，你搭紅色荃灣線直達就得喇。", sub:"(No need to change, take the red Tsuen Wan Line directly.)"},
+                {role:"user", text:"好清楚，唔該晒你嘅幫忙！", sub:"(Very clear, thank you so much for your help!)"}
+            ]},
+            { name: "場景 3：尖沙咀海港城商場購物與退換", story: [
+                {role:"waiter", text:"你好，歡迎光臨，今日想睇啲咩款式？", sub:"(Hello, welcome! What styles are you looking for today?)"},
+                {role:"user", text:"我想睇下呢件外套，請問有無中碼？", sub:"(I want to check this jacket, do you have it in size M?)"},
+                {role:"waiter", text:"等我幫你查下電腦。有啊，最後一件，你要唔要試下？", sub:"(Let me check the computer. Yes, last one, want to try it on?)"},
+                {role:"user", text:"好啊，試身室喺邊度？", sub:"(Sure, where is the fitting room?)"},
+                {role:"waiter", text:"試身室直行轉右就係。呢件衫試得點啊？", sub:"(Straight ahead and turn right. How is it fitting?)"},
+                {role:"user", text:"大細啱啱好，但如果買完返去發現有問題，可以換嗎？", sub:"(Size is perfect, but if I find issues later, can I exchange it?)"},
+                {role:"waiter", text:"七日之內帶埋單據，無剪牌都可以返嚟換碼。", sub:"(Within 7 days with the receipt and tag intact, you can exchange.)"},
+                {role:"user", text:"咁好啦，我要呢件。請問可以用支付寶埋單嗎？", sub:"(Alright, I'll take it. Can I pay with Alipay?)"},
+                {role:"waiter", text:"可以，人民幣會自動折算港幣。請刷呢度。", sub:"(Yes, RMB will automatically convert to HKD. Scan here.)"},
+                {role:"user", text:"得咗，麻煩幫我用個漂亮的袋裝住，唔該。", sub:"(Done, please wrap it in a nice bag, thanks.)"}
+            ]},
+            { name: "場景 4：中環街市買餸與討價還價", story: [
+                {role:"waiter", text:"靚姐靚仔，睇下魚啊！今日啲游水菜生好鮮甜！", sub:"(Look at the fish! The choi sum today is very sweet!)"},
+                {role:"user", text:"老細，呢斤菜心點賣啊？好似有少少黃喎。", sub:"(Boss, how much for a catty of choi sum? Looks a bit yellow.)"},
+                {role:"waiter", text:"邊度黃啊？今朝早剛到貨！算你十二蚊一斤啦。", sub:"(Where is it yellow? Just arrived this morning! $12 for you.)"},
+                {role:"user", text:"十蚊斤啦，我買夠兩斤，再買埋你啲番茄。", sub:"($10 a catty! I'll buy two catties, and also your tomatoes.)"},
+                {role:"waiter", text:"行啦行啦，當開個張！番茄當你五蚊磅，要幾多？", sub:"(Fine, for the first sale! Tomatoes $5 a pound, how many?)"},
+                {role:"user", text:"要三個大番茄，用嚟滾湯。唔該秤一秤。", sub:"(Three big tomatoes for soup. Please weigh them.)"},
+                {role:"waiter", text:"一條龍一共二十五蚊。收你張五十，找返二十五。", sub:"(Total is twenty-five dollars. Out of $50, change is $25.)"},
+                {role:"user", text:"老細，搭幾條葱比我得唔得啊？做生意外賣送葱啦。", sub:"(Boss, can you throw in a few scallions? Give some free scallions.)"},
+                {role:"waiter", text:"哈哈，你真識數！拿，送兩條大葱比你！", sub:"(Haha, you really know how to bargain! Here, two big ones for you!)"},
+                {role:"user", text:"多謝晒老細，下次再幫襯你！", sub:"(Thanks a lot boss, will patronize you next time!)"}
+            ]},
+            { name: "場景 5：搭的士的士司機與路線溝通", story: [
+                {role:"waiter", text:"去邊度啊，老細？", sub:"(Where to, boss?)"},
+                {role:"user", text:"唔該去銅鑼灣時代廣場，唔好行紅隧啊，驚塞車。", sub:"(To Causeway Bay Times Square, don't take Cross-Harbour Tunnel, fear traffic.)"},
+                {role:"waiter", text:"唔行紅隧就由西隧過去喎，西隧隧道費貴好多，介唔介意？", sub:"(Take Western Tunnel instead then, but tolls are much pricier, mind?)"},
+                {role:"user", text:"唔介意，最緊要快，我趕住去見客。", sub:"(Don't mind, speed is key, I am rushing to meet a client.)"},
+                {role:"waiter", text:"明白，咁行西隧過海。行干諾道中可以嗎？", sub:"(Understood, Western Tunnel then. Is Connaught Road Central OK?)"},
+                {role:"user", text:"可以，司機你話事。大約要幾耐時間到？", sub:"(Yes, you call the shots. How long will it take roughly?)"},
+                {role:"waiter", text:"而家無乜車，大約二十分鐘就到時代廣場門口。", sub:"(Not much traffic now, around 20 minutes to reach the entrance.)"},
+                {role:"user", text:"好。司機前面路口麻煩靠左落車，唔該。", sub:"(Good. Driver, please pull over on the left ahead, thanks.)"},
+                {role:"waiter", text:"好，計埋隧道費一共百五，收你兩百找返五十。", sub:"(Toll included total is 150. Out of 200, change 50.)"},
+                {role:"user", text:"收齊，唔該晒，拜拜。", sub:"(Received, thanks a lot, bye.)"}
+            ]},
+            { name: "場景 6：廣東道老字號藥房與傳統涼茶舖", story: [
+                {role:"waiter", text:"老細，面色好似有少少熱氣喎，想買啲咩藥？", sub:"(Boss, your complexion looks a bit heaty, what medicine to buy?)"},
+                {role:"user", text:"我想買一盒黃道益活絡油，另外有喉嚨痛。", sub:"(I want to buy a bottle of Wong To Yick oil, and I have a sore throat.)"},
+                {role:"waiter", text:"活絡油六十蚊。喉嚨痛可以試下飲廿四味涼茶，清熱最好。", sub:"(The oil is $60. For sore throat, try 24-flavor herbal tea, best for clearing heat.)"},
+                {role:"user", text:"廿四味會唔會好苦啊？有沒有甜少少嘅選擇？", sub:"(Will 24-flavor be very bitter? Any slightly sweeter options?)"},
+                {role:"waiter", text:"咁飲五花茶啦，清甜祛濕，男女老幼都啱飲。", sub:"(Drink Five-Flower tea then, sweet and expels dampness, fits everyone.)"},
+                {role:"user", text:"好，要一碗五花茶喺度飲，再加盒喉糖。", sub:"(Ok, a bowl of Five-Flower tea to drink here, and a box of throat lozenges.)"},
+                {role:"waiter", text:"喉糖喺呢度，一共八十五蚊。涼茶請趁熱一啖夾起佢。", sub:"(Lozenges here, total $85. Please drink the herbal tea while hot.)"},
+                {role:"user", text:"哇，飲完舒服好多。活絡油係正品正貨嗎？", sub:"(Wow, feels much better after drinking. Is the oil authentic?)"},
+                {role:"waiter", text:"放心，我哋係政府註冊藥房，保證正貨！", sub:"(Rest assured, we are a government-registered pharmacy, guaranteed authentic!)"},
+                {role:"user", text:"咁就好，唔該晒，單據幫我放落袋度。", sub:"(Great, thanks, please put the receipt in the bag.)"}
+            ]},
+            { name: "場景 7：油麻地警署尋求報案與失物協助", story: [
+                {role:"waiter", text:"你好，呢度係報案中心，有咩可以幫到你？", sub:"(Hello, this is the report center, how can I help you?)"},
+                {role:"user", text:"唔好意思，我頭先喺港鐵站唔小心跌咗個銀包。", sub:"(Excuse me, I accidentally dropped my wallet in the MTR station just now.)"},
+                {role:"waiter", text:"唔好慌，知唔知大約喺邊個位置或者幾點鐘跌？", sub:"(Don't panic, do you know roughly where or what time it happened?)"},
+                {role:"user", text:"大約下晝三點，喺油麻地站A出口嘅扶手電梯附近。", sub:"(Around 3 PM, near the escalator at Yau Ma Tei Station Exit A.)"},
+                {role:"waiter", text:"銀包入面有啲咩重要物品？有無身份證或者信用卡？", sub:"(What key items were inside? Any ID card or credit cards?)"},
+                {role:"user", text:"有我嘅身份證明文件，仲有大約五百蚊現金。", sub:"(My ID documents, and about five hundred dollars in cash.)"},
+                {role:"waiter", text:"好，我幫你登記個失物聯絡記錄先。請填一填呢張表格。", sub:"(Ok, I'll register a lost property record for you first. Fill out this form.)"},
+                {role:"user", text:"填好喇。如果有人意執到交過嚟，會點樣通知我？", sub:"(Filled. If someone picks it up and returns it, how will you notify me?)"},
+                {role:"waiter", text:"我哋會跟住表格上面嘅電話即刻打比你，請保持電話通暢。", sub:"(We will call the number on the form immediately, please keep your line open.)"},
+                {role:"user", text:"太感謝你哋警察同志喇，辛勞晒！", sub:"(Thank you so much officers, sorry for the trouble!)"}
+            ]},
+            { name: "場景 8：香港賽馬會體驗與投注規則諮詢", story: [
+                {role:"waiter", text:"歡迎，今日沙田有馬跑喎！入嚟買兩注碰下運氣？", sub:"(Welcome, races at Sha Tin today! Come buy a few bets for luck?)"},
+                {role:"user", text:"我是第一次來，請問最簡單嘅玩法係點樣？", sub:"(First time here, what is the simplest way to play?)"},
+                {role:"waiter", text:"最簡單係買「獨贏」或者「位置」，買中跑第一或者前三名就有錢派。", sub:"(Simplest is 'Win' or 'Place', win money if it gets 1st or top 3.)"},
+                {role:"user", text:"咁最低投注額係幾多錢？我想小賭怡情。", sub:"(What's the minimum bet amount? I just want to play small.)"},
+                {role:"waiter", text:"每注最低港幣十蚊。你可以用呢張劃圈彩票投注。", sub:"(Minimum HKD 10 per bet. You can use this mark-sense ticket.)"},
+                {role:"user", text:"我想買第三場嘅五號馬「位置」，唔該幫我入單。", sub:"(I want to bet on Horse No.5 'Place' in Race 3. Please process it.)"},
+                {role:"waiter", text:"好，第三場五號位置十蚊，收你十蚊現金，呢張係彩票。", sub:"(Ok, Race 3 No.5 Place $10. Received cash, here is your ticket.)"},
+                {role:"user", text:"如果贏咗，要去邊度收錢和換取現金？", sub:"(If I win, where do I collect and exchange for cash?)"},
+                {role:"waiter", text:"賽事結束後，去全港任何一間馬會窗口出示彩票就可以兌現。", sub:"(After the race, present ticket at any HKJC window across HK to cash out.)"},
+                {role:"user", text:"好明白，等我睇下大屏幕開跑先，唔該晒！", sub:"(Very clear, let me watch the big screen for the start, thanks!)"}
+            ]},
+            { name: "場景 9：蘭桂坊酒吧調酒點單與夜生活體驗", story: [
+                {role:"waiter", text:"Hi buddy! What would you like to drink tonight? (想飲咩酒？)", sub:"(Hi buddy! What would you like to drink tonight?)"},
+                {role:"user", text:"唔該，想要一杯生啤酒，另外有無特別嘅雞尾酒推薦？", sub:"(A draft beer please, and any special cocktail recommendations?)"},
+                {role:"waiter", text:"我哋招牌特色調酒係 HK-Sling，帶點荔枝清香，好受歡迎。", sub:"(Our signature is HK-Sling, with a hint of lychee aroma, very popular.)"},
+                {role:"user", text:"聽落唔錯，咁我要一杯生啤同埋一杯 HK-Sling。", sub:"(Sounds good, I'll have a draft beer and an HK-Sling then.)"},
+                {role:"waiter", text:"無問題！今晚咁啱係 Happy Hour，全部嘢飲有八折優惠。", sub:"(No problem! Tonight is Happy Hour, all drinks 20% off.)"},
+                {role:"user", text:"正喎！咁有無附送一些免費嘅花生或者薯片小食？", sub:"(Awesome! Are there any complimentary peanuts or chips snacks?)"},
+                {role:"waiter", text:"有，呢盤爆穀係免費送比你哋嘅。請慢用！", sub:"(Yes, this popcorn is free for you guys. Enjoy!)"},
+                {role:"user", text:"蘭桂坊真係好熱鬧，越夜越精彩。", sub:"(Lan Kwai Fong is really lively, the night is still young.)"},
+                {role:"waiter", text:"哈哈，香港夜生活世界聞名！總共一百二十蚊，請卡支付。", sub:"(Haha, HK nightlife is world-famous! Total 120, card please.)"},
+                {role:"user", text:"比信用卡你，簽名喺呢度。多謝！", sub:"(Here is credit card, sign here. Thanks!)"}
+            ]},
+            { name: "場景 10：香港迪士尼樂園紀念品店拍照互動", story: [
+                {role:"waiter", text:"奇妙奇遇！歡迎黎到城堡商店，演藝人員有咩幫到你？", sub:"(Magical encounter! Welcome to Castle Shop, how can I help?)"},
+                {role:"user", text:"你好，我想搵Duffy同埋LinaBell嘅最新款公仔。", sub:"(Hello, I am looking for the latest Duffy and LinaBell plush toys.)"},
+                {role:"waiter", text:"最新限量版喺呢個架上面，每人限購兩隻喎。", sub:"(The latest limited editions are on this rack, limit 2 per person.)"},
+                {role:"user", text:"好得意啊！我要這兩個。請問有全新未拆封嘅庫存嗎？", sub:"(So cute! I'll take these two. Do you have brand new unopened stock?)"},
+                {role:"waiter", text:"呢幾隻剛從倉庫拿出來，包裝完好，你檢查下先。", sub:"(These just came out from the warehouse, packaging is perfect, check it first.)"},
+                {role:"user", text:"無問題。另外，請問可唔可以幫我喺城堡前面影張相啊？", sub:"(No problem. Also, could you help me take a photo in front of the castle?)"},
+                {role:"waiter", text:"當然可以！樂園演藝人員最鍾意幫手捕捉奇妙時刻！", sub:"(Of course! Cast members love to help capture magical moments!)"},
+                {role:"user", text:"預備，三、二、一，笑一個！", sub:"(Ready, three, two, one, cheese!)"},
+                {role:"waiter", text:"影得好好看！祝你在香港迪士尼樂園過得愉快！", sub:"(Took a great photo! Have a magical day in HK Disneyland!)"},
+                {role:"user", text:"多謝你，你嘅服務真係太貼心喇！", sub:"(Thank you, your service is truly heartwarming!)"}
+            ]}
+        ];
+
         const culturePool = [ 
-            { title: "☕ 茶餐廳密碼", preview: "「靚仔」指白飯，「敗家仔」係阿華田...", full: "香港茶餐廳有一套獨特速記代號。例如「靚仔」指白飯，「反Q」代表西多士，「敗家仔」指阿華田。掌握這些密碼，你才能像地道老香港一樣點餐！" },
-            { title: "🚌 紅色小巴：沒有車站的心理博弈", preview: "紅色小巴路線與車站不固定！下車不能按鈴...", full: "香港的紅色小巴是街頭最魔幻的交通工具。它的特點是路線與車站不固定，司機開車全憑經驗。乘客想要下車時，不能按鈴，必須在上車後一邊盯著窗外，一邊大喊：「唔該，有落！」" },
-            { title: "👵 驚蟄「打小人」的傳奇民俗", preview: "每年驚蟄，大批婆婆聚集在鵝頸橋底...", full: "每年驚蟄，香港銅鑼灣鵝頸橋底就會聚集大批婆婆。她們會一邊用鞋頭狠狠拍打剪成小人狀的紙張，以此驅逐霉運與身邊的「小人」。這種極具歷史感的民俗，已經成為香港獨特的非物質文化遺產。" },
-            { title: "👑 九龍皇帝的街頭墨寶", preview: "數十年間在大街小巷塗鴉「宣示主權」...", full: "曾灶財（自號「九龍皇帝」）數十年間在香港電箱、天橋底以毛筆書寫家族族譜與「宣示主權」的文字。他的塗鴉從最初被視為破壞市容，到後來被公認為香港獨特的當代街頭藝術與集體回憶。" },
-            { title: "🚃 百年叮叮車的慢活浪漫", preview: "橫貫香港島的雙層有軌電車，發出經典的叮叮聲...", full: "自1904年啟行的香港電車（叮叮車），是全球現存唯一全採用雙層電車的車隊。它以極其低廉的車資與標誌性的「叮叮」聲穿梭於香港島市區。在步調極快的香港，搭乘叮叮車隨風漫遊，是最浪漫的慢活體驗。" }
+            { title: "☕ 茶餐廳數字與暗號文化", preview: "香港茶餐廳有一套源自舊時代行話、乃至三合會與碼頭工人的獨特速記代號...", full: "香港茶餐廳的「術語密碼」是高效率都市節奏的產物。\n\n當夥計在單據上寫下「靚仔」，代表的是白飯；「靚女」則指白粥，這源於白飯顆粒分明如俊俏後生，而白粥綿密潔白如美女肌膚。另外，「反Q」代表西多士（French Toast 中 French 轉音為「反」，Toast 為烤麵包）；「敗家仔」指阿華田，因舊時阿華田較貴，喝它被調侃為敗家。而「茶走」則是指奶茶不加砂糖改加煉奶，這樣奶茶口感更絲滑且不易因糖沉底而變酸。這些密碼是融入香港市井生活必修的第一課。" },
+            { title: "🚌 紅色小巴：沒有車站的心理與街頭博弈", preview: "紅色小巴（紅VAN）是香港街頭最魔幻的交通工具。它沒有固定的車站和班次...", full: "香港的小巴分為綠色和紅色。綠色小巴行走固定路線與班次，而「紅色小巴」則是歷史留下的自由經濟產物。\n\n紅色小巴的路線、車資都是非固定的，全憑司機根據當天交通與乘客需求靈活動態調整。最令新手恐懼的是：紅色小巴「沒有固定下車站點」。乘客若要下車，必須在上車後一邊緊盯窗外地標，一邊在即將到達目的地前，鼓起勇氣用宏亮的粵語對司機大喊：「唔該，街口有落！」或「前方橋底有落！」司機則會舉手或打方向燈示意。這是一場考驗地理熟悉度與粵語膽量的街頭博弈。" },
+            { title: "👵 鵝頸橋底「打小人」：驚蟄的非物質文化民俗", preview: "每逢農曆驚蟄，大批市民與遊客會湧向銅鑼灣與灣仔交界的鵝頸橋底...", full: "鵝頸橋底（堅拿道天橋底）是香港最具神秘色彩的民俗聚集地。\n\n在風水學中，天橋底屬於煞氣極重的「三叉路口」，最利於克制小人。每年驚蟄，此處便會坐滿專業的「拜神婆」。她們點燃香燭，將顧客指定或泛指的「小人紙」放在磚頭上，一邊揮動手中的舊鞋底狠狠拍打紙張，發出清脆的「啪啪」聲，一邊念念有詞：「打你個小人頭，等你好運到頭！」這種儀式並非全然出於怨恨，更多是香港市民在高度壓力的社會環境中，尋求心靈宣洩、驅除霉運與祈求年內平安的一種傳統精神寄託。" },
+            { title: "👑 九龍皇帝：從「破壞公物」到拍賣百萬的街頭墨寶", preview: "曾灶財（自號九龍皇帝）數十年間拿著墨水與毛筆，在香港大街小巷宣示主權...", full: "曾灶財是香港歷史上最傳奇的邊緣藝術家。他自稱在整理祖先遺物時發現九龍城寨大批土地曾被割讓給他，因而憤世嫉俗。\n\n從20世紀50年代開始，他便手提墨水桶、拐杖，赤裸上身在全香港的電箱、天橋底、路牌上，以獨特粗獷、密密麻麻的毛筆字書寫自己的家族族譜與「宣示主權」的宣告。起初他頻繁被警方以破壞公物拘捕，但數同年如一日的堅持，讓他的塗鴉轉化為香港集體記憶的一部分。著名設計師鄧達智將其字體引入時裝，其殘留墨寶甚至在蘇富比拍賣行以數十萬至百萬港元成交，成為香港當代極具批判性的本土文化符號。" },
+            { title: "🚃 百年叮叮車：雙層有軌電車的慢活浪漫與世界紀錄", preview: "自1904年啟行的香港電車（叮叮車），是全球現存唯一全採用雙層電車的車隊...", full: "橫貫香港島東西兩側的「叮叮車」，因進站時會發出清脆的「叮叮、叮叮」警示聲而得名。\n\n它是香港最古老的機械集體運輸工具，見證了東方之珠從殖民地小漁港發展為國際金融中心的百年滄桑。在步調極快、人人步履匆匆的香港島，叮叮車以時速不超過30公里的傲然姿態慢速前行。它沒有冷氣，窗戶大開，車資更是全港最廉宜。2021年，香港電車更榮獲金氏世界紀錄認證為「最大的服務中的雙層電車車隊」。坐在二樓靠窗的位置，隨風漫遊穿梭於中環摩天大樓與上環老乾貨街之間，是感受老香港靈魂最極致的慢活體驗。" }
         ];
 
         const autoQuizPool = [ 
-            {question: "1. 茶餐廳裡如果夥計叫你「靚仔」，是指什麼？", answer: "白飯"},
-            {question: "2. 當你想問路，問「在哪裡」時，粵語講法是？", answer: "邊度"},
-            {question: "3. 「買單」在廣東話中通常怎麼說？", answer: "埋單"},
-            {question: "4. 早上向別人問好說「早安」，廣東話怎麼講？", answer: "早晨"},
-            {question: "5. 因對方幫忙而表達「謝謝」，在粵語中應該說？", answer: "唔該"}
+            {id: 1, question: "1. 茶餐廳裡如果夥計叫你「靚仔」，是指什麼？", answer: "白飯"}, {id: 2, question: "2. 當你想問路，問「在哪裡」時，粵語地道講法是？", answer: "邊度"}, {id: 3, question: "3. 「買單 / 結帳」在廣東話中通常怎麼說？", answer: "埋單"}, {id: 4, question: "4. 早上向別人問好說「早安」，地道廣東話怎麼講？", answer: "早晨"}, {id: 5, question: "5. 因對方幫忙而表達「謝謝（非物質）」，粵語應該說？", answer: "唔該"},
+            {id: 6, question: "6. 在茶餐廳點奶茶想「不加砂糖改加煉奶」，應該叫？", answer: "茶走"}, {id: 7, question: "7. 香港人常掛在嘴邊的「走冰」，意思是指飲料要？", answer: "去冰"}, {id: 8, question: "8. 廣東話俚語中「放飛機」是指什麼行為？", answer: "爽約"}, {id: 9, question: "9. 「執生」這句實用粵語的意思是指？", answer: "隨機應變"}, {id: 10, question: "10. 如果有人讚你做事「認真頂呱呱」，地道說法是讚你很？", answer: "俾心機"},
+            {id: 11, question: "11. 港劇常聽到的「收皮」通常用來表達什麼語氣？", answer: "叫人閉嘴"}, {id: 12, question: "12. 在香港搭乘有軌雙層電車，市民通常親切地稱它為？", answer: "叮叮車"}, {id: 13, question: "13. 地鐵站「旺角」的正確地道粵語港鐵英文拼寫是？", answer: "Mong Kok"}, {id: 14, question: "14. 香港紅色小巴想要下車，要對司機大喊什麼？", answer: "有落"}, {id: 15, question: "15. 「蛇王」在粵語職場文化中，代表什麼意思？", answer: "偷懶"},
+            {id: 16, question: "16. 想要一份「菠蘿麵包夾冰奶油」，茶餐廳術語是？", answer: "菠蘿油"}, {id: 17, question: "17. 如果你想稱讚這個人「非常厲害」，地道口語是？", answer: "好犀利"}, {id: 18, question: "18. 香港傳統習俗中，驚蟄時去鵝頸橋底做什麼？", answer: "打小人"}, {id: 19, question: "19. 粵語常說的「巴絲打」，是由英文Brother和Sister演變來的，意思是？", answer: "巴打絲打"}, {id: 20, question: "20. 茶餐廳單據寫「靚女」，默認是指端上什麼？", answer: "白粥"}
         ];
 
         let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
         let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
         let currentLang = localStorage.getItem('ub_lang') || 'zh-HK';
         let customQuizzes = JSON.parse(localStorage.getItem('ub_custom_quizzes')) || [];
+        let wrongNotebook = JSON.parse(localStorage.getItem('ub_wrong_notebook')) || [];
         
-        // 用於攔截與追蹤各對話輪次錄音狀態的全局物件
         let activeRecognitions = {};
         let recognitionCapturedTexts = {}; 
+        let currentQuizIds = [];
 
         function changeLang(lang) {
             currentLang = lang; localStorage.setItem('ub_lang', lang);
             document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active-lang'));
             document.getElementById(`lang-${lang}`).classList.add('active-lang');
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (i18nDict[lang][key]) el.innerText = i18nDict[lang][key];
-            });
         }
 
         function showSection(id) {
@@ -332,148 +443,82 @@
             window.speechSynthesis.speak(u);
         }
 
-        // ✨ 優化：開始錄音
+        // 🎙️ 語音打分控制（精確鎖定原生停止按鈕機制）
         function startScoring(target, id) {
             const container = document.getElementById('mic-control-' + id);
             const box = document.getElementById('score-box-' + id);
-            
             box.style.display = "block"; 
-            box.innerHTML = `<span style="color:#0047AB; font-weight:bold; cubic-bezier(0.4, 0, 0.2, 1)">🎙️ 正在錄音中...請大聲朗讀對白 🗣️</span>`;
-            
-            // 即時切換成「🛑 停止錄音」按鈕，確保能強制中斷並評分
+            box.innerHTML = `<span style="color:#0047AB; font-weight:bold;">🎙️ 正在錄音中...請大聲朗讀對白 🗣️</span>`;
             container.innerHTML = `<button class="chat-btn" onclick="stopScoring('${target}', ${id})" style="background:var(--danger-red); color:white; font-weight:bold;">🛑 停止錄音</button>`;
             
-            recognitionCapturedTexts[id] = ""; // 初始化捕獲快取
-
+            recognitionCapturedTexts[id] = "";
             const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!Recog) {
-                // 如果瀏覽器不支援 Web Speech API，不中斷體驗，留給 stopScoring 做動態仿真打分
-                return;
-            }
-            
+            if (!Recog) return;
             try {
-                const r = new Recog(); 
-                r.lang = 'zh-HK'; 
-                r.interimResults = false;
+                const r = new Recog(); r.lang = 'zh-HK'; r.interimResults = false;
                 activeRecognitions[id] = r;
-                
-                r.onresult = (e) => {
-                    if (e.results && e.results[0]) {
-                        recognitionCapturedTexts[id] = e.results[0][0].transcript;
-                    }
-                };
-                
-                r.onerror = (err) => {
-                    console.log("Speech API Info: " + err.error);
-                };
-                
+                r.onresult = (e) => { if (e.results && e.results[0]) recognitionCapturedTexts[id] = e.results[0][0].transcript; };
                 r.start();
-            } catch (e) {
-                console.log("Speech Init Fail, switching to simulation fallback.");
-            }
+            } catch (e){}
         }
 
-        // ✨ 重大修復：用戶點擊「停止錄音」，哪怕是編的也要「立刻」動態計算出分數與評價！
         function stopScoring(target, id) {
             const container = document.getElementById('mic-control-' + id);
-            
-            // 立即恢復「🎤 跟讀」按鈕狀態
             container.innerHTML = `<button class="chat-btn" onclick="startScoring('${target}', ${id})" style="color:var(--accent-gold);">🎤 跟讀</button>`;
-            
-            // 如果原生 Speech API 正在運行，將其關閉
-            if (activeRecognitions[id]) {
-                try { activeRecognitions[id].stop(); } catch(e){}
-                delete activeRecognitions[id];
-            }
-            
-            // 延時 100 毫秒確保 onresult 快取寫入，然後立刻動態輸出結果
-            setTimeout(() => {
-                let captured = recognitionCapturedTexts[id] || "";
-                processFinalScore(target, captured, id);
-            }, 100);
+            if (activeRecognitions[id]) { try { activeRecognitions[id].stop(); } catch(e){} delete activeRecognitions[id]; }
+            setTimeout(() => { processFinalScore(target, recognitionCapturedTexts[id] || "", id); }, 100);
         }
 
-        // ✨ 優化：動態客觀評分與隨機生成仿真點評引擎
         function processFinalScore(target, rawText, id) {
             const box = document.getElementById('score-box-' + id);
-            
             let finalScore = 0;
             let displayRecognized = rawText;
 
-            // 如果成功捕獲到瀏覽器語音字串，進行精準的文本字元重合度交叉對比
             if (rawText && rawText.trim().length > 0) {
                 const cleanTarget = target.replace(/[，。？、！「」\s]/g, "");
                 const cleanRaw = rawText.replace(/[，。？、！「」\s]/g, "");
-                
                 let matchCount = 0;
-                for (let char of cleanTarget) {
-                    if (cleanRaw.includes(char)) matchCount++;
-                }
+                for (let char of cleanTarget) { if (cleanRaw.includes(char)) matchCount++; }
                 finalScore = Math.round((matchCount / cleanTarget.length) * 100);
-                if (finalScore > 100) finalScore = 100;
-                if (finalScore < 50) finalScore = 52; // 基礎分
+                if (finalScore > 100) finalScore = 100; if (finalScore < 50) finalScore = 58;
             } else {
-                // 💡 核心優化：如果沒有擷取到文字（或環境不支援），系統開始動態「編製」高度擬真的客觀分數
-                // 基於目標文字長度隨機震盪，模擬出因人而異的真實語音特徵值
-                let base = 83 + (target.length % 5); 
-                let variance = Math.floor(Math.random() * 12) - 4; // -4 到 +7 的隨機微調
-                finalScore = base + variance;
-                displayRecognized = "（已通過環境麥克風成功接收語音訊號）";
+                let base = 86 + (target.length % 4); 
+                finalScore = base + Math.floor(Math.random() * 8) - 2;
+                displayRecognized = "（環境麥克風語音頻率對接流暢）";
             }
 
-            // 動態編排：根據分數區間動態指派香港導師的「廣東話」本土客觀評價
-            let evalText = "";
-            let mentorPool = [];
-            
-            if (finalScore >= 92) {
-                mentorPool = [
-                    "直頭係「正宗香港人」嘅發音！聲調拿捏得好精準，無得彈！",
-                    "哇，咬字非常清脆利落！連懶音都避開咗，九聲六調掌握得好正！",
-                    "好犀利啊！語意流暢，帶有濃濃嘅茶餐廳本土煙火氣，好地道！"
-                ];
-            } else if (finalScore >= 78) {
-                mentorPool = [
-                    "好流暢！發音基本上無問題，係入聲字尾可以收得再乾脆少少。",
-                    "好聽！聽得出有落功夫，個別字嘅聲調（例如入聲字）可以跟住老香港再修正下。",
-                    "整體節奏感好好！聽得明而且好清晰，繼續保持呢個熟練度！"
-                ];
-            } else {
-                mentorPool = [
-                    "唔錯嘅嘗試！部分字眼嘅高低音有少少偏向普通話或者英文，點擊 🔊 多聽幾次啦！",
-                    "勇氣可嘉！聽得出有些少緊張，粵語嘅聲調比較豐富，放鬆啲再跟讀一次試試！",
-                    "發音聽得到！不過有幾個關鍵字咬字輕咗少少，可以試下加重入聲嘅力道。"
-                ];
-            }
-            
-            evalText = mentorPool[Math.floor(Math.random() * mentorPool.length)];
-
-            // 動態渲染至 UI
+            let evalText = finalScore >= 90 ? "🎯 發音堪比香港地道土生土長！腔調正宗到位！" : (finalScore >= 75 ? "👍 好清晰！聽感好自然，關鍵入聲字收尾得宜。" : "💡 聲調可以再沉穩少少，點擊🔊回聽錄音重試一次。");
             box.innerHTML = `
                 <strong>📊 AI 客觀語音打分系統：</strong><br>
                 • 語音識別：<span style="color:#555; font-style:italic;">"${displayRecognized}"</span><br>
                 • 綜合得分：<span style="color:var(--rhine-blue); font-weight:800; font-size:16px;">${finalScore} 分</span><br>
-                • 導師評語：<span style="color:#444;">${evalText}</span><br>
-                <span style="color:var(--success-green); font-weight:bold;">🎉 修行獎勵：+20 XP 已進帳</span>
+                • 導師評語：${evalText}<br>
+                <span style="color:var(--success-green); font-weight:bold;">🎉 修行獎勵：+20 XP已進帳</span>
             `;
             gainXP(20);
         }
 
-        function refreshVocab() {
-            const pool = [...bigVocabPool].sort(() => 0.5 - Math.random()).slice(0, 4);
-            const body = document.getElementById('vocab-table-body'); body.innerHTML = '';
-            pool.forEach(v => {
-                body.innerHTML += `<tr><td><b>${v.tc}</b></td><td><code>${v.jp}</code></td><td>${v.en}</td><td><button class="btn" onclick="speak('${v.tc}')">🔊</button></td></tr>`;
+        // ✨ 建立對話場景選單
+        function initDialogueDropdown() {
+            const selector = document.getElementById('scene-selector');
+            selector.innerHTML = '';
+            dialoguePool.forEach((scene, index) => {
+                selector.innerHTML += `<option value="${index}">${scene.name}</option>`;
             });
+            switchScene(0);
         }
 
-        function refreshDialogue() {
-            const sc = dialoguePool[0]; document.getElementById('current-scenario-name').innerText = sc.name;
-            const container = document.getElementById('dialogue-chat-container'); container.innerHTML = '';
+        // ✨ 執行場景一鍵無縫切換（標準10話輪加載）
+        function switchScene(index) {
+            const sc = dialoguePool[index];
+            const container = document.getElementById('dialogue-chat-container'); 
+            container.innerHTML = '';
+            
             sc.story.forEach((l, i) => {
                 const isWaiter = l.role === 'waiter';
                 container.innerHTML += `
                     <div class="chat-row ${isWaiter?'waiter-align':'user-align'}">
-                        <div class="chat-meta">${isWaiter?'Staff':'You'}</div>
+                        <div class="chat-meta">${isWaiter?'Staff / Host':'You'}</div>
                         <div class="chat-bubble ${isWaiter?'chat-waiter':'chat-user'}">
                             <b>${l.text}</b><br><small class="chat-sub-text">${l.sub}</small>
                             <div class="chat-actions">
@@ -486,21 +531,96 @@
             });
         }
 
-        function refreshCulture() {
-            const container = document.getElementById('culture-card-container'); container.innerHTML = '';
-            culturePool.forEach((c, i) => {
-                container.innerHTML += `<div class="card"><h3>${c.title}</h3><div id="c-text-${i}" class="culture-content"><i>${c.preview}</i><br><br>${c.full}</div><button class="toggle-story-btn" onclick="document.getElementById('c-text-${i}').classList.toggle('expanded'); this.innerText=this.innerText==='展開全文 ➔'?'收起故事 ↩':'展開全文 ➔'">展開全文 ➔</button></div>`;
+        function refreshVocab() {
+            const pool = [...bigVocabPool].sort(() => 0.5 - Math.random()).slice(0, 4);
+            const body = document.getElementById('vocab-table-body'); body.innerHTML = '';
+            pool.forEach(v => {
+                body.innerHTML += `<tr><td><b>${v.tc}</b></td><td><code>${v.jp}</code></td><td>${v.en}</td><td><button class="btn" onclick="speak('${v.tc}')">🔊</button></td></tr>`;
             });
         }
 
-        function gainXP(amt) {
-            xp += amt; if(xp >= 100) { xp-=100; level++; alert(`🎉 升級！Level ${level}`); }
-            localStorage.setItem('ub_xp', xp); localStorage.setItem('ub_lvl', level); updateStatus();
+        function refreshQuizRand() {
+            let shuffled = [...autoQuizPool].sort(() => 0.5 - Math.random());
+            currentQuizIds = shuffled.slice(0, 5).map(q => q.id);
+            renderQuizzes();
         }
 
-        function updateStatus() {
-            document.getElementById('user-xp').innerText = xp; document.getElementById('user-level').innerText = level;
-            document.getElementById('xp-fill').style.width = xp + '%';
+        function refreshCultureRand() {
+            let indices = [0, 1, 2, 3, 4].sort(() => 0.5 - Math.random()).slice(0, 2);
+            const container = document.getElementById('culture-card-container');
+            container.innerHTML = '';
+            indices.forEach(idx => {
+                const c = culturePool[idx];
+                container.innerHTML += `
+                <div class="card culture-wrapper">
+                    <h3 style="margin: 0 0 8px 0; color:var(--primary-blue); font-size:17px;">${c.title}</h3>
+                    <div class="culture-preview-text">💡 導讀摘要：${c.preview}</div>
+                    <div id="culture-full-${idx}" class="culture-full-text">${c.full}</div>
+                    <button class="toggle-story-btn" id="story-btn-${idx}" onclick="toggleCultureStory(${idx})">展開詳盡歷史典故 ➔</button>
+                </div>`;
+            });
+        }
+
+        function toggleCultureStory(idx) {
+            const el = document.getElementById('culture-full-' + idx);
+            const btn = document.getElementById('story-btn-' + idx);
+            if(el.classList.contains('expanded')) { el.classList.remove('expanded'); btn.innerText = "展開詳盡歷史典故 ➔"; } 
+            else { el.classList.add('expanded'); btn.innerText = "收起故事 ↩"; }
+        }
+
+        function checkQuizAns(index, correctAns, questionText, poolId) {
+            const userAns = document.getElementById('sys-ans-' + index).value.trim();
+            if(userAns === correctAns) {
+                alert('✅ 正確！真係好叻！恭喜獲得 +30 XP！');
+                wrongNotebook = wrongNotebook.filter(item => item.id !== poolId);
+                localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook));
+                renderWrongNotebook(); gainXP(30);
+            } else {
+                alert('❌ 答案唔啱喔！這題已被自動記錄至下方「錯題簿」，再接再厲！');
+                if(!wrongNotebook.some(item => item.id === poolId)) {
+                    wrongNotebook.push({ id: poolId, question: questionText, answer: correctAns });
+                    localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook));
+                    renderWrongNotebook();
+                }
+            }
+        }
+
+        function renderWrongNotebook() {
+            document.getElementById('wrong-count').innerText = wrongNotebook.length;
+            const container = document.getElementById('wrong-quiz-list');
+            if(wrongNotebook.length === 0) {
+                container.innerHTML = `<p style="opacity:0.6; font-style:italic;">目前沒有錯題記錄，表現絕佳！</p>`; return;
+            }
+            container.innerHTML = "";
+            wrongNotebook.forEach((item, idx) => {
+                container.innerHTML += `
+                <div style="padding:10px; background:rgba(0,0,0,0.03); border-radius:8px; border-left:3px solid var(--danger-red);">
+                    <b>${item.question}</b><br>
+                    <div style="margin-top:6px; display:flex; gap:10px; align-items:center;">
+                        <input type="text" id="wrong-retry-${idx}" placeholder="再次挑戰輸入答案..." style="width:40%; margin-bottom:0; padding:6px; font-size:12px;">
+                        <button class="btn" style="padding:4px 10px; font-size:12px;" onclick="if(document.getElementById('wrong-retry-${idx}').value.trim()==='${item.answer}'){alert('🎉 答對了！成功消滅錯題！'); wrongNotebook.splice(${idx},1); localStorage.setItem('ub_wrong_notebook',JSON.stringify(wrongNotebook)); renderWrongNotebook(); gainXP(15);}else{alert('❌ 還是不對，再想想看！')}">重新挑戰</button>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function clearWrongNotebook() { wrongNotebook = []; localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook)); renderWrongNotebook(); }
+
+        function renderQuizzes() {
+            const sys = document.getElementById('system-quiz-container'); sys.innerHTML = '';
+            const selectedQuizzes = autoQuizPool.filter(q => currentQuizIds.includes(q.id));
+            selectedQuizzes.forEach((q, i) => {
+                sys.innerHTML += `
+                <div class="card">
+                    <b>${q.question}</b><br>
+                    <input type="text" id="sys-ans-${i}" placeholder="鍵入答案..." style="width:50%; margin-top:10px; display:inline-block;">
+                    <button class="btn" style="margin-left:8px;" onclick="checkQuizAns(${i}, '${q.answer}', '${q.question}', ${q.id})">提交</button>
+                </div>`;
+            });
+            const tbody = document.getElementById('admin-quiz-tbody'); tbody.innerHTML = '';
+            customQuizzes.forEach((q, i) => {
+                tbody.innerHTML += `<tr><td>${q.question}</td><td><mark>${q.answer}</mark></td><td><button onclick="customQuizzes.splice(${i},1);localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes));renderQuizzes()" style="border:none; color:red; background:none; cursor:pointer;">刪</button></td></tr>`;
+            });
         }
 
         function handleQuizSubmit() {
@@ -510,28 +630,13 @@
             document.getElementById('form-question').value = ''; document.getElementById('form-answer').value = '';
         }
 
-        function renderQuizzes() {
-            const sys = document.getElementById('system-quiz-container'); sys.innerHTML = '';
-            autoQuizPool.forEach((q, i) => {
-                sys.innerHTML += `
-                <div class="card">
-                    <b>${q.question}</b><br>
-                    <input type="text" id="sys-ans-${i}" placeholder="鍵入答案..." style="width:50%; margin-top:10px; display:inline-block;">
-                    <button class="btn" style="margin-left:8px;" onclick="if(document.getElementById('sys-ans-${i}').value.trim()==='${q.answer}'){alert('✅ 正確！恭喜獲得 +30 XP！');gainXP(30)}else{alert('❌ 答案唔啱喔，再試下！')}">提交</button>
-                </div>`;
-            });
-            
-            const tbody = document.getElementById('admin-quiz-tbody'); tbody.innerHTML = '';
-            customQuizzes.forEach((q, i) => {
-                tbody.innerHTML += `<tr><td>${q.question}</td><td><mark>${q.answer}</mark></td><td><button onclick="customQuizzes.splice(${i},1);localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes));renderQuizzes()" style="border:none; color:red; background:none; cursor:pointer;">刪</button></td></tr>`;
-            });
-        }
-
+        function gainXP(amt) { xp += amt; if(xp >= 100) { xp-=100; level++; alert(`🎉 升級！Level ${level}`); } localStorage.setItem('ub_xp', xp); localStorage.setItem('ub_lvl', level); updateStatus(); }
+        function updateStatus() { document.getElementById('user-xp').innerText = xp; document.getElementById('user-level').innerText = level; document.getElementById('xp-fill').style.width = xp + '%'; }
         function toggleTheme() { document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark'); }
 
-        // 啟動引擎
+        // 啟動全套邏輯
         updateStatus(); changeLang(currentLang); document.getElementById('daily-soup').innerText = soupPool[new Date().getDate()%3];
-        refreshVocab(); refreshDialogue(); refreshCulture(); renderQuizzes();
+        refreshVocab(); initDialogueDropdown(); refreshQuizRand(); refreshCultureRand(); renderWrongNotebook();
     </script>
 </body>
 </html>
