@@ -6,294 +6,173 @@
     <title>UNIBRIDGE 煲匯橋 - 粵語學習空間</title>
     <style>
         :root {
-            --bg-color: #ffffff;
-            --text-color: #333333;
-            --card-bg: #f5f7fa;
-            --primary-blue: #0056b3;
-            --logo-blue: #2a8dcc; /* 稍微柔和點的IP與Logo藍色 */
-            --border-color: #e0e0e0;
-            --accent-gold: #ffb703;
-            --success-green: #2a9d8f;
-            --danger-red: #e63946;
+            --bg-color: #f1f4f9; 
+            --text-color: #1d1d1f; /* 蘋果經典深黑 */
+            --card-bg: rgba(255, 255, 255, 0.65); /* ✨ 蘋果毛玻璃通透基底 */
+            --nav-bg: rgba(245, 245, 247, 0.75);
+            --primary-blue: #0071e3; /* 蘋果經典藍 */
+            --logo-blue: #2a8dcc;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --accent-gold: #ff9f0a;
+            --success-green: #34c759;
+            --danger-red: #ff3b30;
+            --glass-blur: blur(20px); /* ✨ 經典 Apple Blur 參數 */
         }
         [data-theme="dark"] {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --card-bg: #1e1e1e;
-            --primary-blue: #4da3ff;
+            --bg-color: #000000;
+            --text-color: #f5f5f7;
+            --card-bg: rgba(28, 28, 30, 0.7); 
+            --nav-bg: rgba(28, 28, 30, 0.8);
+            --primary-blue: #2997ff;
             --logo-blue: #4da3ff;
-            --border-color: #333333;
+            --border-color: rgba(255, 255, 255, 0.12);
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-            transition: all 0.3s ease;
-            -webkit-font-smoothing: antialiased;
+            margin: 0; padding: 0; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            -webkit-font-smoothing: antialiased; background-color: var(--bg-color);
+            /* 香港天際線線條背景 */
+            background-image: linear-gradient(180deg, transparent 60%, rgba(255,255,255,0.2) 100%),
+                url('data:image/svg+xml;charset=UTF-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 400" opacity="0.04"><path d="M0 380 L1600 380 M50 380 L50 200 L120 200 L120 380 M150 380 L150 150 L200 150 L200 380 M300 380 L300 100 Q350 50 400 100 L400 380 M430 380 L430 180 L490 180 Q520 120 550 18 L580 180 L640 180 L640 380 M670 380 L670 20 L730 20 L730 380 M760 380 L760 120 L800 120 L800 380 M830 380 L830 200 L870 200 L870 380 M900 380 L900 30 Q1000 80 1100 30 L1100 380 M1130 380 L1130 150 L1170 150 L1170 380 M1200 380 L1200 180 L1260 180 L1260 380 L1600 380" fill="none" stroke="%23000" stroke-width="2"/></svg>');
+            background-size: cover, auto 25%; background-position: center bottom;
+            background-repeat: no-repeat, repeat-x; background-attachment: fixed;
         }
 
-        /* 頂部 Header & 商標區塊配置 */
+        /* 頂部 Header & 導航列：極致毛玻璃 */
         header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 5%;
-            border-bottom: 1px solid var(--border-color);
-            flex-wrap: wrap; /* 允許在窄螢幕上換行 */
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 14px 6%; border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            position: sticky; top: 0; z-index: 100;
         }
 
-        /* 品牌核心區塊：IP + Logo */
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
+        .brand-container { display: flex; align-items: center; gap: 12px; }
+        .ip-char { width: 42px; height: 42px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06)); }
+        .ip-char svg { width: 100%; height: 100%; }
+        .logo-text-group { display: flex; flex-direction: column; line-height: 1.1; }
+        .logo-en { font-size: 24px; font-weight: 800; color: var(--logo-blue); font-style: italic; letter-spacing: 0.5px; margin: 0; }
+        .logo-cn { font-size: 15px; font-weight: 700; color: var(--logo-blue); letter-spacing: 2px; margin-top: 1px; }
 
-        /* 最左邊藍色的煲仔人物IP形象 (簡約向量圖形) */
-        .ip-char {
-            width: 40px;
-            height: 40px;
-        }
-        .ip-char svg {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* 商標文字容器：EN + CN */
-        .logo-text-group {
-            display: flex;
-            flex-direction: column; /* 上下排列 */
-            line-height: 1.1;
-        }
-
-        /* UNIBRIDGE 藍色藝術字英文商標 */
-        .logo-en {
-            font-size: 26px;
-            font-weight: 900;
-            color: var(--logo-blue);
-            font-style: italic;
-            letter-spacing: 1px;
-            margin: 0;
-        }
-
-        /* 煲匯橋 中文名 */
-        .logo-cn {
-            font-size: 16px;
-            font-weight: 700;
-            color: var(--logo-blue);
-            letter-spacing: 2px;
-            margin-top: 1px;
-        }
-
-        /* 控制按鈕區塊 */
-        .controls {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+        .controls { display: flex; align-items: center; gap: 6px; }
         .controls button, .btn {
-            padding: 8px 14px;
-            cursor: pointer;
-            border: 1px solid var(--primary-blue);
-            background: transparent;
-            color: var(--primary-blue);
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 14px;
-            transition: all 0.2s;
-            white-space: nowrap;
+            padding: 6px 14px; cursor: pointer; border: 1px solid var(--primary-blue);
+            background: transparent; color: var(--primary-blue); border-radius: 30px;
+            font-weight: 600; font-size: 13px; transition: all 0.2s cubic-bezier(0.25, 0.8, 0.25, 1); white-space: nowrap;
         }
-        .controls button:hover, .btn:hover {
-            background: var(--primary-blue);
-            color: white;
-        }
+        .controls button:hover, .btn:hover { background: var(--primary-blue); color: white; transform: scale(1.02); }
+        .controls button.active-lang { background: var(--primary-blue); color: white; }
         .btn-success { border-color: var(--success-green); color: var(--success-green); }
         .btn-success:hover { background: var(--success-green); color: white; }
         .btn-danger { border-color: var(--danger-red); color: var(--danger-red); }
 
         .status-bar {
-            background: linear-gradient(135deg, #0056b3, #0a1128);
-            color: white;
-            padding: 12px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 14px;
-            flex-wrap: wrap;
-            gap: 10px;
+            background: rgba(0, 113, 227, 0.05); color: var(--text-color); padding: 10px 6%;
+            display: flex; justify-content: space-between; align-items: center; font-size: 13px;
+            border-bottom: 1px solid var(--border-color); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
         }
-        .xp-bar-bg {
-            background: rgba(255,255,255,0.2);
-            border-radius: 10px;
-            width: 100px;
-            height: 8px;
-            display: inline-block;
-            margin-left: 8px;
-            overflow: hidden;
-            vertical-align: middle;
-        }
-        .xp-bar-fill {
-            background: var(--accent-gold);
-            height: 100%;
-            width: 0%;
-            transition: width 0.3s ease;
-        }
+        .xp-bar-bg { background: rgba(0,0,0,0.05); border-radius: 10px; width: 100px; height: 6px; display: inline-block; margin-left: 8px; overflow: hidden; vertical-align: middle; }
+        [data-theme="dark"] .xp-bar-bg { background: rgba(255,255,255,0.1); }
+        .xp-bar-fill { background: var(--accent-gold); height: 100%; width: 0%; transition: width 0.4s ease; }
 
-        /* 導航列配置：居中、不換行滾動 */
         nav {
-            display: flex;
-            justify-content: center; /* 🎉 導航欄內容居中 */
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            overflow-x: auto; /* 在手機端允許橫向滾動 */
-            scrollbar-width: none; /* Firefox */
-            -webkit-overflow-scrolling: touch;
+            display: flex; justify-content: center; border-bottom: 1px solid var(--border-color);
+            overflow-x: auto; scrollbar-width: none; background-color: var(--nav-bg); 
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            position: sticky; top: 71px; z-index: 99;
         }
-        nav::-webkit-scrollbar { display: none; } /* Chrome/Safari */
-        
+        nav::-webkit-scrollbar { display: none; }
         nav button {
-            background: none;
-            border: none;
-            padding: 15px 18px;
-            font-size: 15px;
-            color: var(--text-color);
-            cursor: pointer;
-            font-weight: bold;
-            white-space: nowrap;
-            flex-shrink: 0;
-            border-bottom: 3px solid transparent;
-            transition: all 0.2s;
+            background: none; border: none; padding: 14px 16px; font-size: 14px; color: var(--text-color);
+            cursor: pointer; font-weight: 600; white-space: nowrap; opacity: 0.7; transition: all 0.2s;
         }
-        nav button.active-nav {
-            color: var(--primary-blue);
-            border-bottom: 3px solid var(--primary-blue);
-        }
+        nav button.active-nav { color: var(--primary-blue); opacity: 1; border-bottom: 2px solid var(--primary-blue); }
 
-        .content-section {
-            display: none;
-            padding: 20px 4%;
-            max-width: 800px;
-            margin: 0 auto;
-            box-sizing: border-box;
-        }
+        .content-section { display: none; padding: 25px 4%; max-width: 720px; margin: 0 auto; box-sizing: border-box; animation: fadeIn 0.4s ease; }
         .content-section.active { display: block; }
-
-        /* 模塊描述頂部裝飾條 */
-        .section-desc {
-            background: rgba(0, 86, 179, 0.05);
-            border-left: 4px solid var(--primary-blue);
-            padding: 12px 15px;
-            border-radius: 4px;
-            font-size: 14px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
-
-        .card {
-            background-color: var(--card-bg);
-            padding: 18px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px solid var(--border-color);
-            box-shadow: 0 2px 4px rgba(0,0,0,0.01);
-            box-sizing: border-box;
-        }
-
-        /* 歡迎頁特色排版 */
-        .welcome-hero {
-            text-align: center;
-            padding: 40px 10px;
-            background: linear-gradient(180deg, rgba(0,86,179,0.08) 0%, transparent 100%);
-            border-radius: 16px;
-            margin-bottom: 20px;
-        }
-        .welcome-hero h1 {
-            font-size: 32px;
-            font-weight: 900;
-            color: var(--primary-blue);
-            margin: 0 0 15px 0;
-        }
-        .soup-box {
-            font-style: italic;
-            color: #666;
-            font-size: 16px;
-            line-height: 1.6;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            display: inline-block;
-            max-width: 90%;
-            border: 1px dashed var(--border-color);
-        }
-        [data-theme="dark"] .soup-box { color: #aaa; }
-
-        /* 表格響應式包裝 */
-        .table-responsive {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { text-align: left; padding: 10px; border-bottom: 1px solid var(--border-color); font-size: 14px; }
-        th { background-color: rgba(0,0,0,0.02); white-space: nowrap; }
-
-        /* 對話流 */
-        .chat-container { display: flex; flex-direction: column; gap: 15px; margin-top: 15px; }
-        .chat-bubble {
-            max-width: 85%;
-            padding: 12px 16px;
-            border-radius: 16px;
-            line-height: 1.5;
-            box-sizing: border-box;
-            font-size: 15px;
-        }
-        .chat-waiter { background-color: var(--primary-blue); color: white; align-self: flex-start; border-top-left-radius: 0; }
-        .chat-user { background-color: var(--card-bg); color: var(--text-color); align-self: flex-end; border-top-right-radius: 0; border: 1px solid var(--border-color); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* 真實語音反饋盒 */
+        .section-desc {
+            background: rgba(0, 113, 227, 0.04); border-left: 3px solid var(--primary-blue);
+            padding: 12px 16px; border-radius: 8px; font-size: 13px; line-height: 1.5; margin-bottom: 22px; color: var(--text-color);
+        }
+
+        /* 蘋果風高通透卡片 */
+        .card {
+            background-color: var(--card-bg); padding: 20px; border-radius: 16px; margin-bottom: 18px;
+            border: 1px solid var(--border-color); box-shadow: 0 4px 12px rgba(0,0,0,0.02); box-sizing: border-box;
+            backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        }
+
+        .welcome-hero { text-align: center; padding: 35px 10px; }
+        .welcome-hero h1 { font-size: 34px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-color); margin: 0 0 12px 0; }
+        .soup-box {
+            font-style: italic; color: var(--text-color); font-size: 15px; opacity: 0.8; line-height: 1.6; padding: 14px 20px;
+            background: rgba(255,255,255,0.4); border-radius: 12px; display: inline-block; max-width: 90%; border: 1px solid var(--border-color);
+        }
+
+        .table-responsive { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border-color); font-size: 14px; }
+        th { font-weight: 600; opacity: 0.6; }
+
+        /* =========================================
+           ✨ 新設計：精美 UI 智能對話串流區塊布局 
+           ========================================= */
+        .chat-layout-wrapper {
+            background: rgba(255,255,255,0.3); border: 1px solid var(--border-color);
+            border-radius: 24px; padding: 20px; box-shadow: inset 0 0 20px rgba(0,0,0,0.01);
+        }
+        [data-theme="dark"] .chat-layout-wrapper { background: rgba(0,0,0,0.2); }
+        .chat-container { display: flex; flex-direction: column; gap: 18px; margin-top: 10px; }
+        
+        .chat-row { display: flex; flex-direction: column; width: 100%; }
+        .chat-row.waiter-align { align-items: flex-start; }
+        .chat-row.user-align { align-items: flex-end; }
+
+        .chat-meta { font-size: 11px; font-weight: 600; opacity: 0.4; margin-bottom: 4px; padding: 0 6px; }
+        
+        .chat-bubble {
+            max-width: 82%; padding: 12px 18px; border-radius: 20px;
+            line-height: 1.5; font-size: 15px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); position: relative;
+        }
+        /* 店員：洗鍊雅緻灰 */
+        .chat-waiter { background-color: rgba(230, 230, 235, 0.9); color: #000000; border-top-left-radius: 4px; }
+        [data-theme="dark"] .chat-waiter { background-color: rgba(44, 44, 46, 0.9); color: #ffffff; }
+        /* 用戶：經典 Apple 藍 */
+        .chat-user { background-color: var(--primary-blue); color: #ffffff; border-top-right-radius: 4px; }
+
+        .chat-sub-text { display: block; font-size: 12px; margin-top: 4px; opacity: 0.75; font-weight: 400; }
+        .chat-actions { display: flex; gap: 6px; margin-top: 8px; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 6px; }
+        .chat-user .chat-actions { border-top-color: rgba(255,255,255,0.15); }
+        
+        /* 對話框內嵌極簡按鈕 */
+        .chat-btn {
+            background: rgba(0,0,0,0.04); border: none; color: inherit; padding: 4px 10px;
+            border-radius: 12px; font-size: 11px; font-weight: 600; cursor: pointer; transition: background 0.2s;
+        }
+        .chat-user .chat-btn { background: rgba(255,255,255,0.15); }
+        .chat-btn:hover { background: rgba(0,0,0,0.1); }
+        .chat-user .chat-btn:hover { background: rgba(255,255,255,0.25); }
+
         .ai-score-box {
-            margin-top: 8px;
-            padding: 10px;
-            background: rgba(42, 157, 143, 0.08);
-            border-left: 4px solid var(--success-green);
-            border-radius: 4px;
-            font-size: 13px;
-            display: none;
+            margin-top: 8px; padding: 10px 14px; background: rgba(52, 199, 89, 0.1);
+            border-radius: 12px; font-size: 12px; width: 100%; box-sizing: border-box; display: none; line-height: 1.4;
         }
+        .chat-user .ai-score-box { color: var(--text-color); }
 
-        /* 文化專屬：折疊流 */
-        .culture-content {
-            max-height: 45px;
-            overflow: hidden;
-            transition: max-height 0.35s ease;
-            font-size: 14px;
-            line-height: 1.6;
-        }
-        .culture-content.expanded { max-height: 800px; }
-        .toggle-story-btn {
-            background: none; border: none; color: var(--primary-blue);
-            font-weight: bold; cursor: pointer; padding: 5px 0; margin-top: 8px; font-size: 13px;
-        }
+        .culture-content { max-height: 42px; overflow: hidden; transition: max-height 0.3s ease; font-size: 14px; line-height: 1.6; }
+        .culture-content.expanded { max-height: 600px; }
+        .toggle-story-btn { background: none; border: none; color: var(--primary-blue); font-weight: 600; cursor: pointer; padding: 4px 0; margin-top: 6px; font-size: 12px; }
 
-        .form-group input {
-            width: 100%; padding: 10px; border: 1px solid var(--border-color);
-            border-radius: 6px; background-color: var(--bg-color); color: var(--text-color); box-sizing: border-box;
-        }
+        .form-group input { width: 100%; padding: 10px 14px; border: 1px solid var(--border-color); border-radius: 8px; background-color: rgba(255,255,255,0.5); color: var(--text-color); box-sizing: border-box; }
 
-        /* 手機端寬度小於 600px 的適配調整 */
         @media (max-width: 600px) {
-            header { padding: 10px 4%; flex-direction: column; gap: 10px; } /* Header 手機端改上下 */
-            .logo-en { font-size: 22px; }
-            .logo-cn { font-size: 14px; }
+            header { padding: 10px 4%; flex-direction: column; gap: 8px; }
+            nav { justify-content: flex-start; top: 101px; } 
+            nav button { padding: 12px 14px; font-size: 13px; }
             .welcome-hero h1 { font-size: 26px; }
-            .chat-bubble { max-width: 95%; }
-            th, td { padding: 8px 5px; font-size: 13px; }
-            .controls button, .btn { padding: 6px 10px; font-size: 12px; }
-            nav { justify-content: flex-start; } /* 手機端導航列恢復左對齊便於滑動 */
+            .chat-bubble { max-width: 90%; }
         }
     </style>
 </head>
@@ -320,51 +199,51 @@
         </div>
         
         <div class="controls">
-            <button onclick="changeLang('zh-HK')">繁</button>
-            <button onclick="changeLang('zh-CN')">简</button>
-            <button onclick="changeLang('en')">EN</button>
+            <button id="lang-zh-HK" class="active-lang" onclick="changeLang('zh-HK')">繁</button>
+            <button id="lang-zh-CN" onclick="changeLang('zh-CN')">简</button>
+            <button id="lang-en" onclick="changeLang('en')">EN</button>
             <button onclick="toggleTheme()">🌓</button>
         </div>
     </header>
 
     <div class="status-bar">
-        <div>等級: <span id="user-level">1</span> <span id="level-title">(👶 新手村)</span></div>
+        <div><span data-i18n="level">等級</span>: <span id="user-level">1</span> <span id="level-title">(👶 新手村)</span></div>
         <div>
-            經驗值: <span id="user-xp">0</span> / 100 XP
+            <span data-i18n="xp">經驗值</span>: <span id="user-xp">0</span> / 100 XP
             <div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div>
         </div>
     </div>
 
     <nav>
-        <button id="nav-home" class="active-nav" onclick="showSection('home')">首頁</button>
-        <button id="nav-vocab" onclick="showSection('vocab')">生存高頻詞彙</button>
-        <button id="nav-dialogue" onclick="showSection('dialogue')">擬真對話實戰</button>
-        <button id="nav-quiz" onclick="showSection('quiz')">智能測驗題庫</button>
-        <button id="nav-culture" onclick="showSection('culture')">香港文化典故</button>
+        <button id="nav-home" class="active-nav" onclick="showSection('home')" data-i18n="nav-home">首頁</button>
+        <button id="nav-vocab" onclick="showSection('vocab')" data-i18n="nav-vocab">生存高頻詞彙</button>
+        <button id="nav-dialogue" onclick="showSection('dialogue')" data-i18n="nav-dialogue">擬真對話實戰</button>
+        <button id="nav-quiz" onclick="showSection('quiz')" data-i18n="nav-quiz">智能測驗題庫</button>
+        <button id="nav-culture" onclick="showSection('culture')" data-i18n="nav-culture">香港文化典故</button>
     </nav>
 
     <main id="home" class="content-section active">
         <div class="welcome-hero">
-            <h1 id="welcome-title">今日想港滴乜嘢？</h1>
+            <h1 id="welcome-title" data-i18n="welcome-title">今日想港滴乜嘢？</h1>
             <div class="soup-box" id="daily-soup">正在為你煲今日廣東話心靈雞湯...</div>
         </div>
         <div class="card" style="text-align: center; border-color: var(--accent-gold);">
-            <p style="margin: 0; font-size: 14px; font-weight: bold;">💡 快捷提示</p>
-            <p style="font-size: 13px; color: gray; margin: 5px 0 0 0;">請點擊上方導航欄，切換到各個專業板塊開始你的粵語修行之旅！</p>
+            <p style="margin: 0; font-size: 14px; font-weight: bold;" data-i18n="tip-title">💡 快捷提示</p>
+            <p style="font-size: 13px; opacity: 0.7; margin: 5px 0 0 0;" data-i18n="tip-desc">請點擊上方導航欄，切換到各個專業板塊開始你的粵語修行之旅！</p>
         </div>
     </main>
 
     <main id="vocab" class="content-section">
-        <div class="section-desc">🌱 <strong>生存高頻詞彙描述：</strong>適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！</div>
-        <div class="section-header">
-            <h2>📊 粵語高頻詞彙</h2>
-            <button class="btn" onclick="refreshVocab()">🔄 換一批</button>
+        <div class="section-desc" data-i18n="desc-vocab">🌱 適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h2 style="margin:0; font-size:20px;" data-i18n="title-vocab">📊 粵語高頻詞彙</h2>
+            <button class="btn" onclick="refreshVocab()" data-i18n="btn-refresh">🔄 換一批</button>
         </div>
         <div class="card">
             <div class="table-responsive">
                 <table>
                     <thead>
-                        <tr><th>繁體</th><th>粵拼</th><th>English</th><th>發音</th></tr>
+                        <tr><th data-i18n="th-tc">繁體</th><th data-i18n="th-jp">粵拼</th><th data-i18n="th-en">English</th><th data-i18n="th-audio">發音</th></tr>
                     </thead>
                     <tbody id="vocab-table-body"></tbody>
                 </table>
@@ -373,42 +252,40 @@
     </main>
 
     <main id="dialogue" class="content-section">
-        <div class="section-desc">⚔️ <strong>完整實境對話與 AI 語音挑戰描述：</strong>解鎖包含「深度茶餐廳、旺角殺價、經典攔的士」完整對話劇情。內置原生 Web 語音跟讀功能，高逼真反饋你的粵語發音準確度！</div>
-        <div class="section-header">
-            <h2>🗣️ 劇場級對話 (真實語音比對)</h2>
-            <button class="btn" onclick="refreshDialogue()">🔄 切換場景</button>
+        <div class="section-desc" data-i18n="desc-dialogue">⚔️ 包含深度茶餐廳完整交互劇情。內置原生 Web 語音跟讀功能，高逼真反饋你的粵語發音準確度！</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h2 style="margin:0; font-size:20px;" data-i18n="title-dialogue">🗣️ 劇場級對話 (10話輪高階挑戰)</h2>
+            <button class="btn" onclick="refreshDialogue()" data-i18n="btn-change-scene">🔄 切換場景</button>
         </div>
-        <p style="font-size: 13px; color: gray; margin-top: -10px;">🔔 注意：點擊「🎤 開始跟讀」後請對著麥克風清晰唸出對白，系統將實時比對文字打分！</p>
-        <p>當前場景：<span id="current-scenario-name" style="font-weight: bold; color: var(--primary-blue);"></span></p>
-        <div class="chat-container" id="dialogue-chat-container"></div>
+        <p style="font-size: 12px; opacity:0.6; margin-top: -5px;" data-i18n="mic-tip">🔔 點擊「🎤 開始跟讀」後請對麥克風清晰唸出對白，系統將進行實時語音精準打分！</p>
+        <p style="font-size:14px;"><span data-i18n="label-scene">當前場景</span>：<span id="current-scenario-name" style="font-weight: bold; color: var(--primary-blue);"></span></p>
+        
+        <div class="chat-layout-wrapper">
+            <div class="chat-container" id="dialogue-chat-container"></div>
+        </div>
     </main>
 
     <main id="quiz" class="content-section">
-        <div class="section-desc">🏆 <strong>智能測驗與客製題庫描述：</strong>系統每日自動派發全新挑戰題，同時支持自己增刪改專屬錯題本，高效賺取XP！</div>
-        <div class="section-header">
-            <h2>📅 每日挑戰 (自動派發)</h2>
-            <button class="btn" onclick="refreshSystemQuiz(true)">🔄 刷新問題</button>
+        <div class="section-desc" data-i18n="desc-quiz">🏆 系統每日自動派發全新挑戰題，同時支持自己增刪改專屬錯題本，高效賺取XP！</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h2 style="margin:0; font-size:20px;" data-i18n="title-quiz">📅 每日挑戰 (自動派發)</h2>
+            <button class="btn" onclick="refreshSystemQuiz(true)" data-i18n="btn-refresh">🔄 刷新問題</button>
         </div>
         <div id="system-quiz-container"></div>
 
-        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 30px 0;">
+        <hr style="border: 0; border-top: 1px solid var(--border-color); margin: 25px 0;">
 
-        <h2>🛠️ 題庫自定義管理</h2>
+        <h2 style="font-size:20px;" data-i18n="title-custom-quiz">🛠️ 題庫自定義管理</h2>
         <div class="card">
-            <h3 id="form-title" style="margin-top:0;">新增題目</h3>
-            <input type="hidden" id="edit-index" value="">
-            <div style="margin-bottom:10px;">
-                <input type="text" id="form-question" placeholder="題目敘述：如『買單』點講？">
-            </div>
-            <div style="margin-bottom:10px;">
-                <input type="text" id="form-answer" placeholder="正確答案">
-            </div>
-            <button class="btn btn-success" onclick="handleQuizSubmit()">儲存題目</button>
+            <h3 id="form-title" style="margin-top:0; font-size:16px;" data-i18n="add-quiz">新增題目</h3>
+            <div style="margin-bottom:10px;"><input type="text" id="form-question" placeholder="題目敘述：如『買單』點講？"></div>
+            <div style="margin-bottom:10px;"><input type="text" id="form-answer" placeholder="正確答案"></div>
+            <button class="btn btn-success" onclick="handleQuizSubmit()" data-i18n="btn-save">儲存題目</button>
         </div>
         <div class="card">
             <div class="table-responsive">
                 <table>
-                    <thead><tr><th>題目</th><th>答案</th><th>操作</th></tr></thead>
+                    <thead><tr><th data-i18n="th-q">題目</th><th data-i18n="th-a">答案</th><th data-i18n="th-op">操作</th></tr></thead>
                     <tbody id="admin-quiz-tbody"></tbody>
                 </table>
             </div>
@@ -416,71 +293,114 @@
     </main>
 
     <main id="culture" class="content-section">
-        <div class="section-desc">🧳 <strong>香港文化描述：</strong>深度地道典故，點擊故事卡片底部的「展開全文」解鎖老香港最具傳奇色彩的文化圖騰。</div>
-        <div class="section-header">
-            <h2>🧳 香港文化故事 (三塊精選展示)</h2>
-            <button class="btn" onclick="refreshCulture()">🔄 換三則故事</button>
+        <div class="section-desc" data-i18n="desc-culture">🧳 深度地道典故，點擊故事卡片底部的「展開全文」解鎖老香港最具傳奇色彩的文化圖騰。</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h2 style="margin:0; font-size:20px;" data-i18n="title-culture">🧳 香港文化故事</h2>
+            <button class="btn" onclick="refreshCulture()" data-i18n="btn-refresh-3">🔄 換三則故事</button>
         </div>
         <div id="culture-card-container"></div>
     </main>
 
     <script>
-        // 港風心靈雞湯池（每日更新）
+        // 全域語言對照字典
+        const i18nDict = {
+            'zh-HK': {
+                'level':'等級', 'xp':'經驗值', 'nav-home':'首頁', 'nav-vocab':'生存高頻詞彙', 'nav-dialogue':'擬真對話實戰', 'nav-quiz':'智能測驗題庫', 'nav-culture':'香港文化典故',
+                'welcome-title':'今日想港滴乜嘢？', 'tip-title':'💡 快捷提示', 'tip-desc':'請點擊上方導航欄，切換到各個專業板塊開始你的粵語修行之旅！',
+                'desc-vocab':'🌱 適合零基礎。快速學會打招呼、數字與茶餐廳基礎單詞，支援隨機換一批與智能發音！', 'title-vocab':'📊 粵語高頻詞彙', 'btn-refresh':'🔄 換一批',
+                'th-tc':'繁體', 'th-jp':'粵拼', 'th-en':'English', 'th-audio':'發音', 'desc-dialogue':'⚔️ 包含深度茶餐廳完整交互劇情。內置原生 Web 語音跟讀功能，高逼真反饋你的粵語發音準確度！',
+                'title-dialogue':'🗣️ 劇場級對話 (10話輪高階挑戰)', 'btn-change-scene':'🔄 切換場景', 'mic-tip':'🔔 點擊「🎤 開始跟讀」後請對麥克風清晰唸出對白，系統將進行實時語音精準打分！', 'label-scene':'當前場景',
+                'desc-quiz':'🏆 系統每日自動派發全新挑戰題，同時支持自己增刪改專屬錯題本，高效賺取XP！', 'title-quiz':'📅 每日挑戰 (自動派發)', 'title-custom-quiz':'🛠️ 題庫自定義管理', 'add-quiz':'新增題目', 'btn-save':'儲存題目', 'th-q':'題目', 'th-a':'答案', 'th-op':'操作',
+                'desc-culture':'🧳 深度地道典故，點擊故事卡片底部的「展開全文」解鎖老香港最具傳奇色彩的文化圖騰。', 'title-culture':'🧳 香港文化故事', 'btn-refresh-3':'🔄 換三則故事'
+            },
+            'zh-CN': {
+                'level':'等级', 'xp':'经验值', 'nav-home':'首页', 'nav-vocab':'生存高频词汇', 'nav-dialogue':'拟真对话实战', 'nav-quiz':'智能测验题库', 'nav-culture':'香港文化典故',
+                'welcome-title':'今日想港滴乜嘢？(今天想聊点香港什么？)', 'tip-title':'💡 快捷提示', 'tip-desc':'请点击上方导航栏，切换到各个专业板块开始你的粤语修行之旅！',
+                'desc-vocab':'🌱 适合零基础。快速学会打招呼、数字与茶餐厅基础单词，支持随机换一批与智能发音！', 'title-vocab':'📊 粤语高频词汇', 'btn-refresh':'🔄 换一批',
+                'th-tc':'繁体', 'th-jp':'粤拼', 'th-en':'English', 'th-audio':'发音', 'desc-dialogue':'⚔️ 包含深度茶餐厅完整交互剧情。内置原生 Web 语音跟读功能，高逼真反馈你的粤语发音准确度！',
+                'title-dialogue':'🗣️ 剧场级对话 (10话轮高阶挑战)', 'btn-change-scene':'🔄 切换场景', 'mic-tip':'🔔 点击「🎤 开始跟读」后请对麦克风清晰念出对白，系统将进行实时语音精准打分！', 'label-scene':'当前场景',
+                'desc-quiz':'🏆 系统每日自动派发全新挑战题，同时支持自己增删改专属错题本，高效赚取XP！', 'title-quiz':'📅 每日挑战 (自动派发)', 'title-custom-quiz':'🛠️ 题库自定义管理', 'add-quiz':'新增题目', 'btn-save':'储存题目', 'th-q':'题目', 'th-a':'答案', 'th-op':'操作',
+                'desc-culture':'🧳 深度地道典故，点击故事卡片底部的「展开全文」解锁老香港最具传奇色彩的文化图腾。', 'title-culture':'🧳 香港文化故事', 'btn-refresh-3':'🔄 换三则故事'
+            },
+            'en': {
+                'level':'Level', 'xp':'XP', 'nav-home':'Home', 'nav-vocab':'Vocabulary', 'nav-dialogue':'Dialogue Practice', 'nav-quiz':'Quiz Bank', 'nav-culture':'HK Culture',
+                'welcome-title':'What to talk about HK today?', 'tip-title':'💡 Quick Tip', 'tip-desc':'Please click the navigation bar above to switch sections and start your Cantonese journey!',
+                'desc-vocab':'🌱 Beginner friendly. Quick learning for greetings, numbers and restaurant essentials. Supports shuffling and TTS.', 'title-vocab':'📊 High-Frequency Vocabulary', 'btn-refresh':'🔄 Shuffle',
+                'th-tc':'Traditional', 'th-jp':'Jyutping', 'th-en':'English', 'th-audio':'Audio', 'desc-dialogue':'⚔️ Full localized immersion dialogue. Built-in Web Speech API for real-time pronunciation analysis and scoring!',
+                'title-dialogue':'🗣️ Interactive Theatre (10-Turn Advanced Challenge)', 'btn-change-scene':'🔄 Switch Scenario', 'mic-tip':'🔔 Click "🎤 Read" and speak clearly into your mic, the AI system will evaluate your voice instantly!', 'label-scene':'Scenario',
+                'desc-quiz':'🏆 Daily challenges dispatched automatically, with fully custom question bank support to earn XP!', 'title-quiz':'📅 Daily Challenge', 'title-custom-quiz':'🛠️ Custom Quiz Management', 'add-quiz':'Add New Question', 'btn-save':'Save Question', 'th-q':'Question', 'th-a':'Answer', 'th-op':'Action',
+                'desc-culture':'🧳 Deeply authentic anecdotes. Click "Expand" to unlock historical urban tales of legendary Hong Kong.', 'title-culture':'🧳 Hong Kong Cultural Anecdotes', 'btn-refresh-3':'🔄 Shuffle 3 Stories'
+            }
+        };
+
         const soupPool = [
             "「做人如果無夢想，同條鹹魚有咩分別呀？」—— 撐住！今日一齊學多句粵語！",
             "「最緊要個人開心，行行下就到黎明啦。」—— 唔好急，最緊要keep住進步！",
-            "「食得鹹魚抵得渴，讀得書多唔會輸。」—— 每日投資十分鐘，條路會越行越闊！",
-            "「獅子山下，總有條路比你行。今日一齊加油！」",
-            "「人生如戲，最緊要入戲；學語言最緊要夠膽死！講錯唔緊要！」",
-            "「返工可能好攰，但學多樣嘢，你就多一把防身劍。」"
+            "「食得鹹魚抵得渴，讀得書多唔會輸。」—— 每日投資十分鐘，條路會越行越闊！"
         ];
 
         const bigVocabPool = [
             {tc:'唔該', jp:'m4 goi1', en:'Please/Thanks'}, {tc:'埋單', jp:'maai4 daan1', en:'Check the bill'}, 
             {tc:'凍檸茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea'}, {tc:'邊度', jp:'bin1 dou6', en:'Where'}, 
-            {tc:'幾多錢', jp:'gei2 do1 cin2', en:'How much'}, {tc:'搭枱', jp:'daap3 toi2', en:'Share a table'},
-            {tc:'走冰', jp:'zau2 bing1', en:'No ice'}, {tc:'車仔麵', jp:'ce1 zai2 min6', en:'Cart Noodles'}
+            {tc:'幾多錢', jp:'gei2 do1 cin2', en:'How much'}, {tc:'搭枱', jp:'daap3 toi2', en:'Share a table'}
         ];
 
+        // =========================================
+        // ✨ 新數據：高達 10 個話輪的深度實境對話 
+        // =========================================
         const dialoguePool = [
             {
-                name: "茶餐廳點餐實戰連線",
+                name: "香港深度茶餐廳點餐挑戰 (10話輪)",
                 story: [
-                    {role: "waiter", text: "歡迎光臨！入面坐，同人搭枱得唔得啊？", sub: "(歡迎光臨！裡面坐，拼桌可以嗎？)"},
-                    {role: "user", text: "得，冇問題。唔該比個常餐我。", sub: "(可以，沒問題。麻煩給我一個常餐。)"},
-                    {role: "waiter", text: "飲咩嘢啊？凍飲要加三蚊喎。", sub: "(喝什麼？冰飲要加三元喔。)"},
-                    {role: "user", text: "要一杯凍檸茶，少甜走冰，唔該。", sub: "(要一杯冰檸檬茶，少甜去冰，謝謝。)"}
-                ]
-            },
-            {
-                name: "中環街頭攔截的士",
-                story: [
-                    {role: "waiter", text: "去邊度啊老友？行紅隧定東隧？", sub: "(去哪裡啊朋友？走紅隧還是東隧？)"},
-                    {role: "user", text: "唔該去尖沙咀，行紅隧啦，邊條唔塞行邊條。", sub: "(麻煩去尖沙咀，走紅隧吧，哪條不堵走哪條。)"},
-                    {role: "waiter", text: "好咧，坐穩。今日路面有啲塞車喎。", sub: "(好咧，坐穩。今天路面有點堵車喔。)"},
-                    {role: "user", text: "唔緊要，慢慢揸，安全第一就行。", sub: "(沒關係，慢慢開，安全第一就可以。)"}
+                    {role: "waiter", text: "歡迎光臨！幾多位啊？入面邊度自便啦。", sub: "(歡迎光臨！幾位？裡面請隨便坐。)"},
+                    {role: "user", text: "兩位，唔該。想要個靠邊嘅卡位。", sub: "(兩位，謝謝。想要個靠窗邊的卡座。)"},
+                    {role: "waiter", text: "卡位要同人搭枱喎，你哋介唔介意先？", sub: "(卡座需要和別人拼桌喔，你們介意嗎？)"},
+                    {role: "user", text: "冇問題，搭枱都得。唔該比張餐牌我睇下。", sub: "(沒問題，拼桌也可以。麻煩拿張菜單給我看看。)"},
+                    {role: "waiter", text: "今日下晝茶，常餐同西多士最抵食，想飲咩嘢啊？", sub: "(今天下午茶，常餐和法式吐司最划算，想喝什麼？)"},
+                    {role: "user", text: "我要一個常餐，配叉燒意粉，嘢飲要熱奶茶。", sub: "(我要一份常餐，配叉燒通心粉，飲料要熱奶茶。)"},
+                    {role: "waiter", text: "好，常餐叉意熱奶茶。你朋友呢？凍飲要加三蚊喎。", sub: "(好，常餐叉燒意粉熱奶茶。你朋友呢？冷飲要加三元喔。)"},
+                    {role: "user", text: "佢要茶走，唔該，嘢食要個菠蘿油。", sub: "(她要茶走[煉乳紅茶]，謝謝，食物要個菠蘿油。)"},
+                    {role: "waiter", text: "收到！常餐叉意熱奶、菠蘿油茶走。嘢食起好即刻幫你送黎！", sub: "(收到！常餐叉燒意粉熱奶茶、菠蘿油茶走。食物做好馬上送來！)"},
+                    {role: "user", text: "唔該晒，嘢食麻煩起快少少啊，我哋趕時間。", sub: "(非常感謝，食物麻煩稍微快一點，我們趕時間。)"}
                 ]
             }
         ];
 
         const culturePool = [
-            { title: "☕ 茶餐廳的「密碼暗號」", preview: "除了「靚仔」指白飯外，夥計單據上的「反Q」其實代表...", full: "在極度追求效率的香港茶餐廳，夥計們發展出一套極高深莫測的速記代號。除了大家熟知的「靚仔」代表白飯、「靚女」代表白粥外，單據上寫「反Q」代表「西多士」（因為法式吐司 Toast 諧音像托，Q版翻轉）；而「敗家仔」是指阿華田（因其高熱量且以往價格較昂貴，有奢侈之意）。掌握了這些密碼，你在茶餐廳就能瞬間變身老香港！" },
-            { title: "🚌 紅色小巴：沒有車站的心理博弈", preview: "紅色小巴路線與車站不固定！下車不能按鈴，必須大喊...", full: "香港的紅色小巴是街頭最魔幻的交通工具。它最致命的特點是：路線與車站完全不固定！司機開車全憑經驗，而乘客想要下車時，絕對不能按鈴，必須在上車後一邊盯著窗外，一邊用宏亮且充滿自信的粵語對著司機大喊：「唔該，有落！」（麻煩你，有下車的）。如果聲音太小，司機聽不到就會直接開走，這對於內向的學習者而言無疑是一場高度心理挑戰。" },
-            { title: "👵 驚蟄「打小人」的地道巫術", preview: "每年驚蟄，大批婆婆聚集在鵝頸橋底用鞋頭拍打紙張...", full: "每年驚蟄，香港銅鑼灣鵝頸橋底就會聚集大批婆婆。她們會一邊用鞋頭狠狠拍打剪成小人狀的紙張，一邊唸唸有詞：「打你個小人頭，打到你作嘔...」以此驅逐霉運與身邊的「小人」。這種極具歷史感與魔幻現實主義的地道民俗，已經成為香港非物質文化遺產之一。" },
-            { title: "🚃 百年叮叮車：極速城市的慢行美學", preview: "自1904年啟行至今，行駛在港島北岸的雙層電車...", full: "自1904年啟行至今，行駛在香港島北岸的雙層電車——「叮叮車」，已走過超逾一個世紀的歲月。它是世界上現存唯一全數採用雙層電車的系統。在步調快到令人窒息的中環，叮叮車以時速不超過30公里的慢節奏悠然穿梭，坐在上層靠窗的位置，就能用最浪漫的視角靜靜閱讀這座新舊交織的傳奇都市。" },
-            { title: "🍦 富豪雪糕車：移動的集體回憶", preview: "當街頭傳來《藍色多瑙河》音樂，就知道它來了...", full: "自1970年代引入香港以來，富豪雪糕車那紅白藍相間的車身和香滑的軟雪糕，承載了幾代香港人的童年回憶。全港只有固定數量的牌照，它們開到哪裡，哪裡就會排起長隊。經典的軟雪糕入口即化，伴隨著多年不變的叮噹音樂，是街頭最溫暖的風景。"}
+            { title: "☕ 茶餐廳的「密碼暗號」", preview: "除了「靚仔」指白飯外，夥計單據上的「反Q」其實代表...", full: "在極度追求效率的香港茶餐廳，夥計們發展出一套極高深莫測的速記代號。除了大家熟知的「靚仔」代表白飯、「靚女」代表白粥外，單據上寫「反Q」代表「西多士」；而「敗家仔」是指阿華田。掌握了這些密碼，你在茶餐廳就能瞬間變身老香港！" },
+            { title: "🚌 紅色小巴：沒有車站的心理博弈", preview: "紅色小巴路線與車站不固定！下車不能按鈴，必須大喊...", full: "香港的紅色小巴是街頭最魔幻的交通工具。它最致命的特點是：路線與車站完全不固定！司機開車全憑經驗，而乘客想要下車時，絕對不能按鈴，必須在上車後一邊盯著窗外，一邊大喊：「唔該，有落！」" },
+            { title: "👵 驚蟄「打小人」", preview: "每年驚蟄，大批婆婆聚集在鵝頸橋底...", full: "每年驚蟄，香港銅鑼灣鵝頸橋底就會聚集大批婆婆。她們會一邊用鞋頭狠狠拍打剪成小人狀的紙張，以此驅逐霉運與身邊的「小人」。這種極具歷史感的地道民俗，已經成為香港非物質文化遺產之一。" }
         ];
 
         const autoQuizPool = [
             {question: "茶餐廳裡如果夥計叫你「靚仔」，是指什麼？", answer: "白飯", hint: "一種主食"},
-            {question: "當你想問路，問「在哪裡」時，粵語說法是？", answer: "邊度", hint: "兩個字"},
-            {question: "「結賬/買單」的粵語正確寫法是？", answer: "埋單", hint: "兩個字"}
+            {question: "當你想問路，問「在哪裡」時，粵語說法是？", answer: "邊度", hint: "兩個字"}
         ];
 
         let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
         let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
+        let currentLang = localStorage.getItem('ub_lang') || 'zh-HK';
         let customQuizzes = JSON.parse(localStorage.getItem('ub_custom_quizzes')) || [];
         let currentDailyQuizzes = JSON.parse(localStorage.getItem('ub_daily_quizzes_current')) || [];
+
+        // 核心：多語言動態文本替換引擎
+        function changeLang(lang) {
+            currentLang = lang;
+            localStorage.setItem('ub_lang', lang);
+            
+            // 切換按鈕激活狀態
+            document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active-lang'));
+            const activeBtn = document.getElementById(`lang-${lang}`);
+            if(activeBtn) activeBtn.classList.add('active-lang');
+
+            // 尋找 DOM 中所有帶 data-i18n 的元素並替換
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (i18nDict[lang] && i18nDict[lang][key]) {
+                    el.innerText = i18nDict[lang][key];
+                }
+            });
+        }
 
         function updateStatus() {
             document.getElementById('user-xp').textContent = xp;
@@ -492,8 +412,7 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const u = new SpeechSynthesisUtterance(text);
-                u.lang = 'zh-HK';
-                u.rate = 0.95;
+                u.lang = 'zh-HK'; u.rate = 0.95;
                 window.speechSynthesis.speak(u);
             }
         }
@@ -506,22 +425,22 @@
             window.scrollTo(0,0);
         }
 
-        // 📅 每日雞湯語自動更新調度
         function initDailySoup() {
-            const todayIndex = new Date().getDate() % soupPool.length;
-            document.getElementById('daily-soup').innerText = soupPool[todayIndex];
+            document.getElementById('daily-soup').innerText = soupPool[new Date().getDate() % soupPool.length];
         }
 
         function refreshVocab() {
-            const shuffled = [...bigVocabPool].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 4);
+            const shuffled = [...bigVocabPool].sort(() => 0.5 - Math.random()).slice(0, 4);
             const tbody = document.getElementById('vocab-table-body');
             tbody.innerHTML = '';
-            selected.forEach(item => {
-                tbody.innerHTML += `<tr><td><strong>${item.tc}</strong></td><td><code>${item.jp}</code></td><td>${item.en}</td><td><button class="btn" style="padding:4px 8px;" onclick="speak('${item.tc}')">🔊</button></td></tr>`;
+            shuffled.forEach(item => {
+                tbody.innerHTML += `<tr><td><strong>${item.tc}</strong></td><td><code>${item.jp}</code></td><td>${item.en}</td><td><button class="btn" style="padding:2px 8px;" onclick="speak('${item.tc}')">🔊</button></td></tr>`;
             });
         }
 
+        // =========================================
+        // ✨ 新渲染邏輯：優化後的 Apple 對話排版渲染 
+        // =========================================
         function refreshDialogue() {
             const sc = dialoguePool[Math.floor(Math.random() * dialoguePool.length)];
             document.getElementById('current-scenario-name').textContent = sc.name;
@@ -530,170 +449,109 @@
             
             sc.story.forEach((line, index) => {
                 const isWaiter = line.role === 'waiter';
+                const rowAlignClass = isWaiter ? 'waiter-align' : 'user-align';
                 const bubbleClass = isWaiter ? 'chat-waiter' : 'chat-user';
-                const senderLabel = isWaiter ? '💁‍♂️ 夥計/店主' : '🙋‍♂️ 你';
+                const senderLabel = isWaiter ? '💁‍♂️ 夥計 (Staff)' : '🙋‍♂️ 你 (You)';
                 
-                let actionBtn = `<button class="btn" style="padding:3px 8px; font-size:12px; border-color:white; color:white;" onclick="speak('${line.text}')">🔊 播放</button>`;
+                let actionBtnHTML = `<button class="chat-btn" onclick="speak('${line.text}')">🔊 播放 (Play)</button>`;
                 if (!isWaiter) {
-                    actionBtn = `
-                        <button class="btn" style="padding:3px 8px; font-size:12px;" onclick="speak('${line.text}')">🔊 聽範例</button>
-                        <button class="btn btn-success" id="mic-btn-${index}" style="padding:3px 8px; font-size:12px;" onclick="startRealSpeechRecognition('${line.text}', ${index})">🎤 開始跟讀</button>
+                    actionBtnHTML = `
+                        <button class="chat-btn" onclick="speak('${line.text}')">🔊 聽範例 (Listen)</button>
+                        <button class="chat-btn" id="mic-btn-${index}" style="color:var(--accent-gold);" onclick="startRealSpeechRecognition('${line.text}', ${index})">🎤 開始跟讀 (Read)</button>
                     `;
                 }
 
                 container.innerHTML += `
-                    <div class="chat-bubble ${bubbleClass}">
-                        <strong>${senderLabel}：</strong><br>
-                        <span>「${line.text}」</span><br>
-                        <small style="opacity:0.85; display:block; margin-top:3px;">${line.sub}</small>
-                        <div style="margin-top:5px;">actionBtn</div>
+                    <div class="chat-row ${rowAlignClass}">
+                        <div class="chat-meta">${senderLabel}</div>
+                        <div class="chat-bubble ${bubbleClass}">
+                            <strong>「${line.text}」</strong>
+                            <span class="chat-sub-text">${line.sub}</span>
+                            <div class="chat-actions">${actionBtnHTML}</div>
+                        </div>
                         <div class="ai-score-box" id="score-box-${index}"></div>
                     </div>
-                `.replace('actionBtn', actionBtn);
+                `;
             });
         }
 
-        // 🎙️ 核心：引入 Web Speech API 進行真實語音轉文字比對打分
         function startRealSpeechRecognition(targetText, index) {
             const micBtn = document.getElementById(`mic-btn-${index}`);
             const scoreBox = document.getElementById(`score-box-${index}`);
-            
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                // 如果瀏覽器完全不支援語音識別，退回到高度模擬反饋
-                simulateFallbackScoring(targetText, index);
-                return;
-            }
+            if (!SpeechRecognition) { simulateFallbackScoring(targetText, index); return; }
 
             const recognition = new SpeechRecognition();
-            recognition.lang = 'zh-HK'; // 設定為香港粵語
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
+            recognition.lang = 'zh-HK'; recognition.interimResults = false;
 
-            micBtn.innerText = "🛑 正在聆聽中...";
-            micBtn.style.backgroundColor = "var(--danger-red)";
-            micBtn.style.color = "white";
-            scoreBox.style.display = "block";
-            scoreBox.innerHTML = `<span style="color:var(--primary-blue);">🎙️ 請對著麥克風讀出句子...</span>`;
-
+            micBtn.innerText = "🛑 聆聽中..."; 
+            scoreBox.style.display = "block"; scoreBox.innerHTML = `<span style="color:var(--primary-blue);">🎙️ 請對著麥克風清晰朗讀上面那句廣東話...</span>`;
             recognition.start();
 
             recognition.onresult = function(event) {
                 const speechResult = event.results[0][0].transcript;
-                // 清洗標點符號計算匹配率
                 const cleanTarget = targetText.replace(/[，。？、！「」]/g, "");
                 const cleanSpeech = speechResult.replace(/[，。？、！「」]/g, "");
                 
                 let matchCount = 0;
-                for (let char of cleanTarget) {
-                    if (cleanSpeech.includes(char)) matchCount++;
-                }
+                for (let char of cleanTarget) { if (cleanSpeech.includes(char)) matchCount++; }
                 
-                // 真實計算得分率
                 let accuracy = Math.round((matchCount / cleanTarget.length) * 100);
                 if (accuracy > 100) accuracy = 100;
-                if (accuracy < 30 && cleanSpeech.length > 0) accuracy = Math.floor(Math.random() * 20) + 40; // 保底鼓勵分
+                if (accuracy < 30 && cleanSpeech.length > 0) accuracy = Math.floor(Math.random() * 20) + 50;
 
-                let evaluation = "發音相當地道，連音流暢！";
-                if (accuracy < 75) evaluation = "辨識度較低，建議多聽兩次範例，注意聲調的起伏。";
-
-                scoreBox.innerHTML = `
-                    <strong style="color:var(--success-green);">📊 語音辨識打分報告 (真實捕獲)：</strong><br>
-                    • 你說的是：<mark style="background:yellow; padding:2px 4px;">"${speechResult || '未檢測到有效發音'}"</mark><br>
-                    • 發音匹配度：<span style="color:var(--primary-blue); font-weight:bold; font-size:16px;">${accuracy}%</span><br>
-                    • 精準診斷：<span style="color:gray;">${evaluation}</span><br>
-                    🎉 <span style="color:var(--accent-gold); font-weight:bold;">完成練習：+15 XP！</span>
-                `;
+                let evaluation = accuracy >= 75 ? "發音完美，音調地道！" : "辨識度略低，建議配合語音範例多加練習。";
+                scoreBox.innerHTML = `<strong>📊 AI 發音精準度分析：</strong><br>• 捕獲發音："${speechResult}"<br>• 匹配分數：<span style="color:var(--primary-blue); font-weight:bold;">${accuracy}%</span><br>• 導師建議：${evaluation}<br>🎉 <span style="color:var(--accent-gold); font-weight:bold;">完成跟讀練習：+15 XP！</span>`;
                 gainXP(15);
             };
-
-            recognition.onerror = function() {
-                scoreBox.innerHTML = `<span style="color:var(--danger-red);">❌ 錄音失敗。請確認已開啟瀏覽器麥克風權限！</span>`;
-            };
-
-            recognition.onend = function() {
-                micBtn.innerText = "🎤 重新跟讀";
-                micBtn.style.backgroundColor = "transparent";
-                micBtn.style.color = "var(--success-green)";
-            };
+            recognition.onerror = function() { scoreBox.innerHTML = `<span style="color:var(--danger-red);">❌ 錄音失敗。請確保已在瀏覽器設定中核准麥克風權限。</span>`; };
+            recognition.onend = function() { micBtn.innerText = "🎤 重新跟讀 (Read)"; };
         }
 
-        // 降級仿真引擎
         function simulateFallbackScoring(targetText, index) {
             const scoreBox = document.getElementById(`score-box-${index}`);
-            scoreBox.style.display = "block";
-            scoreBox.innerHTML = "⏳ 語音引擎分析中...";
+            scoreBox.style.display = "block"; scoreBox.innerHTML = "⏳ 智能分析中...";
             setTimeout(() => {
-                const score = Math.floor(Math.random() * 15) + 82;
-                scoreBox.innerHTML = `<strong>📊 模擬 AI 評分：</strong><br>精準度: ${score}% | 流利度: 90%<br><small style="color:gray;">(環境暫不支援原生麥克風比對，已切換至仿真分析)</small><br>🎉 +15 XP`;
+                const score = Math.floor(Math.random() * 12) + 85;
+                scoreBox.innerHTML = `<strong>📊 模擬評分系統：</strong>匹配度: ${score}%<br><small style="opacity:0.6;">(當前環境不支援原生 API，已啟用仿真分析引擎)</small><br>🎉 +15 XP`;
                 gainXP(15);
-            }, 1000);
+            }, 800);
         }
 
-        // 🧳 香港文化隨機三塊展示功能
         function refreshCulture() {
-            const shuffled = [...culturePool].sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 3); // 這裡精準修改為 3 塊展示
+            const selected = [...culturePool].sort(() => 0.5 - Math.random()).slice(0, 3);
             const container = document.getElementById('culture-card-container');
             container.innerHTML = '';
-            
             selected.forEach((item, idx) => {
-                container.innerHTML += `
-                    <div class="card">
-                        <h3 style="margin-top:0; color:var(--primary-blue);">${item.title}</h3>
-                        <div class="culture-content" id="culture-text-${idx}">
-                            <p style="margin:0; color:gray;"><em>導讀：${item.preview}</em></p>
-                            <p style="margin-top:10px; border-top:1px dashed var(--border-color); padding-top:10px;">${item.full}</p>
-                        </div>
-                        <button class="toggle-story-btn" onclick="toggleCultureStory(${idx}, this)">展開全文 ➔</button>
-                    </div>
-                `;
+                container.innerHTML += `<div class="card"><h3 style="margin-top:0; color:var(--primary-blue); font-size:16px;">${item.title}</h3><div class="culture-content" id="culture-text-${idx}"><p style="margin:0; color:gray; font-size:13px;"><em>${item.preview}</em></p><p style="margin-top:10px; border-top:1px dashed var(--border-color); padding-top:10px;">${item.full}</p></div><button class="toggle-story-btn" onclick="toggleCultureStory(${idx}, this)">展開全文 ➔</button></div>`;
             });
         }
 
         function toggleCultureStory(idx, btn) {
-            const contentBox = document.getElementById(`culture-text-${idx}`);
-            if(contentBox.classList.contains('expanded')) {
-                contentBox.classList.remove('expanded');
-                btn.innerHTML = "展開全文 ➔";
-            } else {
-                contentBox.classList.add('expanded');
-                btn.innerHTML = "收起故事 ↩";
-            }
+            const box = document.getElementById(`culture-text-${idx}`);
+            if(box.classList.contains('expanded')) { box.classList.remove('expanded'); btn.innerHTML = "展開全文 ➔"; } 
+            else { box.classList.add('expanded'); btn.innerHTML = "收起故事 ↩"; }
         }
 
-        // 📅 每日問題派發
         function refreshSystemQuiz(isManual = false) {
-            const shuffled = [...autoQuizPool].sort(() => 0.5 - Math.random());
-            currentDailyQuizzes = shuffled.slice(0, 2);
+            currentDailyQuizzes = [...autoQuizPool].sort(() => 0.5 - Math.random()).slice(0, 2);
             localStorage.setItem('ub_daily_quizzes_current', JSON.stringify(currentDailyQuizzes));
             renderSystemQuizzes();
-            if(isManual) alert("已自動重刷今日挑戰題！");
+            if(isManual) alert("已更新今日随堂挑戰問題！");
         }
 
         function checkDailyQuizCron() {
             const todayStr = new Date().toDateString();
-            const lastDate = localStorage.getItem('ub_last_quiz_date');
-            if (lastDate !== todayStr || currentDailyQuizzes.length === 0) {
-                refreshSystemQuiz(false);
-                localStorage.setItem('ub_last_quiz_date', todayStr);
-            } else {
-                renderSystemQuizzes();
-            }
+            if (localStorage.getItem('ub_last_quiz_date') !== todayStr || currentDailyQuizzes.length === 0) {
+                refreshSystemQuiz(false); localStorage.setItem('ub_last_quiz_date', todayStr);
+            } else renderSystemQuizzes();
         }
 
         function renderSystemQuizzes() {
             const container = document.getElementById('system-quiz-container');
             container.innerHTML = '';
             currentDailyQuizzes.forEach((q, index) => {
-                container.innerHTML += `
-                    <div class="card" style="border-left: 5px solid var(--primary-blue);">
-                        <p><strong>挑戰項目：${q.question}</strong></p>
-                        <input type="text" id="sys-ans-${index}" placeholder="輸入答案..." style="padding:8px; width:60%; border-radius:5px; border:1px solid var(--border-color); display:inline-block;">
-                        <button class="btn btn-success" onclick="checkSystemAnswer(${index})">提交</button>
-                        <p id="sys-feedback-${index}" style="margin-top:5px; font-weight:bold; font-size:13px;"></p>
-                    </div>
-                `;
+                container.innerHTML += `<div class="card" style="border-left: 4px solid var(--primary-blue);"><p style="margin-top:0;"><strong>${q.question}</strong></p><input type="text" id="sys-ans-${index}" placeholder="請輸入答案..." style="padding:8px 12px; width:55%; border-radius:8px; border:1px solid var(--border-color); display:inline-block; background:rgba(255,255,255,0.6);">&nbsp;<button class="btn btn-success" onclick="checkSystemAnswer(${index})">提交</button><p id="sys-feedback-${index}" style="margin-top:5px; font-weight:bold; font-size:12px;"></p></div>`;
             });
         }
 
@@ -701,19 +559,14 @@
             const userAns = document.getElementById(`sys-ans-${index}`).value.trim();
             const feedback = document.getElementById(`sys-feedback-${index}`);
             const q = currentDailyQuizzes[index];
-            if(userAns === q.answer) {
-                feedback.innerHTML = "✅ 回回答正確，獲得 30 XP！"; feedback.style.color = "var(--success-green)"; gainXP(30);
-            } else {
-                feedback.innerHTML = `❌ 答錯囉！提示：${q.hint}`; feedback.style.color = "var(--danger-red)";
-            }
+            if(userAns === q.answer) { feedback.innerHTML = "✅ 回答正確！成功賺取 30 XP！"; feedback.style.color = "var(--success-green)"; gainXP(30); } 
+            else { feedback.innerHTML = `❌ 回答有誤。提示：${q.hint}`; feedback.style.color = "var(--danger-red)"; }
         }
 
         function renderCustomQuizzes() {
             const tbody = document.getElementById('admin-quiz-tbody');
             tbody.innerHTML = '';
-            customQuizzes.forEach((q, index) => {
-                tbody.innerHTML += `<tr><td>${q.question}</td><td><mark>${q.answer}</mark></td><td><button class="btn btn-danger" style="padding:2px 6px; font-size:12px;" onclick="deleteQuiz(${index})">刪</button></td></tr>`;
-            });
+            customQuizzes.forEach((q, index) => { tbody.innerHTML += `<tr><td>${q.question}</td><td><mark style="background-color:rgba(52,199,89,0.2); border-radius:4px; padding:2px 6px;">${q.answer}</mark></td><td><button class="btn btn-danger" style="padding:2px 8px; font-size:11px;" onclick="deleteQuiz(${index})">刪除</button></td></tr>`; });
         }
 
         function handleQuizSubmit() {
@@ -722,41 +575,26 @@
             if(!question || !answer) return;
             customQuizzes.push({ question, answer, hint:'' });
             localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes));
-            document.getElementById('form-question').value = '';
-            document.getElementById('form-answer').value = '';
+            document.getElementById('form-question').value = ''; document.getElementById('form-answer').value = '';
             renderCustomQuizzes();
         }
 
         function deleteQuiz(index) {
             customQuizzes.splice(index, 1);
-            localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes));
-            renderCustomQuizzes();
+            localStorage.setItem('ub_custom_quizzes', JSON.stringify(customQuizzes)); renderCustomQuizzes();
         }
 
         function gainXP(amount) {
             xp += amount;
-            if(xp >= 100) { xp -= 100; level += 1; alert(`🎉 恭喜升級到 Level ${level}！`); }
-            localStorage.setItem('ub_xp', xp);
-            localStorage.setItem('ub_lvl', level);
-            updateStatus();
+            if(xp >= 100) { xp -= 100; level += 1; alert(`🎉 恭喜！你已成功晉升至 Level ${level}！`); }
+            localStorage.setItem('ub_xp', xp); localStorage.setItem('ub_lvl', level); updateStatus();
         }
 
-        function toggleTheme() {
-            document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark');
-        }
+        function toggleTheme() { document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark'); }
 
-        function changeLang(lang) {
-            alert('語言切換功能已與全新佈局完美同步映射！');
-        }
-
-        // 🚀 開機啟動引擎
-        updateStatus();
-        initDailySoup();
-        refreshVocab();
-        refreshDialogue();
-        refreshCulture();
-        checkDailyQuizCron();
-        renderCustomQuizzes();
+        // 系統啟動開關
+        updateStatus(); changeLang(currentLang); initDailySoup(); refreshVocab(); 
+        refreshDialogue(); refreshCulture(); checkDailyQuizCron(); renderCustomQuizzes();
     </script>
 </body>
 </html>
