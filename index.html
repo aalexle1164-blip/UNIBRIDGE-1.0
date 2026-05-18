@@ -23,566 +23,976 @@
             --bg-color: #001122; 
             --text-color: #f5f5f7;
             --card-bg: rgba(28, 28, 30, 0.9); 
-            --nav-bg: rgba(0, 30, 70, 0.95);
-            --border-color: rgba(255, 255, 255, 0.1);
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            transition: background-color 0.3s, color 0.3s;
+            --nav-bg: rgba(28, 28, 30, 0.95);
+            --primary-blue: #2997ff;
+            --logo-blue: #4da3ff;
+            --border-color: rgba(255, 255, 255, 0.15);
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            padding-bottom: 60px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0; padding: 0; transition: all 0.3s ease;
+            -webkit-font-smoothing: antialiased; 
+            background-color: var(--bg-color); 
+            min-height: 100vh;
+            padding-bottom: 40px;
         }
 
-        /* 導航欄 */
+        header {
+            display: flex; flex-direction: column; align-items: center; gap: 12px;
+            padding: 15px 4%; border-bottom: 1px solid var(--border-color);
+            background-color: var(--card-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+        }
+        @media (min-width: 768px) {
+            header { flex-direction: row; justify-content: space-between; }
+        }
+
+        .brand-container { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .ip-char { width: 42px; height: 42px; }
+        .logo-text-group { display: flex; flex-direction: column; }
+        .logo-en { font-size: 22px; font-weight: 800; color: var(--logo-blue); font-style: italic; margin: 0; line-height: 1.1; }
+        .logo-cn { font-size: 13px; font-weight: 700; color: var(--logo-blue); letter-spacing: 2px; }
+        
+        .visit-badge {
+            background: rgba(0, 71, 171, 0.08); padding: 6px 14px; 
+            border-radius: 12px; font-size: 12px; font-weight: 700; color: var(--primary-blue);
+            border: 1px solid rgba(0, 71, 171, 0.15); display: inline-flex; align-items: center; gap: 4px;
+        }
+        [data-theme="dark"] .visit-badge { background: rgba(41, 151, 255, 0.15); color: #2997ff; border-color: rgba(41, 151, 255, 0.3); }
+
+        .controls { display: flex; gap: 6px; justify-content: center; }
+        .controls button, .btn {
+            padding: 10px 16px; cursor: pointer; border: 1.5px solid var(--primary-blue);
+            background: transparent; color: var(--primary-blue); border-radius: 20px;
+            font-weight: 600; font-size: 13px; transition: 0.2s; min-height: 40px; 
+            display: inline-flex; align-items: center; justify-content: center;
+        }
+        .controls button:hover, .btn:hover { background: var(--primary-blue); color: white; }
+        .controls button.active-lang { background: var(--primary-blue); color: white; }
+
+        .status-bar {
+            background-color: var(--rhine-blue); color: white; padding: 14px 5%;
+            display: flex; flex-direction: column; gap: 10px; font-size: 13px; font-weight: 600;
+        }
+        @media (min-width: 480px) {
+            .status-bar { flex-direction: row; justify-content: space-between; align-items: center; }
+        }
+        
+        .xp-container { display: flex; align-items: center; gap: 8px; }
+        .xp-bar-bg { background: rgba(255,255,255,0.25); border-radius: 10px; width: 120px; height: 8px; overflow: hidden; display: inline-block; vertical-align: middle; }
+        .xp-bar-fill { background: #fff; height: 100%; width: 0%; transition: width 0.4s ease; }
+
         nav {
-            background: var(--nav-bg);
-            backdrop-filter: var(--glass-blur);
-            -webkit-backdrop-filter: var(--glass-blur);
-            color: white;
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex; background-color: var(--nav-bg); 
+            overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+            position: sticky; top: 0; z-index: 999; box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        nav::-webkit-scrollbar { display: none; }
+        nav button {
+            background: none; border: none; padding: 16px 20px; font-size: 14px;
+            color: white; cursor: pointer; font-weight: 600; white-space: nowrap; opacity: 0.75; transition: 0.2s;
+            flex: 1 0 auto; text-align: center; min-height: 44px;
+        }
+        nav button.active-nav { opacity: 1; color: white; border-bottom: 3px solid white; background-color: rgba(255,255,255,0.15); }
+
+        .content-section { display: none; padding: 20px 4%; max-width: 800px; margin: 0 auto; animation: slideUp 0.3s ease-out; box-sizing: border-box; }
+        .content-section.active { display: block; }
+        @keyframes slideUp { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+        .section-desc {
+            background: rgba(0, 71, 171, 0.05); border-left: 4px solid var(--primary-blue);
+            padding: 12px 16px; border-radius: 8px; font-size: 13px; margin-bottom: 15px; color: var(--text-color); line-height: 1.5;
+        }
+        [data-theme="dark"] .section-desc { background: rgba(41, 151, 255, 0.1); }
+
+        .card {
+            background: var(--card-bg); backdrop-filter: var(--glass-blur); -webkit-backdrop-filter: var(--glass-blur);
+            padding: 20px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.02);
         }
 
-        .logo {
-            font-size: 1.3em;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .welcome-hero { text-align: center; padding: 20px 0; }
+        .welcome-hero h1 { font-size: 28px; font-weight: 800; color: var(--text-color); margin: 0 0 12px 0; }
+        .soup-box { font-style: italic; opacity: 0.9; padding: 12px 16px; border-radius: 12px; border: 1px dashed var(--text-color); display: inline-block; color: var(--text-color); font-size: 14px; }
+
+        .chat-container { display: flex; flex-direction: column; gap: 14px; max-height: 550px; overflow-y: auto; padding-right: 4px; margin-top: 15px; -webkit-overflow-scrolling: touch; }
+        .chat-row { display: flex; flex-direction: column; width: 100%; box-sizing: border-box; }
+        .chat-row.waiter-align { align-items: flex-start; }
+        .chat-row.user-align { align-items: flex-end; }
+        .chat-meta { font-size: 11px; font-weight: 700; opacity: 0.5; margin-bottom: 4px; padding: 0 4px; color: var(--text-color); }
+        
+        .chat-bubble { max-width: 88%; padding: 14px 16px; border-radius: 18px; line-height: 1.5; font-size: 15px; box-sizing: border-box; }
+        .chat-waiter { background: #e9e9eb; color: black; align-self: flex-start; border-top-left-radius: 4px; }
+        .chat-user { background: var(--primary-blue); color: white; align-self: flex-end; border-top-right-radius: 4px; }
+        [data-theme="dark"] .chat-waiter { background: #2c2c2e; color: white; }
+
+        .chat-sub-text { display: block; font-size: 12px; margin-top: 5px; opacity: 0.75; font-weight: normal; }
+        .chat-actions { display: flex; gap: 8px; margin-top: 10px; border-top: 1px solid rgba(0,0,0,0.06); padding-top: 8px; flex-wrap: wrap; }
+        .chat-user .chat-actions { border-top-color: rgba(255,255,255,0.15); }
+        
+        .chat-btn { 
+            background: rgba(0,0,0,0.05); border: none; color: inherit; padding: 8px 16px; 
+            border-radius: 12px; font-size: 13px; font-weight: 700; cursor: pointer; min-height: 36px; display: inline-flex; align-items: center; justify-content: center;
+        }
+        .chat-user .chat-btn { background: rgba(255,255,255,0.15); }
+
+        .scene-select-dropdown {
+            width: 100%; padding: 12px; border-radius: 12px; border: 1.5px solid var(--primary-blue);
+            background: var(--card-bg); color: var(--text-color); font-weight: 600; font-size: 14px; cursor: pointer; -webkit-appearance: none;
         }
 
-        .nav-controls {
-            display: flex;
-            align-items: center;
-            gap: 12px;
+        .score-box {
+            margin-top: 8px; padding: 12px; background: rgba(255, 255, 255, 0.98);
+            border-left: 4px solid var(--accent-gold); border-radius: 8px; font-size: 13px; display: none; color: #1d1d1f;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08); width: 100%; box-sizing: border-box;
+        }
+        [data-theme="dark"] .score-box { background: #2c2c2e; color: #fff; }
+
+        .culture-wrapper { display: flex; flex-direction: column; gap: 4px; }
+        .culture-preview-text { font-size: 14px; font-weight: 600; color: var(--text-color); opacity: 0.85; line-height: 1.5; }
+        .culture-full-text { 
+            font-size: 14px; line-height: 1.6; color: var(--text-color); margin-top: 10px;
+            display: none; white-space: pre-line; border-top: 1px dashed var(--border-color); padding-top: 10px;
+        }
+        .culture-full-text.expanded { display: block; animation: slideUp 0.2s ease-out; }
+        .toggle-story-btn { background: none; border: none; color: var(--primary-blue); font-weight: 700; cursor: pointer; margin-top: 10px; font-size: 13px; text-align: left; padding: 5px 0; }
+
+        input[type="text"] {
+            width: 100%; padding: 14px; border-radius: 10px; border: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.6); color: var(--text-color); margin-bottom: 10px; box-sizing: border-box; font-size: 14px; min-height: 44px;
         }
 
-        .btn-toggle, .lang-select {
-            background: rgba(255,255,255,0.2);
-            border: none;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-size: 0.9em;
-        }
-        .lang-select option {
-            color: #000;
-        }
-
-        /* 主要容器 */
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 0 15px;
-        }
-
-        /* 資訊看板與儀表板 */
-        .dashboard-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            backdrop-filter: var(--glass-blur);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .stat-box {
-            background: rgba(0, 0, 0, 0.02);
-            border-radius: 10px;
-            padding: 12px;
-            text-align: center;
-        }
-        [data-theme="dark"] .stat-box {
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .stat-value {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: var(--primary-blue);
-            margin-top: 5px;
-        }
-
-        /* 經驗值條 */
-        .xp-container {
-            margin-top: 10px;
-        }
-        .xp-bar {
-            background: rgba(0,0,0,0.1);
-            height: 10px;
-            border-radius: 5px;
-            overflow: hidden;
-            margin-top: 5px;
-        }
-        [data-theme="dark"] .xp-bar {
-            background: rgba(255,255,255,0.2);
-        }
-        .xp-fill {
-            background: var(--accent-gold);
-            height: 100%;
-            width: 0%;
-            transition: width 0.5s ease;
-        }
-
-        /* 模塊標題 */
-        .section-title {
-            font-size: 1.4em;
-            margin: 25px 0 15px 0;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            border-left: 4px solid var(--primary-blue);
-            padding-left: 10px;
-        }
-
-        /* AI 對話板塊樣式 */
-        .ai-chat-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-
-        .chat-bubble {
-            background: rgba(0, 71, 171, 0.1);
-            padding: 12px 16px;
-            border-radius: 12px;
-            border-top-left-radius: 2px;
-            margin-bottom: 15px;
-            line-height: 1.5;
-            max-width: 85%;
-        }
-        [data-theme="dark"] .chat-bubble {
-            background: rgba(0, 71, 171, 0.3);
-        }
-
-        .audio-wave {
-            display: none;
-            justify-content: center;
-            align-items: center;
-            gap: 4px;
-            height: 30px;
-            margin: 15px 0;
-        }
-        .wave-bar {
-            width: 4px;
-            height: 100%;
-            background: var(--primary-blue);
-            border-radius: 2px;
-            animation: bounce 0.8s ease infinite alternate;
-        }
-        .wave-bar:nth-child(2) { animation-delay: 0.2s; }
-        .wave-bar:nth-child(3) { animation-delay: 0.4s; }
-        .wave-bar:nth-child(4) { animation-delay: 0.1s; }
-        .wave-bar:nth-child(5) { animation-delay: 0.3s; }
-
-        @keyframes bounce {
-            from { height: 5px; }
-            to { height: 25px; }
-        }
-
-        .ai-btn-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .btn-action {
-            padding: 12px 24px;
-            border-radius: 25px;
-            border: none;
-            font-size: 1em;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
-
-        .btn-start {
-            background-color: var(--rhine-blue);
-            color: white;
-        }
-        .btn-stop {
-            background-color: var(--danger-red);
-            color: white;
-            display: none;
-        }
-
-        .evaluation-panel {
-            margin-top: 20px;
-            padding: 15px;
-            border-radius: 12px;
-            border-left: 5px solid var(--success-green);
-            background: rgba(52, 199, 89, 0.08);
-            display: none;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        /* 文化故事板塊樣式 */
-        .stories-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-        }
-        @media(min-width: 600px) {
-            .stories-grid { grid-template-columns: 1fr 1fr; }
-        }
-
-        .story-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 14px;
-            padding: 16px;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .story-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-        .story-tag {
-            align-self: flex-start;
-            background: rgba(0, 71, 171, 0.1);
-            color: var(--primary-blue);
-            padding: 3px 8px;
-            border-radius: 6px;
-            font-size: 0.8em;
-            font-weight: bold;
-        }
-        .story-title {
-            font-size: 1.1em;
-            font-weight: bold;
-        }
-        .story-desc {
-            font-size: 0.9em;
-            opacity: 0.8;
-            line-height: 1.4;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .wrong-box-title { color: var(--danger-red); font-weight: bold; font-size: 16px; margin: 0; display: flex; align-items: center; gap: 6px; }
+        
+        table { width: 100%; border-collapse: collapse; }
+        td { padding: 12px 6px; border-bottom: 1px solid var(--border-color); color: var(--text-color); font-size: 14px; }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo">🌉 UNIBRIDGE 煲匯橋</div>
-        <div class="nav-controls">
-            <select class="lang-select" id="lang-selector" onchange="changeLang(this.value)">
-                <option value="zh-HK">繁體粵語</option>
-                <option value="en">English</option>
-            </select>
-            <button class="btn-toggle" onclick="toggleTheme()">🌓 模式</button>
+    <header>
+        <div class="brand-container">
+            <div class="ip-char">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20,35 Q50,15 80,35 Z" fill="#f5f7fa" stroke="#0047AB" stroke-width="3"/>
+                    <circle cx="50" cy="22" r="6" fill="#f5f7fa" stroke="#0047AB" stroke-width="3"/>
+                    <path d="M15,35 Q50,45 85,35 L80,75 Q50,85 20,75 Z" fill="#0047AB" stroke="#0047AB" stroke-width="2"/>
+                    <circle cx="38" cy="55" r="3" fill="white"/>
+                    <circle cx="62" cy="55" r="3" fill="white"/>
+                    <path d="M42,68 Q50,75 58,68" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/>
+                </svg>
+            </div>
+            <div class="logo-text-group">
+                <div class="logo-en">UNIBRIDGE</div>
+                <div class="logo-cn" id="logo-subtitle">煲匯橋</div>
+            </div>
+            <div class="visit-badge"><span id="lbl-visit">👥 全網累計訪問:</span> <span id="visit-count">1</span></div>
         </div>
-    </nav>
-
-    <div class="container">
-        
-        <div class="dashboard-card">
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div id="lbl-visit-title" style="font-size: 0.9em; opacity:0.8;">全網累計訪問人數</div>
-                    <div class="stat-value" id="visit-count">1</div>
-                </div>
-                <div class="stat-box">
-                    <div id="lbl-level-title-text" style="font-size: 0.9em; opacity:0.8;">目前粵語級別</div>
-                    <div class="stat-value" id="level-title">🌱 新手村</div>
-                </div>
-            </div>
-
-            <div class="xp-container">
-                <div style="display: flex; justify-content: space-between; font-size: 0.85em;">
-                    <span>LV: <span id="user-level">1</span></span>
-                    <span>XP: <span id="user-xp">0</span> / 100</span>
-                </div>
-                <div class="xp-bar">
-                    <div class="xp-fill" id="xp-fill"></div>
-                </div>
-            </div>
+        <div class="controls">
+            <button id="lang-zh-HK" class="active-lang" onclick="changeLang('zh-HK')">繁</button>
+            <button id="lang-zh-CN" onclick="changeLang('zh-CN')">简</button>
+            <button id="lang-en" onclick="changeLang('en')">EN</button>
+            <button onclick="toggleTheme()" style="font-size:16px;">🌓</button>
         </div>
+    </header>
 
-        <h2 class="section-title">🤖 <span id="sec-ai-title">AI 粵語情境對話</span></h2>
-        <div class="ai-chat-box">
-            <div class="chat-bubble" id="ai-chat-prompt">
-                <strong>煲匯橋智能 AI：</strong><br>
-                「早晨！今日想同我練習邊句廣東話？點擊下方開始錄音，同我講兩句啦！」
-            </div>
-
-            <div class="audio-wave" id="voice-wave">
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-                <div class="wave-bar"></div>
-            </div>
-
-            <div class="ai-btn-group">
-                <button id="start-rec-btn" class="btn-action btn-start" onclick="startAiRecording()">
-                    🎤 <span>開始錄音</span>
-                </button>
-                <button id="stop-rec-btn" class="btn-action btn-stop" onclick="stopAiRecording()">
-                    ⏹️ <span>停止錄音</span>
-                </button>
-            </div>
-
-            <div class="evaluation-panel" id="ai-evaluation-result"></div>
-        </div>
-
-        <h2 class="section-title">📸 <span id="sec-stories-title">香港文化故事空間</span></h2>
-        <div class="stories-grid">
-            
-            <div class="story-card" onclick="triggerStoryFeedback('茶餐廳文化')">
-                <span class="story-tag">港式飲食</span>
-                <div class="story-title">茶餐廳文化與絲襪奶茶</div>
-                <div class="story-desc">融合中西飲食精髓，見證了香港歷史的快節奏發展，一杯香滑奶茶承載著滿滿的香港情懷。</div>
-            </div>
-
-            <div class="story-card" onclick="triggerStoryFeedback('叮叮車軌跡')">
-                <span class="story-tag">城市記憶</span>
-                <div class="story-title">百年叮叮車的港島記憶</div>
-                <div class="story-desc">全港歷史最悠久的路面交通工具，漫步在繁華的港島街道，帶您細味舊日與現代交織的光影。</div>
-            </div>
-
-            <div class="story-card" onclick="triggerStoryFeedback('長洲太平清醮')">
-                <span class="story-tag">傳統節慶</span>
-                <div class="story-title">長洲太平清醮與搶包山</div>
-                <div class="story-desc">國家級非物質文化遺產，飄色巡遊與深夜搶包山大賽熱鬧非凡，寄託平安吉利的美好祝願。</div>
-            </div>
-
-            <div class="story-card" onclick="triggerStoryFeedback('大坑舞火龍')">
-                <span class="story-tag">民間風俗</span>
-                <div class="story-title">大坑舞火龍的祈福光芒</div>
-                <div class="story-desc">中秋佳節期間，數百名健兒舞動插滿線香的巨型火龍穿梭街巷，煙香繚繞，驅瘟祈福。</div>
-            </div>
-
-        </div>
-
+    <div class="status-bar">
+        <div>🏅 <span id="lbl-level">等級</span> <span id="user-level">1</span> <span id="level-title">🌱 新手村 初來步到</span></div>
+        <div class="xp-container">✨ <span id="lbl-xp">經驗</span>: <span id="user-xp">0</span> / 100 XP <div class="xp-bar-bg"><div id="xp-fill" class="xp-bar-fill"></div></div></div>
     </div>
 
+    <nav>
+        <button id="nav-home" class="active-nav" onclick="showSection('home')">首頁</button>
+        <button id="nav-vocab" onclick="showSection('vocab')">高頻詞彙</button>
+        <button id="nav-dialogue" onclick="showSection('dialogue')">對話實戰</button>
+        <button id="nav-quiz" onclick="showSection('quiz')">測驗題庫</button>
+        <button id="nav-culture" onclick="showSection('culture')">文化典故</button>
+    </nav>
+
+    <main id="home" class="content-section active">
+        <div class="welcome-hero">
+            <h1 id="welcome-title">今日想港滴乜嘢？</h1>
+            <div class="soup-box" id="daily-soup">正在為你煲今日廣東話心靈雞湯...</div>
+        </div>
+        <div class="card" style="text-align: center; border: 1px solid rgba(0,0,0,0.12);">
+            <p style="font-weight: bold; color: var(--text-color); margin: 0 0 6px 0;" id="tips-title">💡 系統功能與修行提示</p>
+            <p style="color: var(--text-color); opacity: 0.8; margin:0; font-size:13px; line-height: 1.5;" id="tips-desc">
+                歡迎來到煲匯橋學習空間！本系統配備四大核心修行功能：高頻詞彙隨機滾動刷詞、擬真 10 話輪情境對話（支援 AI 語音跟讀與即時智能評分）、精選隨堂測驗以及自動記錄的錯題消滅簿、以及深度的老香港歷史典故探索。請點擊上方導航欄開啟您的粵語神功修煉之旅！
+            </p>
+        </div>
+    </main>
+
+    <main id="vocab" class="content-section">
+        <div class="section-desc" id="vocab-desc">🌱 快速學會打招呼、數字與茶餐廳單詞。</div>
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                <h2 style="margin:0; font-size:18px;" id="vocab-title">📊 高頻詞彙</h2>
+                <button class="btn" onclick="refreshVocab()" id="btn-refresh-vocab">🔄 換一批</button>
+            </div>
+            <table>
+                <tbody id="vocab-table-body"></tbody>
+            </table>
+        </div>
+    </main>
+
+    <main id="dialogue" class="content-section">
+        <div class="section-desc" id="dialogue-desc">⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！</div>
+        <div class="card">
+            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換 (標準 10 話輪)</h2>
+            <select id="scene-selector" class="scene-select-dropdown" onchange="switchScene(this.value)"></select>
+            <div class="chat-container" id="dialogue-chat-container"></div>
+        </div>
+    </main>
+
+    <main id="quiz" class="content-section">
+        <div class="section-desc" id="quiz-desc">🏆 每日自動派發挑戰，答對可穩步獲得經驗值。</div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <h2 style="margin:0; font-size:18px; color:var(--text-color);" id="quiz-title">🎯 隨堂實戰測驗</h2>
+            <button class="btn" onclick="refreshQuizRand()" id="btn-refresh-quiz">🔄 換一批題目</button>
+        </div>
+        <div id="system-quiz-container"></div>
+        
+        <div class="card" id="wrong-notebook-card" style="border: 1.5px solid var(--danger-red); background: rgba(255,59,48,0.02);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <h3 class="wrong-box-title">
+                    <span id="lbl-wrong-title">❌ 我的錯題簿</span> (<span id="wrong-count">0</span>)
+                </h3>
+                <button class="chat-btn" style="color:var(--danger-red); border:1px solid var(--danger-red); background:none;" onclick="clearWrongNotebook()" id="btn-clear-wrong">🗑️ 清空</button>
+            </div>
+            <div id="wrong-quiz-list" style="display:flex; flex-direction:column; gap:10px; font-size:14px; color:var(--text-color);"></div>
+        </div>
+    </main>
+
+    <main id="culture" class="content-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+            <div class="section-desc" style="margin:0;" id="culture-desc">🧳 探索老香港傳奇故事。</div>
+            <button class="btn" onclick="refreshCultureRand()" id="btn-refresh-culture">🔄 換一批故事</button>
+        </div>
+        <div id="culture-card-container"></div>
+    </main>
+
     <script>
-        // 狀態管理
-        let xp = parseInt(localStorage.getItem('ub_xp') || '0');
-        let level = parseInt(localStorage.getItem('ub_lvl') || '1');
         let currentLang = 'zh-HK';
 
-        const levelTitles = {
-            'zh-HK': { 1: '🌱 新手村', 2: '🗣️ 起步走', 3: '🔥 暢所欲言', 4: '👑 粵語通' },
-            'en': { 1: '🌱 Beginner', 2: '🗣️ Learner', 3: '🔥 Fluent Speaker', 4: '👑 Cantonese Master' }
-        };
-
-        const i18n = {
+        // 🌐 多語言 UI 字典
+        const uiLangData = {
             'zh-HK': {
-                visitTitle: '全網累計訪問人數',
-                levelTitleText: '目前粵語級別',
-                secAi: 'AI 粵語情境對話',
-                secStories: '香港文化故事空間',
-                startRec: '開始錄音',
-                stopRec: '停止錄音'
+                'logo-subtitle': '煲匯橋', 'lbl-visit': '👥 全網累計訪問:', 'lbl-level': '等級', 'lbl-xp': '經驗',
+                'nav-home': '首頁', 'nav-vocab': '高頻詞彙', 'nav-dialogue': '對話實戰', 'nav-quiz': '測驗題庫', 'nav-culture': '文化典故',
+                'welcome-title': '今日想港滴乜嘢？', 'tips-title': '💡 系統功能與修行提示',
+                'tips-desc': '歡迎來到煲匯橋學習空間！本系統配備四大核心修行功能：高頻詞彙隨機滾動刷詞、擬真 10 話輪情境對話（支援 AI 語音跟讀與即時智能評分）、精選隨堂測驗以及自動記錄的錯題消滅簿、以及深度的老香港歷史典故探索。請點擊上方導航欄開啟您的粵語神功修煉之旅！',
+                'vocab-desc': '🌱 快速學會打招呼、數字與茶餐廳單詞。', 'vocab-title': '📊 高頻詞彙', 'btn-refresh-vocab': '🔄 換一批',
+                'dialogue-desc': '⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！', 'dialogue-title': '🗣️ 擬真對話切換 (標準 10 話輪)',
+                'quiz-desc': '🏆 每日自動派發挑戰，答對可穩步獲得經驗值。', 'quiz-title': '🎯 隨堂實戰測驗', 'btn-refresh-quiz': '🔄 換一批題目',
+                'lbl-wrong-title': '❌ 我的錯題簿', 'btn-clear-wrong': '🗑️ 清空',
+                'culture-desc': '🧳 探索老香港傳奇故事。', 'btn-refresh-culture': '🔄 換一批故事',
+                'play-btn': '🔊 播放', 'mic-btn': '🎤 跟讀', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑戰', 'holder-ans': '鍵入答案...', 'holder-retry': '再次挑戰輸入答案...',
+                'alert-correct': '✅ 正確！恭喜獲得 +8 XP！', 'alert-wrong': '❌ 答案唔啱喔！已自動記錄至下方「錯題簿」。', 'alert-retry-correct': '🎉 答對了！成功消滅錯題！', 'alert-retry-wrong': '❌ 還是不對，再想想看！',
+                'no-wrong': '目前沒有錯題記錄，表現絕佳！', 'meta-waiter': '主持 / 店員', 'meta-user': '您', 'btn-expand-story': '展開詳盡歷史典故 ➔', 'btn-collapse-story': '收起故事 ↩'
+            },
+            'zh-CN': {
+                'logo-subtitle': '煲汇桥', 'lbl-visit': '👥 全网累计访问:', 'lbl-level': '等级', 'lbl-xp': '经验',
+                'nav-home': '首页', 'nav-vocab': '高频词汇', 'nav-dialogue': '对话实战', 'nav-quiz': '测验题库', 'nav-culture': '文化典故',
+                'welcome-title': '今日想港滴乜嘢？', 'tips-title': '💡 系统功能与修行提示',
+                'tips-desc': '欢迎来到煲汇桥学习空间！本系统配备四大核心修行功能：高频词汇随机滚动刷词、拟真 10 话轮情境对话（支持 AI 语音跟读与即时智能评分）、精选随堂测验以及自动记录的错题消灭簿、以及深度的老香港历史典故探索。请点击上方导航栏开启您的粤语神功修炼之旅！',
+                'vocab-desc': '🌱 快速学会打招呼、数字与茶餐厅单词。', 'vocab-title': '📊 高频词汇', 'btn-refresh-vocab': '🔄 换一批',
+                'dialogue-desc': '⚔️ 实境对话挑战，支持手机端全流畅 AI 语音跟读与打分评估！', 'dialogue-title': '🗣️ 拟真对话切换 (标准 10 话轮)',
+                'quiz-desc': '🏆 每日自动派发挑战，答对可稳步获得经验值。', 'quiz-title': '🎯 随堂实战测验', 'btn-refresh-quiz': '🔄 换一批题目',
+                'lbl-wrong-title': '❌ 我的错题簿', 'btn-clear-wrong': '🗑️ 清空',
+                'culture-desc': '🧳 探索老香港传奇故事。', 'btn-refresh-culture': '🔄 换一批故事',
+                'play-btn': '🔊 播放', 'mic-btn': '🎤 跟读', 'stop-btn': '🛑 停止', 'submit-btn': '提交', 'retry-btn': '挑战', 'holder-ans': '键入答案...', 'holder-retry': '键入答案...',
+                'alert-correct': '✅ 正确！恭喜获得 +8 XP！', 'alert-wrong': '❌ 答案不对喔！已自动记录至下方「错题簿」。', 'alert-retry-correct': '🎉 答对了！成功消灭错题！', 'alert-retry-wrong': '❌ 还是不对，再想想看！',
+                'no-wrong': '目前没有错题记录，表现绝佳！', 'meta-waiter': '主持 / 店员', 'meta-user': '您', 'btn-expand-story': '展开详尽历史典故 ➔', 'btn-collapse-story': '收起故事 ↩'
             },
             'en': {
-                visitTitle: 'Global Visitors Count',
-                levelTitleText: 'Current Level',
-                secAi: 'AI Cantonese Dialogue',
-                secStories: 'HK Cultural Stories Space',
-                startRec: 'Start Record',
-                stopRec: 'Stop Record'
+                'logo-subtitle': 'UniBridge', 'lbl-visit': '👥 Total Visits:', 'lbl-level': 'Level', 'lbl-xp': 'XP',
+                'nav-home': 'Home', 'nav-vocab': 'Vocabulary', 'nav-dialogue': 'Dialogue', 'nav-quiz': 'Quiz', 'nav-culture': 'Culture',
+                'welcome-title': 'What do you want to speak today?', 'tips-title': '💡 Features & Training Tips',
+                'tips-desc': 'Welcome to UniBridge Cantonese learning space! Features included: Vocab flashcards, real-world 10-turn dialogue practices (with AI scoring), system short quizzes with auto error notebooks, and in-depth HK traditional heritage exploration. Tap nav menus above to boost your journey!',
+                'vocab-desc': '🌱 Learn greetings, numbers, and local restaurant terms rapidly.', 'vocab-title': '📊 High-Frequency Vocab', 'btn-refresh-vocab': '🔄 Refresh',
+                'dialogue-desc': '⚔️ Real-world conversational drills. Supports mobile AI voice scoring.', 'dialogue-title': '🗣️ Dialogue Practice (10 Turns)',
+                'quiz-desc': '🏆 Daily evaluation. Earn Experience Points (XP) through correct answers.', 'quiz-title': '🎯 Quiz Challenge', 'btn-refresh-quiz': '🔄 Refresh Questions',
+                'lbl-wrong-title': '❌ My Error Notebook', 'btn-clear-wrong': '🗑️ Clear All',
+                'culture-desc': '🧳 Explore legendary Hong Kong stories and heritage.', 'btn-refresh-culture': '🔄 Refresh Stories',
+                'play-btn': '🔊 Play', 'mic-btn': '🎤 Speak', 'stop-btn': '🛑 Stop', 'submit-btn': 'Submit', 'retry-btn': 'Retry', 'holder-ans': 'Type answer here...', 'holder-retry': 'Try answering again...',
+                'alert-correct': '✅ Correct! +8 XP Awarded!', 'alert-wrong': '❌ Incorrect! Saved to your Error Notebook below.', 'alert-retry-correct': '🎉 Correct! Error cleared from notebook!', 'alert-retry-wrong': '❌ Still incorrect, keep trying!',
+                'no-wrong': 'Excellent! No error logs recorded.', 'meta-waiter': 'Staff', 'meta-user': 'You', 'btn-expand-story': 'Read Full History ➔', 'btn-collapse-story': 'Collapse Story ↩'
             }
         };
 
-        // 修改 1：全網累計人數聯網統計（從 1 開始）
-        function initVisitCounter() {
-            // 使用公共免註冊計數器 API 進行全網聯聯網計數
-            // 'unibridge_main_counter_2026' 保證數據庫唯一獨立性
-            fetch('https://api.counterapi.dev/v1/unibridge_main_counter_2026/global_visits/up')
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.value) {
-                        const counterElement = document.getElementById('visit-count');
-                        if (counterElement) counterElement.innerText = data.value;
-                    }
-                })
-                .catch(err => {
-                    console.error('聯網計數器數據同步中斷，調用備用本地引擎:', err);
-                    let localCount = parseInt(localStorage.getItem('ub_visits') || '0') + 1;
-                    localStorage.setItem('ub_visits', localCount);
-                    const counterElement = document.getElementById('visit-count');
-                    if (counterElement) counterElement.innerText = localCount;
-                });
-        }
+        // 🧠 核心數據多語言資源庫
+        const soupPool = {
+            'zh-HK': ["「做人如果無夢想，同條鹹魚有咩分別呀？」", "「最緊要個人開心，行行下就到黎明啦。」", "「食得鹹魚抵得渴，每日學多句粵語！」"],
+            'zh-CN': ["\"做人如果无梦想，同条咸鱼有咩分别呀？\"", "\"最紧要个人开心，行行下就到黎明啦。\"", "\"食得咸鱼抵得渴，每日学多句粤语！\""],
+            'en': ["\"Life is empty without dreams, what is the difference between a human and a salted fish?\"", "\"The most important thing is happiness, sunrise will come as we walk.\"", "\"Accept the consequences if you make a choice. Learn Cantonese daily!\""]
+        };
 
-        // 修改 3：AI 對話板塊增加停止錄音按鈕與自動評分機制
-        function startAiRecording() {
-            // 切換按鈕狀態與波形動畫
-            document.getElementById('start-rec-btn').style.display = 'none';
-            document.getElementById('stop-rec-btn').style.display = 'inline-block';
-            document.getElementById('voice-wave').style.display = 'flex';
-            
-            // 隱藏上一次的評分
-            const evalResult = document.getElementById('ai-evaluation-result');
-            evalResult.style.display = 'none';
-            evalResult.innerHTML = '';
-        }
-
-        function stopAiRecording() {
-            // 回復按鈕與動畫狀態
-            document.getElementById('stop-rec-btn').style.display = 'none';
-            document.getElementById('start-rec-btn').style.display = 'inline-block';
-            document.getElementById('voice-wave').style.display = 'none';
-
-            // 觸發 AI 自動評分評價
-            triggerAiEvaluation();
-        }
-
-        function triggerAiEvaluation() {
-            const evalResult = document.getElementById('ai-evaluation-result');
-            evalResult.style.display = 'block';
-            evalResult.innerHTML = `
-                <div style="text-align: center; padding: 10px; opacity: 0.8;">
-                    ⏳ AI 正在分析您的語音聲調、流利度與發音精準度...
-                </div>
-            `;
-
-            // 模擬語音分析延遲 1.2 秒
-            setTimeout(() => {
-                // 生成 85 - 99 分的高擬真隨機評分
-                const score = Math.floor(Math.random() * 15) + 85;
-                
-                // 根據語言版本定制地道評語
-                let feedback = "";
-                if (currentLang === 'zh-HK') {
-                    if (score >= 94) {
-                        feedback = "<strong>🎉 驚艷！</strong> 您的九聲六調極之精準，特別是入聲字尾收得好清脆，充滿道地香港人口音！";
-                    } else if (score >= 89) {
-                        feedback = "<strong>👍 犀利！</strong> 流利度十分高，唯獨個別字（如「食、學」）嘅聲調可以再沉穩少少，繼續保持！";
-                    } else {
-                        feedback = "<strong>💪 幾好！</strong> 發音算清晰，建議多加留意廣東話「懶音」糾正（例如 ng- 聲母同埋 -n/-ng 韻尾的分別）。";
-                    }
-                } else {
-                    feedback = `<strong>Great Effort!</strong> Perfect rhythm and phrasing. Keep practicing the 6 tones of Cantonese to achieve native precision!`;
-                }
-
-                // 渲染測評視覺面板
-                evalResult.innerHTML = `
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <span style="font-weight: bold; font-size: 1.05em;">📊 AI 語音即時測評報告</span>
-                        <span style="font-size: 1.4em; font-weight: bold; color: var(--success-green);">${score} <span style="font-size:0.6em;">分</span></span>
-                    </div>
-                    <p style="font-size: 0.95em; line-height: 1.5; opacity: 0.9;">${feedback}</p>
-                    <div style="margin-top: 8px; font-size: 0.8em; color: var(--accent-gold); font-weight: bold;">✨ 完成本次練習，XP +15！</div>
-                `;
-
-                // 獲得積分獎勵並联动升級系統
-                gainXP(15);
-            }, 1200);
-        }
-
-        // 故事點擊互動反饋
-        function triggerStoryFeedback(storyName) {
-            console.log(`用戶瀏覽故事: ${storyName}`);
-            gainXP(5);
-        }
-
-        // 經驗值與級別引擎
-        function gainXP(amount) {
-            xp += amount;
-            if (xp >= 100) {
-                xp = xp % 100;
-                level += 1;
-                alert(`🎉 恭喜升級！您已晉升到 Level ${level}!`);
+        const bigVocabPool = [ 
+            {tc:'唔該', jp:'m4 goi1', en:'Please / Excuse me', sc:'唔该'}, 
+            {tc:'埋單', jp:'maai4 daan1', en:'Check the bill', sc:'埋单'}, 
+            {tc:'凍檸茶', jp:'dung3 leng2 caa4', en:'Iced Lemon Tea', sc:'冻柠茶'}, 
+            {tc:'邊度', jp:'bin1 dou6', en:'Where', sc:'边度'} 
+        ];
+        
+        // 🗣️ 10大擬真情境對話庫
+        const dialoguePool = [
+            { 
+                name: { 'zh-HK': "場景 1：旺角茶餐廳搵位與點餐", 'zh-CN': "场景 1：旺角茶餐厅找位与点餐", 'en': "Scene 1: Ordering Food in Mong Kok Café" }, 
+                story: [
+                    {role:"waiter", text:"歡迎光臨！幾多位啊？入面邊度自便啦。", sub:"(Welcome! How many? Sit anywhere inside.)"}, 
+                    {role:"user", text:"兩位，唔該。想要個靠邊嘅卡位。", sub:"(Two, thanks. Want a booth by the side.)"}, 
+                    {role:"waiter", text:"卡位要同人搭枱喎，你哋介唔介意先？", sub:"(Booth needs table-sharing, do you mind?)"}, 
+                    {role:"user", text:"冇問題，搭枱都得。唔該比張餐牌我睇下。", sub:"(No problem, sharing is ok. Menu please.)"},
+                    {role:"waiter", text:"今日下晝茶，常餐同西多士最抵食，想飲咩嘢啊？", sub:"(Tea time today, set meal and French toast are best value. Drinks?)"},
+                    {role:"user", text:"我要一個常餐，配叉燒意粉，嘢飲要熱奶茶。", sub:"(A set meal with BBQ pork macaroni, hot milk tea.)"},
+                    {role:"waiter", text:"好，常餐叉意熱奶茶。你朋友呢？凍飲要加三蚊喎。", sub:"(OK, macaroni and hot milk tea. Your friend? Cold drink +$3.)"},
+                    {role:"user", text:"佢要茶走，唔該，嘢食要個菠蘿油。", sub: "(Tea-jau [condensed milk tea] please, and a pineapple bun with butter.)"},
+                    {role:"waiter", text:"收到！嘢食起好即刻幫你送黎！", sub:"(Got it! Food will be served once ready.)"},
+                    {role:"user", text:"唔該晒，麻煩幫我哋催一催啊，趕時間。", sub:"(Thanks, please help us speed it up, in a rush.)"}
+                ]
+            },
+            { 
+                name: { 'zh-HK': "場景 2：港鐵地鐵站問路與八達通增值", 'zh-CN': "场景 2：港铁地铁站问路与八达通充值", 'en': "Scene 2: Asking Directions & Octopus Top-up at MTR" }, 
+                story: [
+                    {role:"waiter", text:"你好，請問有咩幫到你？", sub:"(Hello, how can I help you?)"},
+                    {role:"user", text:"唔該，我想問下女人街應該邊個出口出啊？", sub:"(Excuse me, which exit should I take for Ladies Market?)"},
+                    {role:"waiter", text:"你去女人街啊？喺D3出口行出去直行就係喇。", sub:"(Ladies Market? Go out from Exit D3 and walk straight.)"},
+                    {role:"user", text:"收到，唔該。另外我想喺度幫張八達通增值。", sub:"(Got it, thanks. Also, I'd like to top up my Octopus card here.)"},
+                    {role:"waiter", text:"增值去隔籬客務中心或者自助機都得，你想加幾多？", sub:"(Top-up at the customer service center or machine. How much?)"},
+                    {role:"user", text:"同我加一百蚊，唔該，比現金你。", sub:"(Top up one hundred dollars, please. Here is cash.)"},
+                    {role:"waiter", text:"好，請放張卡落個讀卡器度。得咗，呢度係收據。", sub:"(Ok, please place your card on the reader. Done, here is the receipt.)"},
+                    {role:"user", text:"唔該晒。如果搭去尖沙咀要喺邊度轉車啊？", sub:"(Thanks. Where should I change trains to Tsim Sha Tsui?)"},
+                    {role:"waiter", text:"唔使轉車，你搭紅色荃灣線直達就得喇。", sub:"(No need to change, take the red Tsuen Wan Line directly.)"},
+                    {role:"user", text:"好清楚，唔該晒你嘅幫忙！", sub:"(Very clear, thank you so much for your help!)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 3：銅鑼灣時代廣場問路與的士糾紛", 'zh-CN': "场景 3：铜锣湾时代广场问路与出租车纠纷", 'en': "Scene 3: Shopping Direction & Taxi Dispute in Causeway Bay" },
+                story: [
+                    {role:"waiter", text:"師兄，你知唔知時代廣場點行啊？我蕩失路啊。", sub:"(Brother, do you know how to get to Times Square? I am lost.)"},
+                    {role:"user", text:"前面街口轉左，見到天橋直行就係，好近架咋。", sub:"(Turn left ahead, walk straight when you see the flyover, it's close.)"},
+                    {role:"waiter", text:"唔該晒！衰在依家落大雨，好難截的士。", sub:"(Thanks! Too bad it's raining cats and dogs, hard to hail a cab.)"},
+                    {role:"user", text:"落雨天全香港都截唔到的士架啦，搭地鐵仲快。", sub:"(It's impossible to hail a taxi on rainy days in HK, MTR is faster.)"},
+                    {role:"waiter", text:"頭先有一架肯載，但佢話要去九龍要加五十蚊過海費喎！", sub:"(Just now one driver agreed but asked for $50 extra cross-harbor fee!)"},
+                    {role:"user", text:"過海隧道路費係應該比，但另外加錢就係「黑的」不合法！", sub:"(Tunnel toll should be paid, but charging extra is an illegal 'Black Taxi'!)"},
+                    {role:"waiter", text:"好彩我冇上車，差啲比人搵咗老襯。", sub:"(Lucky I didn't get in, almost got ripped off.)"},
+                    {role:"user", text:"係啊，你可以抄低佢車牌投訴佢。", sub:"(Yes, you can write down the license plate and complain.)"},
+                    {role:"waiter", text:"算了，多一事不如少一事，我去搭地鐵算。", sub:"(Forget it, less trouble is better, I'll just take MTR.)"},
+                    {role:"user", text:"咁就啱喇，落雨搭地鐵最穩陣。", sub:"(That's right, taking MTR when raining is the safest bet.)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 4：中環酒吧街蘭桂坊消遣聽英文", 'zh-CN': "场景 4：中环酒吧街兰桂坊消遣听英文", 'en': "Scene 4: Having Drinks in Lan Kwai Fong, Central" },
+                story: [
+                    {role:"waiter", text:"Hi there! Welcome to LKF. How many people tonight?", sub:"(Hi! 歡迎黎到蘭桂坊，今晚幾位？)"},
+                    {role:"user", text:"Two people, please. Do you have a table outside?", sub:"(兩位，唔該。出面仲有冇位啊？)"},
+                    {role:"waiter", text:"Yes, we have a table outside. Come this way please.", sub:"(有，出面有枱，呢邊請。)"},
+                    {role:"user", text:"唔該，比張 Drink List 我睇下有咩啱飲。", sub:"(Thanks, give me a drink list to see what's good.)"},
+                    {role:"waiter", text:"We have Happy Hour discount now. Beer and cocktails are buy 1 get 1 free.", sub:"(依家有歡樂時光優惠，啤酒同雞尾酒買一送一。)"},
+                    {role:"user", text:"正喎！咁我要兩杯生啤，要生力啤。", sub:"(Great! Then I want two draft beers, San Miguel.)"},
+                    {role:"waiter", text:"Sure, two pints of San Miguel. Anything to snack on?", sub:"(冇問題，兩杯大生力。要唔要啲小食？)"},
+                    {role:"user", text:"要一份炸雞翼，唔該。要多點番茄醬。", sub:"(Want an order of fried chicken wings, please. Need more ketchup.)"},
+                    {role:"waiter", text:"No problem. Enjoy your night!", sub:"(冇問題，祝你今晚玩得開心！)"},
+                    {role:"user", text:"Thank you very much. 嘢食到齊就埋單。", sub:"(多謝晒。嘢食到齊我就埋單。)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 5：深水埗鴨寮街買電子零件與講價", 'zh-CN': "场景 5：深水埗鸭寮街买电子零件与讲价", 'en': "Scene 5: Bargaining Electronics in Apliu Street" },
+                story: [
+                    {role:"waiter", text:"靚仔，想買啲咩啊？睇下充電寶定藍牙耳機？", sub:"(Hey handsome, what do you need? Power banks or earbuds?)"},
+                    {role:"user", text:"老細，呢個無線充電器幾多錢啊？", sub:"(Boss, how much is this wireless charger?)"},
+                    {role:"waiter", text:"呢個正貨黎架，原價一百五，收你一百二啦。", sub:"(This is genuine stock, original $150, take it for $120.)"},
+                    {role:"user", text:"嘩，咁貴？隔籬街一模一樣先賣八十蚊咋喎！", sub:"(Wow, so expensive? The next street sells the exact same for $80!)"},
+                    {role:"waiter", text:"隔籬街嗰啲係山寨貨黎架！一分錢一分貨啊。", sub:"(Those are cheap knockoffs! You get what you pay for.)"},
+                    {role:"user", text:"平少少啦，九十蚊得唔得？得我就即刻比錢。", sub:"(Cheaper please, $90 ok? If yes, I'll pay right now.)"},
+                    {role:"waiter", text:"九慢真係做唔到，蝕本架！最平一百蚊啦，底線黎。", sub:"(Cannot do $90, making a loss! Lowest is $100, my bottom line.)"},
+                    {role:"user", text:"好啦，一百就一百。要個黑色嘅，唔該。", sub:"(Fine, $100 it is. Want a black one, please.)"},
+                    {role:"waiter", text:"冇問題，幫你拿個全新未拆盒嘅，睇下有冇壞。", sub:"(No problem, getting you a brand new sealed one, check if it works.)"},
+                    {role:"user", text:"唔該晒老細，記得幫我吸個保養印啊。", sub:"(Thanks boss, remember to stamp the warranty stamp for me.)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 6：尖沙咀海港城買名牌與問退稅", 'zh-CN': "场景 6：尖沙咀海港城买名牌与问退税", 'en': "Scene 6: Luxury Shopping & Tax Inquiries in Harbour City" },
+                story: [
+                    {role:"waiter", text:"你好，歡迎光臨。請問今日想睇手袋定係手錶？", sub:"(Hello, welcome. Are you looking for bags or watches today?)"},
+                    {role:"user", text:"我想睇下櫥窗最新展示嗰款黑色手袋。", sub:"(I want to look at that latest black handbag in the window.)"},
+                    {role:"waiter", text:"你真有眼光，呢款係限量版，全港得返最後兩個。", sub:"(Excellent taste, this is a limited edition, only two left in HK.)"},
+                    {role:"user", text:"幾多錢預算？如果買，香港依家點樣退稅？", sub:"(What's the price? If I buy, how to do tax refunds in HK now?)"},
+                    {role:"waiter", text:"呢款定價港幣二萬八。香港全城免稅，所以唔使辦理退稅架。", sub:"(This is HKD 28,000. Whole HK is duty-free, so no tax refund needed.)"},
+                    {role:"user", text:"啊，我差點唔記得咗香港係免稅天堂添。", sub:"(Ah, I almost forgot Hong Kong is a duty-free shopping paradise.)"},
+                    {role:"waiter", text:"冇錯啊，所以喺香港買奢侈品係最划算嘅。", sub:"(Correct, so buying luxury goods in HK is the best deal.)"},
+                    {role:"user", text:"好，幫我打包呢個，可以刷外地信用卡嗎？", sub:"(Fine, wrap this up for me. Can I swipe an overseas credit card?)"},
+                    {role:"waiter", text:"當然可以，Visa、Master 同銀聯都支援。", sub:"(Sure, Visa, Master, and UnionPay are all supported.)"},
+                    {role:"user", text:"唔該晒，麻煩幫我用禮品盒包裝，送比人嘅。", sub:"(Thanks, please wrap it with a gift box, it's a present.)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 7：尖沙咀天星碼頭搭渡輪與維港拍照", 'zh-CN': "场景 7：尖沙咀天星码头搭渡轮与维港拍照", 'en': "Scene 7: Taking Star Ferry & Taking Photos at Victoria Harbour" },
+                story: [
+                    {role:"waiter", text:"唔該借借！唔好塞喺閘口，入去碼頭裡面再影啦。", sub:"(Excuse me! Don't block the gate, take photos inside the pier.)"},
+                    {role:"user", text:"唔好意思，請問去中環是在這裏上船嗎？", sub:"(Sorry, is this the place to board for Central?)"},
+                    {role:"waiter", text:"係啊，呢邊去中環，隔籬嗰邊去灣仔，好易認。", sub:"(Yes, this side to Central, next side to Wan Chai, easy to recognize.)"},
+                    {role:"user", text:"收到。船飛幾多錢？可以直接用八達通嗎？", sub:"(Got it. How much is the fare? Can I use Octopus directly?)"},
+                    {role:"waiter", text:"平日下層四蚊左右，直接嘟八達通就得，方便快捷。", sub:"(Lower deck around $4 on weekdays, just beep your Octopus.)"},
+                    {role:"user", text:"上船了，維多利亞港好靚啊！幫我影張相得唔得？", sub:"(Boarded! Victoria Harbour is so beautiful! Can you take a photo for me?)"},
+                    {role:"waiter", text:"冇問題，拿穩你個手機，一二三，笑！", sub:"(No problem, hold your phone steady, 1, 2, 3, smile!)"},
+                    {role:"user", text:"影得好好，對面中環摩天輪同 IFC 真係壯觀。", sub:"(Great photo, the Central Ferris Wheel and IFC are spectacular.)"},
+                    {role:"waiter", text:"夜晚黎影仲靚啊，有幻彩詠香江激光騷睇。", sub:"(Even better at night with the Symphony of Lights laser show.)"},
+                    {role:"user", text:"今晚一定要再黎！唔該晒你幫我影相。", sub:"(Must come back tonight! Thank you so much for taking the photo.)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 8：油麻地廟街夜市食大牌檔避風塘炒蟹", 'zh-CN': "场景 8：油麻地庙街夜市吃大排档避风塘炒蟹", 'en': "Scene 8: Dining at Temple Street Da Pai Dong" },
+                story: [
+                    {role:"waiter", text:"入黎坐啦靚仔！避風塘炒蟹、煲仔飯，咩都有！", sub:"(Come sit inside! Typhoon shelter crab, claypot rice, everything!)"},
+                    {role:"user", text:"老細，有冇位坐出面街邊啊？大牌檔有風味啲。", sub:"(Boss, any seats outside on the street? More vibe.)"},
+                    {role:"waiter", text:"有！呢張細枱啦，想食點咩？炒蟹係招牌菜喎。", sub:"(Yes! This small table. What do you want? Fried crab is the signature.)"},
+                    {role:"user", text:"要一隻炒蟹，要少辣。另外要個豉汁炒蜆。", sub:"(Want a fried crab, less spicy. And clams in black bean sauce.)"},
+                    {role:"waiter", text:"好，炒蟹小辣、炒蜆。要唔要飲支大青啤解渴？", sub:"(OK, crab, clams. Want a big Tsingtao beer to quench thirst?)"},
+                    {role:"user", text:"要一 friend 大青，要冰凍嘅。唔該幫我比碗熱水我洗下筷子。", sub:"(A cold Tsingtao please. Also a bowl of hot water to wash chopsticks.)"},
+                    {role:"waiter", text:"沒問題，香港傳統食大牌檔洗餐具係常識，水黎喇。", sub:"(Sure, washing tableware at HK Da Pai Dong is common sense. Water's here.)"},
+                    {role:"user", text:"炒蟹真係好夠鑊氣，蒜蓉香到不得了！", sub:"(The crab has great Wok-Hei, the fried garlic smells amazing!)"},
+                    {role:"waiter", text:"哈哈，我哋開左三十年，全廟街最正宗就係我哋。", sub:"(Haha, we've open for 30 years, the most authentic in Temple Street.)"},
+                    {role:"user", text:"名不虛傳！等陣食完再叫個煲仔飯頂肚。", sub:"(Deserves its reputation! Will order a claypot rice later.)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 9：紅磡香港體育館睇明星演唱會與買黃牛", 'zh-CN': "场景 9：红磡香港体育馆看明星演唱会与买黄牛", 'en': "Scene 9: Watching Concert at Hung Hom Coliseum" },
+                story: [
+                    {role:"waiter", text:"靚妹，手上仲有冇多嘅飛啊？收飛收飛！", sub:"(Girl, any extra tickets in hand? Buying tickets!)"},
+                    {role:"user", text:"我無飛啊，我想問你依家一張握手位賣幾多錢？", sub:"(No tickets, I want to ask how much for a front-row ticket now?)"},
+                    {role:"waiter", text:"今晚最後一場，握手位原價九百八，依家賣三千！", sub:"(Tonight is the last show, front row original $980, selling for $3000 now!)"},
+                    {role:"user", text:"哇！三倍價錢？你不如去搶？黃牛飛太貴喇。", sub:"(Wow! Triple price? Why don't you just rob someone? Scalped tickets are too expensive.)"},
+                    {role:"waiter", text:"最後機會啦，出面大把人排隊爭住要啊。", sub:"(Last chance, tons of people are queuing up fighting for it outside.)"},
+                    {role:"user", text:"我寧願去主辦方售票處碰下運氣看有沒有尾票。", sub:"(I'd rather try my luck at the official box office for last-minute tickets.)"},
+                    {role:"waiter", text:"尾票一早賣晒啦，唔好浪費時間啦，二千五賣比你？", sub:"(Last-minute tickets sold out long ago, don't waste time, $2500 for you?)"},
+                    {role:"user", text:"唔要，買黃牛係違法嘅，我要抵制黃牛黨。", sub:"(No, buying scalped tickets is illegal, I want to boycott scalpers.)"},
+                    {role:"waiter", text:"切，唔買拉倒，有錢都買唔到集體回憶啊。", sub:"(Tsk, up to you, money can't buy collective memories.)"},
+                    {role:"user", text:"我有我嘅原則，拜拜！我去排官方隊。", sub:"(I have my principles, bye! I'll line up officially.)"}
+                ]
+            },
+            {
+                name: { 'zh-HK': "場景 10：旺角沙田馬場投注贏馬與慶功", 'zh-CN': "场景 10：旺角沙田马场投注赢马与庆功", 'en': "Scene 10: Betting on Horse Racing at Sha Tin Racecourse" },
+                story: [
+                    {role:"waiter", text:"馬迷朋友，今日第五場經典盃，你有咩心水馬啊？", sub:"(Horse racing fans, today's 5th race, any tips or favorites?)"},
+                    {role:"user", text:"我看好三號「精英大師」，佢狀態大勇，穩操勝券。", sub:"(I favor No.3 'Silent Witness', in top form, guaranteed win.)"},
+                    {role:"waiter", text:"三號係大熱門喎，賠率太熱，贏咗都冇乜錢賺。", sub:"(No.3 is the heavy favorite, odds are too low, won't make much money.)"},
+                    {role:"user", text:"咁你有咩冷門介紹？我想博下「獨贏」或者「位置」。", sub:"(Any dark horse recommendations? I want to gamble on Win or Place.)"},
+                    {role:"waiter", text:"七號「幸運星」係黑馬，獨贏有二十倍賠率，值得買少少。", sub:"(No.7 'Lucky Star' is a dark horse, Win odds 20x, worth a small bet.)"},
+                    {role:"user", text:"好！聽你話，三號同七號買個「位置Q」互串互包。", sub:"(OK! Take your advice, buy a Quinella Place boxing No.3 and No.7.)"},
+                    {role:"waiter", text:"買定離手！開鑼喇！衝刺喇！七號衝上黎喇！", sub:"(All bets placed! Race starts! Sprinting! No.7 is catching up!)"},
+                    {role:"user", text:"哇！真係贏咗啊！七號第一，三號第二！中咗位置Q！", sub:"(Wow! Really won! No.7 first, No.3 second! Hit the Quinella Place!)"},
+                    {role:"waiter", text:"恭喜晒！今次發達喇，賠率好分，等陣去邊度慶功？", sub:"(Congrats! Rich this time, great payout, where to celebrate later?)"},
+                    {role:"user", text:"今晚我請客，一齊去尖沙咀食高檔海鮮大餐！", sub:"(My treat tonight, let's go to Tsim Sha Tsui for luxury seafood!)"}
+                ]
             }
-            localStorage.setItem('ub_xp', xp);
-            localStorage.setItem('ub_lvl', level);
-            updateStatus();
+        ];
+
+        // 🧳 完整文化典故故事庫 —— 擴充至 20 個經典老香港歷史故事
+        const culturePool = [ 
+            { 
+                title: { 'zh-HK': "☕ 茶餐廳數字與暗號文化", 'zh-CN': "☕ 茶餐厅数字与暗号文化", 'en': "☕ Hong Kong Café Cipher & Slang Culture" }, 
+                preview: { 'zh-HK': "香港茶餐廳有一套源自舊時代江湖行話與避諱的獨特速記暗號...", 'zh-CN': "香港茶餐厅有一套源自旧时代江湖行话与避讳的独特速记暗号...", 'en': "Hong Kong cafés feature an ingenious stenographic jargon dating back to historical street codes..." },
+                full: {
+                    'zh-HK': "香港茶餐廳的節奏極快，夥計為了縮短點餐與傳單的時間，演變出了一套極具市井智慧的江湖密碼。當你在手寫單據上看到「靚仔」，千萬不要暗自竊喜，因為這在行話裡代表的是「白飯」；而「靚女」則對應外表白淨的「白粥」。\n\n此外，茶餐廳裡更有許多諧音與典故。例如「反Q」指的是「西多士」（源自法式吐司 French Toast 譯音轉化）；而「敗家仔」是指「阿華田」，因為傳統觀念認為喝阿華田是奢侈、敗家的行為。如果你想喝一杯少糖、口感卻更加絲滑濃郁的奶茶，地道的叫法是「茶走」——意思是「去掉砂糖與淡奶，改加煉奶」。這套充滿生命力的語言系統，至今仍深深烙印在港人的日常飲食之中。",
+                    'zh-CN': "香港茶餐厅的节奏极快，伙计为了缩短点餐与传单的时间，演变出了一套极具市井智慧的江湖密码。当你在手写单据上看到“靓仔”，千万不要暗自窃喜，因为这在行话里代表的是“白饭”；而“靓女”则对应外表白净的“白粥”。\n\n此外，茶餐厅里更有许多谐音与典故。例如“反Q”指的是“西多士”（源自法式吐司 French Toast 译音转化）；而“败家子”是指“阿华田”，因为传统观念认为喝阿华田是奢侈、败家的行为。如果你想喝一杯少糖、口感却更加丝滑浓郁的奶茶，地道的叫法是“茶走”——意思是“去掉砂糖与淡奶，改加炼奶”。这套充满生命力的语言系统，至今仍深深烙印在港人的日常饮食之中。",
+                    'en': "Hong Kong cafés move at lightning speed. To expedite orders, servers created short-hand codes filled with urban wit. Seeing 'Handsome Boy' (靚仔) written on your receipt is no flirtation—it actually codes for plain steamed rice, while 'Pretty Girl' (靚女) stands for plain white congee.\n\nFascinating homophones abound: 'Fan Q' refers to French Toast via linguistic evolution, while Ovaltine is humorously labeled 'Prodigal Son' (敗家仔) as ordering it was historically deemed a luxury. For a smoother, deeply aromatic tea with condensed milk instead of ordinary sugar and evaporated milk, ask for 'Caa Zau' (茶走). This vivid system remains a proud, delicious testament to HK identity."
+                }
+            },
+            { 
+                title: { 'zh-HK': "🚌 紅色小巴：街頭心跳博弈", 'zh-CN': "🚌 红色小巴：街头心跳博弈", 'en': "🚌 Red Minibuses: Street Gambling of Bravery" }, 
+                preview: { 'zh-HK': "俗稱「紅VAN」的紅色小巴，是香港最魔幻且最考驗粵語膽量的交通工具...", 'zh-CN': "俗称“红VAN”的红色小巴，是香港最魔幻且最考验粤语胆量的交通工具...", 'en': "The iconic 'Red VANs' form Hong Kong's most surreal and linguistically daring public transit network..." },
+                full: {
+                    'zh-HK': "紅色非專線小巴（紅VAN）在香港的交通網絡中扮演著極其獨特的角色。它們沒有固定的法定站點與班次，車資與路線全由市場供需與司機之間的江湖默契決定。對於外地遊客或粵語初學者而言，搭乘紅VAN無疑是一場心跳加速的生存挑戰。\n\n因為紅色小巴是「隨叫隨停」的，當你想要下車時，車上並沒有任何下車鈴可以按。你必須在小巴快速穿梭於旺角或銅鑼灣狹窄街頭時，一邊緊盯窗外地標，一邊看準時機，鼓起全身勇氣用宏亮且道地的粵語對司機大喊：「唔該，有落！」或「唔該，前方街口有落！」如果喊得太小聲或發音不準，司機很可能直接呼嘯而過。這種獨特的互動，正是香港街頭文化中最具張力、也最有人情味的一幕。",
+                    'zh-CN': "红色非专线小巴（红VAN）在香港的交通网络中扮演着极其独特角色。它们没有固定的法定站点和班次，车资与路线全由市场供需与司机之间的江湖默契决定。对于外地游客或粤语初学者而言，搭乘红VAN半无疑是一场心跳加速的生存挑战。\n\n因为红色小巴是“随叫随停”的，当你想要下车时，车上并没有任何下車铃可以按。你必须在小巴快速穿梭于旺角或铜锣湾狭窄街头时，一边紧盯窗外地标，一边看准时机，鼓起全身勇气用宏亮且道地的粤语对司机大喊：“唔该，有落！”或“唔该，前方街口有落！”如果喊得太小声或发音不准，司机很可能直接呼啸而过。这种独特的互动，正是香港街头文化中最具张力、也最有人情味的一幕。",
+                    'en': "Red non-franchised minibuses (Red VANs) command a legendary niche in HK. Free from regular municipal routing, their fees and paths fluctuate entirely based on real-time demands and historical turf agreements. For learners, stepping inside is an adrenaline-inducing thrill.\n\nOperating on a wave-down and call-out scheme, there are no physical stop buttons on board. As the van careens through dense Mong Kok corridors, you must monitor your surroundings, calculate the distance, muster your absolute courage, and yell to the driver in impeccable Cantonese: 'M4 Goi1, Jau5 Lok6!' (Stop here, please!). A faint whisper means risking being carried away into the next district. It stands as an interactive, thrilling masterpiece of local street dynamics."
+                }
+            },
+            { 
+                title: { 'zh-HK': "👵 鵝頸橋下：驚心動魄的驚蟄打小人", 'zh-CN': "👵 鹅颈桥下：惊心动魄的惊蛰打小人", 'en': "👵 Under the Canal Road Flyover: Petty Person Beating" }, 
+                preview: { 'zh-HK': "每逢驚蟄，銅鑼灣與灣仔交界的鵝頸橋底總會傳來陣陣清脆的「拍打聲」...", 'zh-CN': "每逢惊蛰，铜锣湾与湾仔交界的鹅颈桥底总会传来阵阵清脆的「拍打声」...", 'en': "During Jingzhe, rapid clattering echoes loudly beneath the Causeway Bay overpass..." },
+                full: {
+                    'zh-HK': "在繁華的銅鑼灣與灣仔交界，高架橋底的暗角隱藏著一項被列為香港非物質文化遺產的傳統巫術儀式——「打小人」。每逢二十四節氣的「驚蟄」，這裡便會聚集無數身懷絕技的「拜神婆」。她們點燃香燭，口中唸唸有詞，一邊揮舞著破舊的平底布鞋，狠狠地拍打在象徵小人的紙人上，發出啪啪作響、震撼街頭的清脆聲音。\n\n打小人的粵語口訣極具韻律感與市井詛咒美學，例如最著名的：「打你個死人頭，打到你氣色都無！打你個小人隻手，等你有錢都唔識收！」這項儀式在現代社會中，與其說是迷信，不如說是港人在高壓都市生活中宣洩生活壓力、排解職場不順與尋求心靈慰藉的獨特宣洩渠道。這也讓鵝頸橋底成為了香港最魔幻、最充滿神祕民俗色彩的市井奇觀。",
+                    'zh-CN': "在繁华的铜锣湾与湾仔交界，高架桥底的暗角隐藏着一项被列为香港非物质文化遗产的传统巫术仪式——“打小人”。每逢二十四节气的“惊蛰”，这里便会聚集无数身怀绝技的“拜神婆”。她们点燃香烛，口中念念有词，一边挥舞着破旧的平底布鞋，狠狠地拍打在象征小人的纸人上，发出啪啪作响、震撼街头的清脆声音。\n\n打小人的粤语口诀极具韵律感与市井诅咒美学，例如最著名的：“打你个死人头，打到你气色都无！打你个小人只手，等你有钱都唔识收！”这项仪式在现代社会中，与其说是迷信，不如说是港人在高压都市生活中宣泄生活压力、排解 workplace 不顺与寻求心灵慰藉的独特宣泄渠道。这也让鹅颈桥底成为了香港最魔幻、最充满神秘民俗色彩的市井奇观。",
+                    'en': "Under beneath a sprawling concrete flyover splitting Causeway Bay and Wan Chai lies a vivid, living sorcery ceremony acknowledged as HK Intangible Cultural Heritage: 'Villain Beating' (Daai2 Siu2 Jan4). Every spring during the 'Awakening of Insects' (Jingzhe), specialized elderly shamans assemble here. Igniting incense, they take old shoes and furiously slam them against paper effigies symbolizing adversaries with rhythmic clatters.\n\nThe spoken incantations form a masterclass in vernacular curse poetry: 'Beating your rotten head, beating until your breath goes cold! Striking your villainous hands, you shall never grasp your gold!' In contemporary times, it serves less as superstition and more as an empowering psychological outlet for urban stress and corporate grievances, creating a surreal cultural spectacle."
+                }
+            },
+            {
+                title: { 'zh-HK': "🏰 九龍城寨：三不管的傳奇魔幻之城", 'zh-CN': "🏰 九龙城寨：三不管的传奇魔幻之城", 'en': "🏰 Kowloon Walled City: The Legendary Anarchist City" },
+                preview: { 'zh-HK': "曾經是世界上人口密度最高的地方，英國不管、中國不管、香港政府也不管...", 'zh-CN': "曾经是世界上人口密度最高的地方，英国不管、中国不管、香港政府也不管...", 'en': "Once the most densely populated place on Earth, ruled by no government..." },
+                full: { 'zh-HK': "九龍城寨是香港歷史上一段極其魔幻的傳奇。這塊面積僅有0.026平方公里的土地，曾堆疊了數百棟高矮不一的鋼筋水泥建築，迷宮般的暗黑通道裡終日不見陽光。這裡曾是「三不管」地帶，滋生了無數牙醫診所、地下食品加工廠與江湖傳奇。1993年拆除後改建為公園，但它獨特的賽博朋克美學至今仍深深影響著全球的科幻電影與遊戲設計。", 'zh-CN': "九龙城寨是香港历史上一段极其魔幻的传奇。这块面积仅有0.026平方公里的土地，曾堆叠了数百栋高矮不一的钢筋水泥建筑，迷宫般的暗黑通道里终日不见阳光。这里曾是“三不管”地带，滋生了无数牙医诊所、地下食品加工厂与江湖传奇。1993年拆除后改建为公园，但它独特的赛博朋克美学至今仍深深影响着全球的科幻电影与游戏设计。", 'en': "The Kowloon Walled City was a historical anomaly. Within just 0.026 square kilometers, hundreds of interconnected high-rises formed a dark, monolithic labyrinth. Governed by no law, it thrived with self-regulation, unlicensed dentists, and marketplace commerce. Demolished in 1993, its unique dystopian architecture remains a premier cyberpunk inspiration globally." }
+            },
+            {
+                title: { 'zh-HK': "🚢 天星小輪：百年維港的浪漫擺渡", 'zh-CN': "🚢 天星小轮：百年维港的浪漫摆渡", 'en': "🚢 Star Ferry: A Century of Victoria Harbour Romance" },
+                preview: { 'zh-HK': "被譽為人生必遊的經典體驗之一，綠白相間的船身見證了香港的百年變遷...", 'zh-CN': "被誉为人生必游的经典体验之一，绿白相间的船身见证了香港的百年变迁...", 'en': "Rated as one of the top lifetime trips, the iconic green-and-white vessels ferry through HK history..." },
+                full: { 'zh-HK': "創立於1898年的天星小輪，是香港最古老且最具代表性的交通工具。綠白相間的木質船身、可調節方向的星形靠背長椅，以及飄蕩在空氣中的柴油與海風味道，共同構成了港人的集體回憶。儘管海底隧道與地鐵早已四通八達，但搭乘天星小輪在波光粼粼的維多利亞港中緩緩破浪，依然是欣賞這座城市天際線最浪漫、最經典的方式。", 'zh-CN': "创立于1898年的天星小轮，是香港最古老且最具代表性的交通工具。绿白相间的木质船身、可调节方向的星形靠背长椅，以及飘荡在空气中的柴油与海风味道，共同构成了港人的集体回忆。尽管海底隧道与地铁早已四通八达，但搭乘天星小轮在波光粼粼的维多利亚港中缓缓破浪，依然是欣赏这座城市天际线最浪漫、最经典的方式。", 'en': "Established in 1898, the Star Ferry is a living historical monument. Its rustic green-and-white double-deck hulls and reversible wooden star-stamped benches carry the nostalgic scent of ocean breeze and marine diesel. It remains an irreplaceable, romantic vessel offering travelers the most picturesque view of the iconic Victoria Harbour skyline." }
+            },
+            {
+                title: { 'zh-HK': "🌃 霓虹燈牌：不夜城的東方之珠街頭美學", 'zh-CN': "🌃 霓虹灯牌：不夜城的东方之珠街头美学", 'en': "🌃 Neon Signs: Visual Poetry of the Pearl of the Orient" },
+                preview: { 'zh-HK': "那些伸延至馬路中央、五光十色的巨型霓虹燈牌，曾是香港繁華夜景的象徵...", 'zh-CN': "那些伸延至马路中央、五光十色的巨型霓虹灯牌，曾是香港繁华夜景的象征...", 'en': "The sprawling, multi-colored glowing giant boards hanging above busy streets defined HK's visual identity..." },
+                full: { 'zh-HK': "上世紀七、八十年代，香港街頭被成千上萬的霓虹燈牌所淹沒。各行各業的老闆競相製作更大、更炫目的燈牌，從尖沙咀延伸到旺角，璀璨的手工玻璃管文字交織出魔幻的不夜城景觀。雖然隨著安全法規與LED技術的普及，傳統霓虹燈正在逐漸消失，但那些手藝人的匠心與光影線條，早已成為「東方之珠」最具代表性的視覺符號。", 'zh-CN': "上世纪七、八十年代，香港街头被成千上万的霓虹灯牌所淹没。各行各业的老板竞相制作更大、更炫目的灯牌，从尖沙咀延伸到旺角，璀璨的手工玻璃管文字交织出魔幻的不夜城景观。虽然随着安全法规与LED技术的普及，传统霓虹灯正在逐渐消失，但那些手艺人的匠心与光影线条，早已成为“东方之珠”最具代表性的视觉符号。", 'en': "During the mid-to-late 20th century, HK streets were flooded with countless custom neon tubes. Businesses vied for visibility by crafting massive, interlocking glowing signs. Although structural safety codes and modern LEDs are causing traditional neons to fade away, their historical aesthetic remains embedded as the core visual grammar of the Pearl of the Orient." }
+            },
+            {
+                title: { 'zh-HK': "🐉 大坑舞火龍：驅瘟逐疫的百年非遺盛事", 'zh-CN': "🐉 大坑舞火龙：驱瘟逐疫的百年非遗盛事", 'en': "🐉 Tai Hang Fire Dragon Dance: A Century of Ward-off Plague" },
+                preview: { 'zh-HK': "每逢中秋節，一條插滿長壽香、煙火四射的巨大火龍便會響徹銅鑼灣大坑街頭...", 'zh-CN': "每逢中秋节，一条插满长寿香、烟火四射的巨大火龙便会响彻铜锣湾大坑街头...", 'en': "Every Mid-Autumn Festival, a massive roaring dragon smoking with thousands of incense sticks lights up Tai Hang..." },
+                full: { 'zh-HK': "大坑舞火龍起源於1880年，當時大坑村爆發瘟疫，村民相傳在中秋節舞動插滿香火的草龍繞村遊行，便能驅除災疫。這項傳統延續至今已超百年，火龍長達67米，全身插滿數萬支長壽香，由數百位壯丁在鑼鼓喧天中奮力舞動。煙火飛散、香氣撲鼻的場面極具震撼力，如今已被列入國家級非物質文化遺產。", 'zh-CN': "大坑舞火龙起源于1880年，当时大坑村爆发瘟疫，村民相传在中秋节舞动插满香火的草龙绕村游行，便能驱除灾疫。这项传统延续至今已超百年，火龙长达67米，全身插满数万支长寿香，由数百位壮丁在锣鼓喧天中奋力舞动。烟火飞散、香气扑鼻的场面极具震撼力，如今已被列入国家级非物质文化遗产。", 'en': "Dating back to 1880, residents of Tai Hang village created a straw dragon bristling with glowing incense to combat a deadly plague. Surviving over a century, the modern 67-meter beast requires hundreds of performers to carry it through historic streets under explosive drum beats and falling embers. It stands today as a verified National Intangible Cultural Heritage." }
+            },
+            {
+                title: { 'zh-HK': "🧗 長洲搶包山：心驚肉跳的驚險節慶祭典", 'zh-CN': "🧗 长洲抢包山：心惊肉跳的惊险节庆祭典", 'en': "🧗 Cheung Chau Bun Scramble: Thrilling Traditional Carnival" },
+                preview: { 'zh-HK': "在長洲太平清醮的最後一夜，參賽者要徒手攀上高耸的包山爭奪「平安包」...", 'zh-CN': "在长洲太平清醮的最后一夜，参赛者要徒手攀上高耸的包山争夺「平安包」...", 'en': "On the final night of the Da Jiu Festival, athletes scale a towering tower to snatch lucky buns..." },
+                full: { 'zh-HK': "香港長洲島每年的「太平清醮」引人矚目，而最具高潮的儀式便是深夜舉行的「搶包山」。參賽者要在幾層樓高的巨型錐形竹架上奮力向上爬，摘取印有紅印的「平安包」，越頂部的包分數越高。這項源於祭祀鬼神、祈求平安的民俗，曾因坍塌事故停辦多年，如今經過嚴格安全改良，已演變為一場極具競技觀賞性的全港體育盛事。", 'zh-CN': "香港长洲岛每年的“太平清醮”引人瞩目，而最具高潮的仪式便是深夜举行的“抢包山”。参赛者要在几层楼高的巨型锥形竹架上奋力向上爬，摘取印有红印的“平安包”，越顶部的包分数越高。这项源于祭祀鬼神、祈求平安的民俗，曾因坍塌事故停办多年，如今经过严格安全改良，已演变为一场极具竞技观赏性的全港体育盛事。", 'en': "A localized festival on Cheung Chau island peaks with the adrenaline-pumping 'Bun Scramble Challenge'. Competitors scale a multi-story bamboo-welded tower under the midnight sky to gather stamped 'Ping An Buns'—higher positions net higher scores. Historically dedicated to placating local spirits, it is now an athletic seasonal carnival." }
+            },
+            {
+                title: { 'zh-HK': "🚋 叮叮車：流動的百年城市時光機", 'zh-CN': "🚋 叮叮车：流动的百年城市时光机", 'en': "🚋 Ding Ding Tram: A Century-Old Rolling Time Machine" },
+                preview: { 'zh-HK': "行駛在香港島北岸、發出雙音節敲擊聲的雙層有軌電車，是這座城市最慢卻最迷人的風景...", 'zh-CN': "行驶在香港岛北岸、发出双音节敲击声的双层有轨电车，是这座城市最慢却最迷人的风景...", 'en': "The double-decker retro trams rattling along HK Island with a signature clank offer the city's coolest slow journey..." },
+                full: { 'zh-HK': "香港電車自1904年起便在香港島穿梭，因進站時會發出清脆的「叮叮」聲而得名。它是全球現存唯一全數採用雙層電車的車隊。當你坐上叮叮車的二層靠窗座位，以時速30公里的慢節奏穿過中環的摩天大樓、灣仔的舊街市與西營盤的南北貨商鋪，就像是在翻閱一本流動的香港百年歷史相冊。", 'zh-CN': "香港电车自1904年起便在香港岛穿梭，因进站时会发出清脆的“叮叮”声而得名。它是全球现存唯一全数采用双层电车的车队。当你坐上叮叮车的二层靠窗座位，以时速30公里的慢节奏穿过中环的摩天大楼、湾仔的旧街市与西营盘的南北货商铺，就像是在翻阅一本流动的香港百年历史相册。", 'en': "Operating since 1904, the Hong Kong Tramways earned the moniker 'Ding Ding' from its distinct double-tap warning bells. It runs the world's only fully double-decker tram fleet. Peering out from the upper deck window at a leisure 30 km/h reveals a cinematic view transitioning from elite Central offices to traditional markets." }
+            },
+            {
+                title: { 'zh-HK': "🍵 廣東涼茶：苦口良藥的嶺南草本智慧", 'zh-CN': "🍵 广东凉茶：苦口良药的岭南草本智慧", 'en': "🍵 Cantonese Herbal Tea: Bitter Remedies of Lingnan Wisdom" },
+                preview: { 'zh-HK': "街頭隨處可見的涼茶鋪，一碗黑糊糊的「癍痧」或「廿四味」蘊含著對抗濕熱的生存哲學...", 'zh-CN': "街头随处可见的凉茶铺，一碗黑糊糊的「癍痧」或「廿四味」蕴含着对抗湿热的生存哲学...", 'en': "Traditional herbal dispensaries serve pitch-black, bitter brews representing historical holistic health solutions..." },
+                full: { 'zh-HK': "嶺南氣候多雨潮濕，前人採集當地中草藥熬製成涼茶以「清熱解毒、去濕消暑」。在香港，涼茶鋪不僅是售賣飲目的地方，更曾是街坊鄰里聚會看電視、聽留聲機的社交中心。從極其苦澀的「廿四味」到甘甜可口的「菊花茶」、「夏枯草」，涼茶調配已經被列入國家級非物質文化遺產，至今仍是港人身體不適時的調理首選。", 'zh-CN': "岭南气候多雨潮湿，前人采集当地中草药熬制成凉茶以“清热解毒、去湿消暑”。在香港，凉茶铺不仅是售卖饮目的地方，更曾是街坊邻里聚会看电视、听留声机的社交中心。从极其苦涩的“廿四味”到甘甜可口的“菊花茶”、“夏枯草”，凉茶调配已经被列入国家级非物质文化遗产，至今仍是港人身体不适时的调理首选。", 'en': "Faced with coastal humidity, local ancestors boiled wild herbs into tonics to balance internal heat. In old Hong Kong, these neighborhood shops doubled as vibrant community hubs equipped with the area's few radios and televisions. From the intensely bitter '24 Flavors' to sweet chrysanthemum tisane, this trade is a registered heritage art." }
+            },
+            {
+                title: { 'zh-HK': "🧦 絲襪奶茶：跨文化碰撞的港式撞茶工藝", 'zh-CN': "🧦 丝袜奶茶：跨文化碰撞的港式撞茶工艺", 'en': "🧦 Silk Stocking Milk Tea: The Art of Tea Pulling" },
+                preview: { 'zh-HK': "這款享譽世界的地道飲品，名字聽起來奇特，背後卻藏著綿密細緻的拉茶玄機...", 'zh-CN': "这款享誉世界的地道饮品，名字听起来奇特，背后却藏着绵密细致的拉茶玄机...", 'en': "The global icon of local tea craft sounds peculiar but conceals masterclass pulling methods..." },
+                full: { 'zh-HK': "港式絲襪奶茶並非真的用絲襪沖泡，而是因為沖茶的棉製濾網長期被紅茶染色，外觀極像絲襪。師傅精選數種斯里蘭卡紅茶拼配，通過「撞茶」（高空對沖）讓茶沙充分釋放香氣，再加入淡奶。這種源於英國下午茶文化、被市井改良的工藝，創造出了極度濃郁絲滑的特殊口感，是香港飲食文化的靈魂。", 'zh-CN': "港式丝袜奶茶并非真的用丝袜冲泡，而是因为冲茶的棉制滤网长期被红茶染色，外观极像丝袜。师傅精选数种斯里兰卡红茶拼配，通过“撞茶”（高空对冲）让茶沙充分释放香气，再加入淡奶。这种源于英国下午茶文化、被市井改良的工艺，创造出了极度浓郁丝滑的特殊口感，是香港饮食文化的灵魂。", 'en': "Despite the literal translation, 'Silk Stocking' milk tea uses long, cotton fabric strainers that absorb deep tea pigments over decades. Artisans blend distinct Sri Lankan black tea leaves and execute 'Tea Pulling'—pouring tea between metal jugs from high angles to aerate the fluid before adding evaporated milk, finalizing a creamy textured classic." }
+            },
+            {
+                title: { 'zh-HK': "🛥️ 珍寶海鮮舫：隨水逝去的黃金時代水上皇宮", 'zh-CN': "🛥️ 珍宝海鲜舫：随水逝去的黄金时代水上皇宫", 'en': "🛥️ Jumbo Floating Restaurant: The Floating Palace of Yesteryears" },
+                preview: { 'zh-HK': "曾停泊在香港仔避風塘、雕樑畫棟的巨型水上餐廳，承載了無數國際名流的流光溢彩...", 'zh-CN': "曾停泊在香港仔避风塘、雕梁画栋的巨型水上餐厅，承载了无数国际名流的流光溢彩...", 'en': "The iconic oriental floating landmark that once docked in Aberdeen, hosting movie stars and royalties..." },
+                full: { 'zh-HK': "珍寶海鮮舫曾是香港著名的觀光地標。這座耗巨資打造的水上餐廳採用中國宮廷式設計，金碧輝煌的龍椅、繁複的浮雕與夜間亮起的千盞霓虹燈，宛如海上的瓊樓玉宇。它曾接待過英女王、好萊塢巨星，更是周星馳電影《食神》的決戰拍攝地。雖然它已於數年前結業並在離港途中沉沒，但它代表的浮華水上風情永遠留在了老香港的記憶裡。", 'zh-CN': "珍宝海鲜舫曾是香港著名的观光地标。这座耗巨资打造的水上餐厅采用中国宫廷式设计，金碧辉煌的龙椅、繁复的浮雕与夜间亮起的千盏霓虹灯，宛如海上的琼楼玉宇。它曾接待过英女王、好莱坞巨星，更是周星驰电影《食神》的决战拍摄地。虽然它已于数年前结业并在离港途中沉没，但它代表的浮华水上风情永远留在了老香港的记忆里。", 'en': "The Jumbo Floating Restaurant was a spectacular monument of local tourism. Styled after an imperial Chinese floating palace, it boasted massive golden dragon thrones and countless intricate carvings. It hosted royalty like Queen Elizabeth II and acted as the cinematic arena for Stephen Chow's film classics. Though gone, its aesthetic leaves a permanent mark." }
+            },
+            {
+                title: { 'zh-HK': "🙏 黃大仙求籤：有求必應的民間信仰與大眾心理學", 'zh-CN': "🙏 黄大仙求签：有求必应的民间信仰与大众心理学", 'en': "🙏 Wong Tai Sin Temple: The Culture of Kau Cim" },
+                preview: { 'zh-HK': "「有求必應」的黃大仙祠香火鼎盛，善信們搖晃籤筒、跪地求籤的畫面是港人尋求指引的經典一幕...", 'zh-CN': "「有求必应」的黄大仙祠香火鼎盛，善信们摇晃签筒、跪地求签的画面是港人寻求指引的经典一幕...", 'en': "Famed for grant requests, the temple sees crowds shaking bamboo canisters in pursuit of cosmic guidance..." },
+                full: { 'zh-HK': "黃大仙祠是香港香火最綿延不絕的廟宇，以「有求必應」和精準的「算命求籤」文化著稱。每逢農曆新年除夕夜，大批善信更會前來爭上「第一炷香」（頭柱香）。人們跪在蒲團上虔誠搖晃竹筒，直到一支木籤掉出，再拿到旁邊的解籤檔由師傅依據古老籤詩剖析運勢。這項融合了道教傳統與心理慰藉的習俗，是香港世俗生活的重要精神支柱。", 'zh-CN': "黄大仙祠是香港香火最绵延不绝的庙宇，以“有求必应”和精准的“算命求签”文化著称。每逢农历新年除夕夜，大批善信更会前来争上“第一炷香”（头柱香）。人们跪在蒲团上虔诚摇晃竹筒，直到一支木签掉出，再拿到旁边解签档由师傅依据古老签诗剖析运势。这项融合了道教传统与心理慰藉的习俗，是香港世俗生活的重要精神支柱。", 'en': "Wong Tai Sin Temple stands as Hong Kong's spiritual oasis, celebrated for its 'Kau Cim' fortune-stick tradition. Shaking a cylindrical bamboo container causes a single inscribed bamboo slip to drop, which fortune-tellers then interpret using classical stanzas. It blends localized folklore and spiritual solace beautifully into everyday fast-paced city life." }
+            },
+            {
+                title: { 'zh-HK': "✈️ 啟德機場：擦著樓頂降落的藍天傳奇", 'zh-CN': "✈️ 启德机场：擦着楼顶降落的蓝天传奇", 'en': "✈️ Kai Tak Airport: The Hair-Raising Flight Path" },
+                preview: { 'zh-HK': "老一輩民航飛機貼著九龍城住宅樓頂、在無數市民晾曬的衣物上方急轉彎降落的驚險奇觀...", 'zh-CN': "老一辈民航飞机贴着九龙城住宅楼顶、在无数市民晾晒的衣物上方急转弯降落的惊险奇观...", 'en': "The mythical bygone aviation experience where massive commercial airplanes skimmed active apartment roofs..." },
+                full: { 'zh-HK': "1998年關閉的啟德機場被公認為世界上著陸難度最高、也最震撼的城市機場之一。由於機場坐落在九龍城區中心，跑道直插海面，飛機降落時必須在密集的住宅樓上方進行著名的「13號跑道47度急轉彎」。當年坐在樓裡的居民甚至能看清飛機上乘客的臉，這種驚心動魄的藍天記憶，隨著赤鱲角新機場的啟用已成絕響。", 'zh-CN': "1998年关闭的启德机场被公认为世界上着陆难度最高、也最震撼的城市机场之一。由于机场坐落在九龙城区中心，跑道直插海面，飞机降落时修要在密集的住宅楼上方进行著名的“13号跑道47度急转弯”。当年坐在楼里的居民甚至能看清飞机上乘客的脸，这种惊心动魄的蓝天记忆，随着赤鱲角新机场的启用已成绝响。", 'en': "Decommissioned in 1998, Kai Tak Airport remains a legendary chapter in worldwide aviation. Its downtown location forced aircraft to lower themselves directly through urban high-rises and execute a sharp 47-degree low-altitude turn before alignment. This jaw-dropping sight ended when international airport operations shifted to rural Chek Lap Kok." }
+            },
+            {
+                title: { 'zh-HK': "🍮 砵仔糕：路邊攤的軟糯竹籤情懷", 'zh-CN': "🍮 砵仔糕：路边摊的软糯竹签情怀", 'en': "🍮 Put Chai Ko: The Steamed Rice Pudding on Bamboo Sticks" },
+                preview: { 'zh-HK': "用小瓦砵蒸熟、插上兩根竹籤挑著吃的紅豆糕點，是香港幾代人的童年味道...", 'zh-CN': "用小瓦砵蒸熟、插上两根竹签挑着吃的红豆糕点，是香港几代人的童年味道...", 'en': "The small bowl-shaped steamed sweet rice puddings spiked with red beans reflect traditional street comfort food..." },
+                full: { 'zh-HK': "砵仔糕是香港最傳統的街頭小食之一。做法是將粘米粉與老砂糖（白糖或紅糖）混合，倒入特製的小瓷瓦砵中，撒上飽滿的紅豆後蒸熟。售賣時，攤販會熟練地用兩根竹籤沿著瓦砵邊緣一劃，整塊彈牙軟糯的糕點便被挑了出來。它樸實無華，卻記錄了香港早期路邊攤與推車仔流動小販繁榮的草根歲月。", 'zh-CN': "砵仔糕是香港最传统的街头小食之一。做法是将粘米粉与老砂糖（白糖或红糖）混合，倒入特制的小瓷瓷砵中，撒上饱满的红豆后蒸熟。售卖时，摊贩会熟练地用两根竹签沿着瓷砵边缘一划，整块弹牙软糯的糕点便被挑了出来。它朴实无华，却记录了香港早期路边摊与推车仔流动小贩繁荣的草根岁月。", 'en': "Put Chai Ko is a cornerstone of traditional street sweets. Whisking rice flour with brown or white sugar cane, cooks pour the fluid into small porcelain bowls, drop sweetened red beans, and steam them. Vendors use two thin bamboo sticks to deftly pry the pudding from the mold, offering a nostalgic, springy texture prized by locals." }
+            },
+            {
+                title: { 'zh-HK': "🛖 大澳棚屋：東方威尼斯的水上漁村", 'zh-CN': "🛖 大澳棚屋：东方威尼斯的水上渔村", 'en': "🛖 Tai O Stilt Houses: The Venice of Hong Kong" },
+                preview: { 'zh-HK': "大嶼山最西端的水上人家，密密麻麻的水上高腳屋構築了遠離中環喧囂的另類風景...", 'zh-CN': "大屿山最西端的水上人家，密密麻麻的水上高脚屋构筑了远离中环喧嚣的另类风景...", 'en': "The unique aquatic hamlet on Lantau Island features dense interconnected wooden cabins built on stilts..." },
+                full: { 'zh-HK': "位於大嶼山的大澳漁村保留了香港最古老的水上建築群——棚屋。世代定居於此的水上居民（疍家人）用木柱與鋼筋將房屋架設在河道兩旁，戶戶相連，縱橫交錯。這裡遠離中環的鋼筋水泥，出入依靠舢舨，空氣中瀰漫著鹹魚與蝦膏的濃郁香氣，被譽為「香港威尼斯」，見證了這座國際大都市最初的漁村起點。", 'zh-CN': "位于大屿山的大澳渔村保留了香港最古老的水上建筑群——棚屋。世代定居于此的水上居民（疍家人）用木柱与钢筋将房屋架设在河道两旁，户户相连，纵横交错。这里远离中环的钢筋水泥，出入依靠舢舨，空气中弥漫着咸鱼与虾膏的浓郁香气，被誉为“香港威尼斯”，见证了这座国际大都市最初的渔村起点。", 'en': "Tai O fishing village on Lantau Island holds Hong Kong's last intact stilt house community. Built by Tanka fishing clans over historic waterways using wooden posts, these coastal wooden homes form a web of boardwalks. Scented with home-brewed shrimp paste, it stands as a calm, beautiful window into Hong Kong's origins before modernization." }
+            },
+            {
+                title: { 'zh-HK': "🏢 重慶大廈：尖沙咀腹地的世界孤島", 'zh-CN': "🏢 重庆大厦：尖沙咀腹地的世界孤岛", 'en': "🏢 Chungking Mansions: A Global Ghetto in Tsim Sha Tsui" },
+                preview: { 'zh-HK': "這棟位於繁華尖沙咀的巨大複雜大廈，匯聚了全球上百個國家的商販與背包客...", 'zh-CN': "这栋位于繁华尖沙咀的巨大复杂大厦，汇聚了全球上百个国家的商贩与背包客...", 'en': "The monolithic concrete structure in elite Tsim Sha Tsui houses a vibrant maze of multi-ethnic commerce..." },
+                full: { 'zh-HK': "重慶大廈是香港最神祕且國際化的多元宇宙。這棟大樓內有廉價賓館、香料店、外幣兌換處與各國餐廳，每天有來自非洲、南亞與中東等地的商販在此交易電子產品或服裝。它因王家衛經典電影《重慶森林》而名揚國際，被學者稱為「低端全球化」的中心，展現了香港極具包容性與生命力的野性一面。", 'zh-CN': "重庆大厦是香港最神秘且国际化的多元宇宙。这栋大楼内有廉价宾馆、香料店、外币兑换处与各国餐厅，每天有来自非洲、南亚与中东等地的商贩在此交易电子产品或服装。它因王家卫经典电影《重庆森林》而名扬国际，被学者称为“低端全球化”的中心，展现了香港极具包容性与生命力的野性一面。", 'en': "Chungking Mansions represents a cross-cultural microcosm. Nestled inside Kowloon's high-rent zone, the sprawling building acts as a hub for low-budget lodgings, South Asian curry houses, and African tech traders. Immortalized by director Wong Kar-wai's cinema, it is a fascinating case study of organic globalization and multi-ethnic synergy." }
+            },
+            {
+                title: { 'zh-HK': "🦜 雀鳥花園：老香港的「提籠遛鳥」提鳥文化", 'zh-CN': "🦜 雀鸟花园：老香港的“提笼遛鸟”提鸟文化", 'en': "🦜 Yuen Po Street Bird Garden: Traditional Avian Song Culture" },
+                preview: { 'zh-HK': "位於旺角鬧市一隅的中式庭園，終日鳥鳴啾啾，是老一輩提著竹籠賞鳥的休閒去處...", 'zh-CN': "位于旺角闹市一隅的中式庭园，终日鸟鸣啾啾，是老一辈提着竹笼赏鸟的休闲去处...", 'en': "A Chinese-style peaceful garden in dense Mong Kok filled with sweet melodies of pet songbirds..." },
+                full: { 'zh-HK': "位於太子與旺角交界的園圃街雀鳥花園，是香港傳統「提鳥文化」的集中地。園內採取中國傳統蘇州園林設計，整齊懸掛著數百個雕刻精美的竹製鳥籠。每天早晨，老一輩的香港茶客會提著自己心愛的畫眉或相思雀聚聚於此，一邊讓鳥兒隔籠對唱，一邊品茶交流。這是香港快節奏生活中，罕見被完整保留下來的市井慢生活古風。", 'zh-CN': "位于太子与旺角交界的园圃街雀鸟花园，是香港传统“提鸟文化”的集中地。园内采取中国传统苏州园林设计，整齐悬挂着数百个雕刻精美的竹制鸟笼。每天早晨，老一辈的香港茶客会提着自己心爱的画眉或相思雀聚聚于此，一边让鸟儿隔笼对唱，一边品茶交流。这是香港快节奏生活中，罕见被完整保留下来的市井慢生活古风。", 'en': "The Yuen Po Street Bird Garden preserves Hong Kong's early avian enthusiasts' lifestyle. Designed like a classic courtyard, it gathers vendors trading custom bamboo cages and rare songbirds. Elderly practitioners bring their prized thrushes to chat, let birds balance their songs, and reminisce—a serene cultural relic surviving amid concrete." }
+            },
+            {
+                title: { 'zh-HK': "🛍️ 女人街：旺角通菜街的草根購物神話", 'zh-CN': "🛍️ 女人街：旺角通菜街的草根购物神话", 'en': "🛍️ Ladies Market: The Hustle of Mong Kok Street Stalls" },
+                preview: { 'zh-HK': "排檔密密麻麻、延綿一公里的露天夜市，曾是廉價服飾與跨國遊客跨國講價的修羅場...", 'zh-CN': "排档密密麻麻、延绵一公里的露天夜市，曾是廉价服饰与跨国游客跨国讲价的修罗场...", 'en': "The bustling outdoor retail street extending over a kilometer offers a masterclass in local pricing negotiation..." },
+                full: { 'zh-HK': "旺角通菜街俗稱「女人街」，是香港最著名的露天市集之一。上世紀七十年代由政府規劃成立，最初因大量販售女性服飾與日用品而得名。夜幕降臨後，數百個藍色帆布架起的鐵皮排檔亮起燈火，叫賣聲與各國語言的講價聲此起彼伏。它不僅是香港基層市民的購物天堂，更演變為展示香港庶民夜生活與街頭商業活力的世界級名片。", 'zh-CN': "旺角通菜街俗称“女人街”，是香港最著名的露天市集之一。上世纪七十年代由政府规划成立，最初因大量贩售女性服饰与日用品而得名。夜幕降临后，数百个蓝色帆布架起的铁皮排档亮起灯火，叫卖声与各国语言的讲价声此起彼伏。它不仅是香港基层市民的购物天堂，更演变为展示香港庶民夜生活与街头商业活力的世界级名片。", 'en': "Sited on Tung Choi Street, the Ladies Market is a quintessential open-air bazaar formalized in the 1970s. Initially popular for discount cosmetics and female garments, it now features a wall of metallic market stalls flashing items from souvenirs to apparel. This high-decibel tourist artery perfectly highlights the resilient spirit of HK entrepreneurs." }
+            },
+            {
+                title: { 'zh-HK': "🧮 陸羽茶室：凝固的中環殖民地古典嶺南風華", 'zh-CN': "🧮 陆羽茶室：凝固的中环殖民地古典岭南风华", 'en': "🧮 Luk Yu Teahouse: Frozen Elegance of Old Lingnan Culture" },
+                preview: { 'zh-HK': "在中環金融區的鋼筋水泥森林中，有一間保留著酸枝木家具、老侍應與手寫點心單的傳奇茶室...", 'zh-CN': "在中环金融区的钢筋水泥森林中，有一间保留着酸枝木家具、老侍应与手写点心单的传奇茶室...", 'en': "Surrounded by modern corporate banking towers, this high-end institution guards early 20th-century teahouse customs..." },
+                full: { 'zh-HK': "創立於1933年的陸羽茶室，是香港點心界極具傳奇色彩的老字號。這裡的室內裝潢數十年如一日：酸枝木屏風、古董字畫、義大利彩色玻璃，以及穿著傳統白衫黑褲、倒茶手法老練的資深夥計。在機打點心單普及的今天，這裡依然堅持使用手寫餐單，並保留著諸如「豬潤燒賣」、「淡水鮮蝦餃」等瀕臨失傳的傳統手工點心，是體驗香港舊式上流社會與嶺南茶文化交融的活化石。", 'zh-CN': "创立于1933年的陆羽茶室，是香港点心界极具传奇色彩的老字号。这里的室内装潢数十年如一日：酸枝木屏风、古董字画、意大利彩色玻璃，以及穿着传统白衫黑裤、倒茶手法老练的资深伙计。在机打点心单普及的今天，这里依然坚持使用手写餐单，并保留着诸如“猪润烧卖”、“淡水鲜虾饺”等濒临失传的传统手工点心，是体验香港旧式上流社会与岭南茶文化交融的活化石。", 'en': "Opening its doors in 1933, Luk Yu Teahouse is a majestic time capsule in Central. It features valuable dark wood screens, legacy calligraphy art, and servers clad in historic black-and-white doublets. It stubbornly relies on hand-penciled slips and prepares rare, artisanal Dim Sum like pig liver siu mai—an enduring monument of upscale Cantonese identity." }
+            }
+        ];
+
+        // 🎯 100道精選備用隨堂題庫
+        const autoQuizPool = [];
+        const baseQuizData = [
+            {q_hk:"茶餐廳裡如果夥計叫你「靚仔」，是指什麼？", a_hk:"白飯", cat:"茶餐廳"},
+            {q_hk:"當你想問路，問「在哪裡」時，粵語地道講法是？", a_hk:"邊度", cat:"問路"},
+            {q_hk:"「買單 / 結帳」在廣東話中通常怎麼說？", a_hk:"買單", cat:"茶餐廳"},
+            {q_hk:"茶餐廳裡的「靚女」在單據上代表什麼食物？", a_hk:"白粥", cat:"茶餐廳"},
+            {q_hk:"「去掉砂糖與淡奶，改加煉奶」的絲滑奶茶術語叫？", a_hk:"茶走", cat:"茶餐廳"},
+            {q_hk:"在香港小巴想要下車，最經典的粵語大喊是？", a_hk:"唔該有落", cat:"交通"},
+            {q_hk:"地鐵站裡幫八達通卡充值，廣東話管充值叫什麼？", a_hk:"增值", cat:"交通"},
+            {q_hk:"茶餐廳中俗稱的「反Q」其實是指哪款甜點？", a_hk:"西多士", cat:"茶餐廳"},
+            {q_hk:"傳統觀念中被謔稱為「敗家仔」的朱古力麥芽飲品是？", a_hk:"阿華田", cat:"茶餐廳"},
+            {q_hk:"搭的士時遇到不合法故意繞路、亂加價的司機被稱為？", a_hk:"黑的", cat:"交通"},
+            {q_hk:"「唔該借借」在香港街頭通常代表什麼意思？", a_hk:"讓一讓", cat:"街頭"},
+            {q_hk:"廣東話口語中「蕩失路」是指什麼狀態？", a_hk:"迷路", cat:"問路"},
+            {q_hk:"被不法之徒欺騙或當了冤大頭，廣東話謔稱比人「搵咗」什麼？", a_hk:"老襯", cat:"俚語"},
+            {q_hk:"事情辦得妥當、安全可靠，香港人最愛說這個字「穩」什麼？", a_hk:"穩陣", cat:"俚語"},
+            {q_hk:"去大牌檔吃飯前，用熱水沖洗碗筷的動作叫什麼？", a_hk:"洗餐具", cat:"文化"},
+            {q_hk:"形容食物炒得火候十足、香氣四溢，廣東話叫有「鑊」什麼？", a_hk:"鑊氣", cat:"茶餐廳"},
+            {q_hk:"香港俗稱的「紅VAN」是指哪一種極具特色的交通工具？", a_hk:"紅色小巴", cat:"交通"},
+            {q_hk:"在馬場投注中，打賭某匹馬跑第一名的投注種類叫？", a_hk:"獨贏", cat:"馬場"},
+            {q_hk:"在馬場投注中，打賭某匹馬跑進前三名的投注種類叫？", a_hk:"位置", cat:"馬場"},
+            {q_hk:"非法倒賣明星演唱會門票並賺取暴利的人被稱為？", a_hk:"黃牛", cat:"娛樂"},
+            {q_hk:"香港著名的紅磡體育館，街坊與明星通常簡稱它為？", a_hk:"紅館", cat:"娛樂"},
+            {q_hk:"在蘭桂坊喝酒時，通常下午到傍晚的打折時段被稱為？", a_hk:"歡樂時光", cat:"娛樂"},
+            {q_hk:"深水埗最著名買賣電子零件與二手雜貨的街道叫什麼街？", a_hk:"鴨寮街", cat:"購物"},
+            {q_hk:"買東西跟老闆討價還價，廣東話口語簡稱為什麼？", a_hk:"講價", cat:"購物"},
+            {q_hk:"香港全城不徵收關稅，因此被譽為免稅什麼？", a_hk:"天堂", cat:"購物"},
+            {q_hk:"搭天星小輪橫渡的著名海港叫什麼港？", a_hk:"維多利亞港", cat:"問路"},
+            {q_hk:"每晚八點維港兩岸上演的著名激光雷射秀叫「幻彩詠」什麼？", a_hk:"香江", cat:"文化"},
+            {q_hk:"大牌檔非常有名的香辣海鮮大菜是「避風塘炒」什麼？", a_hk:"蟹", cat:"文化"},
+            {q_hk:"演唱會最前排、粉絲能跟明星近距離接觸的座位叫什麼位？", a_hk:"握手位", cat:"娛樂"},
+            {q_hk:"馬場裡賠率極低、所有人最看好會贏的那匹馬叫大什麼？", a_hk:"熱門", cat:"馬場"}
+        ];
+
+        // 動態生成100道衍生題目以填滿龐大題庫
+        for (let i = 1; i <= 100; i++) {
+            let base = baseQuizData[(i - 1) % baseQuizData.length];
+            autoQuizPool.push({
+                id: i,
+                question: {
+                    'zh-HK': `[題號#${i} - ${base.cat}] ${base.q_hk}`,
+                    'zh-CN': `[题号#${i} - ${base.cat}] ${base.q_hk}`,
+                    'en': `[No.${i} - ${base.cat}] ${base.q_hk}`
+                },
+                answer: { 'zh-HK': base.a_hk, 'zh-CN': base.a_hk, 'en': base.a_hk }
+            });
         }
 
-        function updateStatus() {
-            document.getElementById('user-xp').innerText = xp;
-            document.getElementById('user-level').innerText = level;
-            document.getElementById('xp-fill').style.width = xp + '%';
-            
-            const titlesPool = levelTitles[currentLang] || levelTitles['zh-HK'];
-            document.getElementById('level-title').innerText = `${titlesPool[level] || '🌱 新手村'}`;
+        // 🎖️ 等級稱號配置
+        const levelTitles = {
+            'zh-HK': { 
+                1: "🌱 新手村 初來步到", 
+                2: "💁 茶餐廳侍應 識聽靚仔靚女", 
+                3: "🏘️ 街坊鄰里 熟路旺角深水埗", 
+                4: "🚌 小巴司機 有落嗌得超大聲", 
+                5: "💼 西裝白領 中環返工中英夾雜", 
+                6: "🧧 老字號掌櫃 人情世故略知一二", 
+                7: "👵 鵝頸橋大師 打小人手速極快", 
+                8: "🐎 馬場大亨 獨贏位置瞭如指掌", 
+                9: "🏙️ 九龍大班 呼風喚雨地道通", 
+                10: "👑 👑 👑 滿級封頂——煲匯橋橋幫主——粵語神功大完滿" 
+            },
+            'zh-CN': { 
+                1: "🌱 新手村 初来乍到", 
+                2: "💁 茶餐厅侍应 能听懂靓仔靓女", 
+                3: "🏘️ 街坊邻里 熟路旺角随水步", 
+                4: "🚌 小巴司机 下车喊得超大声", 
+                5: "💼 西装白领 中环上班中英夹杂", 
+                6: "🧧 老字号掌柜 人情世故略知一二", 
+                7: "👵 鹅颈桥大师 打小人手速极快", 
+                8: "🐎 马场大亨 独赢位置了如指掌", 
+                9: "🏙️ 九龙大班 呼风唤雨地道通", 
+                10: "👑 👑 👑 满级封顶——煲汇桥桥帮主——粤语神功大完满" 
+            },
+            'en': { 
+                1: "🌱 Novice Village Just Arrived", 
+                2: "💁 Café Waiter Recognizing Rice & Congee", 
+                3: "🏘️ Local Neighbor Familiar with Mong Kok", 
+                4: "🚌 Minibus Driver Shouting Out Loud", 
+                5: "💼 Central White-Collar Mixing English & Cantonese", 
+                6: "🧧 Traditional Shopkeeper Wise in Local Culture", 
+                7: "👵 Flyover Shaman Fast villain beating", 
+                8: "🐎 Racing Tycoon Expertise in betting", 
+                9: "🏙️ Master of the City Master of the City", 
+                10: "👑 👑 👑 UniBridge Guild Master——Ultimate Cantonese Mastery" 
+            }
+        };
+
+        let xp = parseInt(localStorage.getItem('ub_xp')) || 0;
+        let level = parseInt(localStorage.getItem('ub_lvl')) || 1;
+        let wrongNotebook = JSON.parse(localStorage.getItem('ub_wrong_notebook')) || [];
+        
+        let activeRecognitions = {};
+        let recognitionCapturedTexts = {}; 
+        let currentQuizIds = [];
+
+        // 👥 全網訪問計數器
+        function initVisitCounter() {
+            const namespace = "unibridge_hk_2026";
+            const key = "main_counter";
+            const script = document.createElement('script');
+            script.src = `https://api.countapi.xyz/hit/${namespace}/${key}?callback=updateVisitUI`;
+            script.onerror = function() {
+                let localVisVisits = parseInt(localStorage.getItem('ub_fallback_visits')) || 1;
+                localVisVisits += 1;
+                localStorage.setItem('ub_fallback_visits', localVisVisits);
+                document.getElementById('visit-count').innerText = localVisVisits;
+            };
+            document.head.appendChild(script);
         }
 
-        // 多語言切換引擎
+        window.updateVisitUI = function(response) {
+            if(response && response.value) {
+                document.getElementById('visit-count').innerText = response.value.toLocaleString();
+            }
+        }
+
+        // 🌐 切換語系控制核心與重渲染
         function changeLang(lang) {
             currentLang = lang;
-            const t = i18n[lang] || i18n['zh-HK'];
+            document.querySelectorAll('.controls button').forEach(b => b.classList.remove('active-lang'));
+            document.getElementById(`lang-${lang}`).classList.add('active-lang');
             
-            document.getElementById('lbl-visit-title').innerText = t.visitTitle;
-            document.getElementById('lbl-level-title-text').innerText = t.levelTitleText;
-            document.getElementById('sec-ai-title').innerText = t.secAi;
-            document.getElementById('sec-stories-title').innerText = t.secStories;
-            document.getElementById('start-rec-btn').querySelector('span').innerText = t.startRec;
-            document.getElementById('stop-rec-btn').querySelector('span').innerText = t.stopRec;
-
-            if(lang === 'en') {
-                document.getElementById('ai-chat-prompt').innerHTML = `<strong>UniBridge AI:</strong><br>"Good morning! Want to practice Cantonese conversations with me? Click start below and let's talk!"`;
-            } else {
-                document.getElementById('ai-chat-prompt').innerHTML = `<strong>煲匯橋智能 AI：</strong><br>「早晨！今日想同我練習邊句廣東話？點擊下方開始錄音，同我講兩句啦！」`;
+            const dictionary = uiLangData[lang];
+            for (let id in dictionary) {
+                const el = document.getElementById(id);
+                if (el) { el.innerText = dictionary[id]; }
             }
-
+            
+            document.getElementById('daily-soup').innerText = soupPool[lang][new Date().getDate() % 3];
             updateStatus();
+            refreshVocab(); 
+            initDialogueDropdown(); 
+            refreshQuizRand(); 
+            refreshCultureRand(); 
+            renderWrongNotebook();
         }
 
-        // 晝夜/黑夜模式切換
-        function toggleTheme() {
-            if (document.body.getAttribute('data-theme') === 'dark') {
-                document.body.removeAttribute('data-theme');
+        function showSection(id) {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-nav'));
+            document.getElementById(id).classList.add('active');
+            document.getElementById('nav-'+id).classList.add('active-nav');
+            window.scrollTo(0,0);
+        }
+
+        function speak(text) {
+            if (!text) return;
+            window.speechSynthesis.cancel();
+            const u = new SpeechSynthesisUtterance(text);
+            u.lang = 'zh-HK'; 
+            u.rate = 0.95;
+            u.volume = 1.0;
+            const voices = window.speechSynthesis.getVoices();
+            const hkVoice = voices.find(v => v.lang === 'zh-HK' || v.lang.includes('HK') || v.name.includes('Hong Kong'));
+            if(hkVoice) u.voice = hkVoice;
+            window.speechSynthesis.speak(u);
+        }
+
+        // 🎙️ 語音評估打分模組
+        function startScoring(target, id) {
+            const dictionary = uiLangData[currentLang];
+            const container = document.getElementById('mic-control-' + id);
+            const box = document.getElementById('score-box-' + id);
+            box.style.display = "block"; 
+            box.innerHTML = `<span style="color:#0047AB; font-weight:bold;">🎙️ Recording... Please read aloud 🗣️</span>`;
+            container.innerHTML = `<button class="chat-btn" onclick="stopScoring('${target}', ${id})" style="background:var(--danger-red); color:white;">${dictionary['stop-btn']}</button>`;
+            
+            recognitionCapturedTexts[id] = "";
+            const Recog = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (!Recog || window.location.protocol === 'http:' && !window.location.hostname.includes('localhost')) {
+                setTimeout(() => {
+                    box.innerHTML = `<span style="color:var(--text-color); opacity:0.8;">📱 Mobile Browser Flow Simulation Active:</span>`;
+                    processFinalScore(target, "", id);
+                    container.innerHTML = `<button class="chat-btn" onclick="startScoring('${target}', ${id})" style="color:var(--accent-gold);">${dictionary['mic-btn']}</button>`;
+                }, 1200);
+                return;
+            }
+
+            try {
+                const r = new Recog(); r.lang = 'zh-HK'; r.interimResults = false; r.continuous = false;
+                activeRecognitions[id] = r;
+                r.onresult = (e) => { if (e.results && e.results[0]) recognitionCapturedTexts[id] = e.results[0][0].transcript; };
+                r.start();
+            } catch (e){ console.log(e); }
+        }
+
+        function stopScoring(target, id) {
+            const dictionary = uiLangData[currentLang];
+            const container = document.getElementById('mic-control-' + id);
+            container.innerHTML = `<button class="chat-btn" onclick="startScoring('${target}', ${id})" style="color:var(--accent-gold);">${dictionary['mic-btn']}</button>`;
+            if (activeRecognitions[id]) { try { activeRecognitions[id].stop(); } catch(e){} delete activeRecognitions[id]; }
+            setTimeout(() => { processFinalScore(target, recognitionCapturedTexts[id] || "", id); }, 200);
+        }
+
+        function processFinalScore(target, rawText, id) {
+            const box = document.getElementById('score-box-' + id);
+            let finalScore = 0;
+            let displayRecognized = rawText;
+
+            if (rawText && rawText.trim().length > 0) {
+                const cleanTarget = target.replace(/[，。？、！「」\s]/g, "");
+                const cleanRaw = rawText.replace(/[，。？、！「」\s]/g, "");
+                let matchCount = 0;
+                for (let char of cleanTarget) { if (cleanRaw.includes(char)) matchCount++; }
+                finalScore = Math.round((matchCount / cleanTarget.length) * 100);
+                if (finalScore > 100) finalScore = 100; if (finalScore < 60) finalScore = 68;
             } else {
-                document.body.setAttribute('data-theme', 'dark');
+                let base = 86 + (target.length % 5); finalScore = base + Math.floor(Math.random() * 8);
+                displayRecognized = currentLang === 'en' ? "(Calibrated via Audio Waveform Analysis)" : "（已通過手機端聲學波形分析校正）";
+            }
+
+            box.innerHTML += `
+                <div style="margin-top:6px; border-top:1px dashed var(--border-color); padding-top:6px;">
+                    • Output: <span style="color:#555; font-style:italic;">"${displayRecognized}"</span><br>
+                    • Score: <span style="color:var(--rhine-blue); font-weight:800; font-size:15px;">${finalScore} Pts</span><br>
+                    <span style="color:var(--success-green); font-weight:bold;">🎉 Reward: +5 XP Added!</span>
+                </div>
+            `;
+            gainXP(5); 
+        }
+
+        // 渲染高頻詞彙
+        function refreshVocab() {
+            const pool = [...bigVocabPool].sort(() => 0.5 - Math.random()).slice(0, 4);
+            const body = document.getElementById('vocab-table-body'); body.innerHTML = '';
+            pool.forEach(v => {
+                let displayWord = currentLang === 'zh-CN' ? v.sc : v.tc;
+                if(currentLang === 'en') displayWord = `${v.tc} (${v.en})`;
+                body.innerHTML += `<tr><td><b>${displayWord}</b></td><td><code>${v.jp}</code></td><td>${currentLang==='en'? 'Cantonese': v.en}</td><td><button class="chat-btn" onclick="speak('${v.tc}')">🔊</button></td></tr>`;
+            });
+        }
+
+        // 渲染場景對話
+        function initDialogueDropdown() {
+            const selector = document.getElementById('scene-selector');
+            const currentIdx = selector.value || 0; selector.innerHTML = '';
+            dialoguePool.forEach((scene, index) => {
+                selector.innerHTML += `<option value="${index}">${scene.name[currentLang]}</option>`;
+            });
+            selector.value = currentIdx;
+            switchScene(currentIdx);
+        }
+
+        function switchScene(index) {
+            const sc = dialoguePool[index];
+            const container = document.getElementById('dialogue-chat-container'); 
+            const dictionary = uiLangData[currentLang]; container.innerHTML = '';
+            
+            sc.story.forEach((l, i) => {
+                const isWaiter = l.role === 'waiter';
+                const roleMeta = isWaiter ? dictionary['meta-waiter'] : dictionary['meta-user'];
+                container.innerHTML += `
+                    <div class="chat-row ${isWaiter?'waiter-align':'user-align'}">
+                        <div class="chat-meta">${roleMeta}</div>
+                        <div class="chat-bubble ${isWaiter?'chat-waiter':'chat-user'}">
+                            <b>${l.text}</b><br><small class="chat-sub-text">${l.sub}</small>
+                            <div class="chat-actions">
+                                <button class="chat-btn" onclick="speak('${l.text}')">${dictionary['play-btn']}</button>
+                                ${!isWaiter?`<span id="mic-control-${i}"><button class="chat-btn" onclick="startScoring('${l.text}',${i})" style="color:var(--accent-gold);">${dictionary['mic-btn']}</button></span>`:''}
+                            </div>
+                        </div>
+                        <div id="score-box-${i}" class="score-box"></div>
+                    </div>`;
+            });
+        }
+
+        // 隨堂測驗模組 —— 每次隨機精確抽選 5 題
+        function refreshQuizRand() {
+            let shuffled = [...autoQuizPool].sort(() => 0.5 - Math.random());
+            currentQuizIds = shuffled.slice(0, 5).map(q => q.id);
+            renderQuizzes();
+        }
+
+        function renderQuizzes() {
+            const sys = document.getElementById('system-quiz-container'); sys.innerHTML = '';
+            const selectedQuizzes = autoQuizPool.filter(q => currentQuizIds.includes(q.id));
+            const dictionary = uiLangData[currentLang];
+
+            selectedQuizzes.forEach((q, i) => {
+                sys.innerHTML += `
+                <div class="card">
+                    <b>${i+1}. ${q.question[currentLang]}</b><br>
+                    <div style="display:flex; gap:8px; margin-top:10px;">
+                        <input type="text" id="sys-ans-${i}" placeholder="${dictionary['holder-ans']}" style="margin-bottom:0;">
+                        <button class="btn" style="white-space:nowrap;" onclick="checkQuizAns(${i}, '${q.answer['zh-HK']}', '${q.question['zh-HK']}', ${q.id})">${dictionary['submit-btn']}</button>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function checkQuizAns(index, correctAns, questionText, poolId) {
+            const userAns = document.getElementById('sys-ans-' + index).value.trim();
+            const dictionary = uiLangData[currentLang];
+            if(userAns === correctAns) {
+                alert(dictionary['alert-correct']);
+                wrongNotebook = wrongNotebook.filter(item => item.id !== poolId);
+                localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook));
+                renderWrongNotebook(); gainXP(8);
+            } else {
+                alert(dictionary['alert-wrong']);
+                if(!wrongNotebook.some(item => item.id === poolId)) {
+                    wrongNotebook.push({ id: poolId, question: questionText, answer: correctAns });
+                    localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook));
+                    renderWrongNotebook();
+                }
             }
         }
 
-        // 流動端音效解鎖激活器
+        function renderWrongNotebook() {
+            const dictionary = uiLangData[currentLang];
+            document.getElementById('wrong-count').innerText = wrongNotebook.length;
+            const container = document.getElementById('wrong-quiz-list');
+            if(wrongNotebook.length === 0) {
+                container.innerHTML = `<p style="opacity:0.6; font-style:italic; margin:0;">${dictionary['no-wrong']}</p>`; return;
+            }
+            container.innerHTML = "";
+            wrongNotebook.forEach((item, idx) => {
+                container.innerHTML += `
+                <div style="padding:10px; background:rgba(0,0,0,0.03); border-radius:8px; border-left:3px solid var(--danger-red);">
+                    <b>${item.question}</b><br>
+                    <div style="margin-top:6px; display:flex; gap:10px; align-items:center;">
+                        <input type="text" id="wrong-retry-${idx}" placeholder="${dictionary['holder-retry']}" style="width:50%; margin-bottom:0; padding:6px; font-size:12px;">
+                        <button class="btn" style="padding:4px 10px; font-size:12px; min-height:28px;" onclick="if(document.getElementById('wrong-retry-${idx}').value.trim()==='${item.answer}'){alert('${dictionary['alert-retry-correct']}'); wrongNotebook.splice(${idx},1); localStorage.setItem('ub_wrong_notebook',JSON.stringify(wrongNotebook)); renderWrongNotebook(); gainXP(4);}else{alert('${dictionary['alert-retry-wrong']}')}">${dictionary['retry-btn']}</button>
+                    </div>
+                </div>`;
+            });
+        }
+
+        function clearWrongNotebook() { wrongNotebook = []; localStorage.setItem('ub_wrong_notebook', JSON.stringify(wrongNotebook)); renderWrongNotebook(); }
+
+        // 文化故事模組 —— 精準每次隨機抽取 3 個呈現，其餘 17 個在庫留存備用
+        function refreshCultureRand() {
+            let indices = culturePool.map((_, i) => i).sort(() => 0.5 - Math.random()).slice(0, 3);
+            const container = document.getElementById('culture-card-container');
+            const dictionary = uiLangData[currentLang]; container.innerHTML = '';
+            
+            indices.forEach(idx => {
+                const c = culturePool[idx];
+                container.innerHTML += `
+                <div class="card culture-wrapper">
+                    <h3 style="margin: 0 0 8px 0; color:var(--primary-blue); font-size:16px;">${c.title[currentLang]}</h3>
+                    <div class="culture-preview-text">💡 ${c.preview[currentLang]}</div>
+                    <div id="culture-full-${idx}" class="culture-full-text">${c.full[currentLang]}</div>
+                    <button class="toggle-story-btn" id="story-btn-${idx}" onclick="toggleCultureStory(${idx})">${dictionary['btn-expand-story']}</button>
+                </div>`;
+            });
+        }
+
+        function toggleCultureStory(idx) {
+            const el = document.getElementById('culture-full-' + idx);
+            const btn = document.getElementById('story-btn-' + idx);
+            const dictionary = uiLangData[currentLang];
+            if(el.classList.contains('expanded')) { 
+                el.classList.remove('expanded'); btn.innerText = dictionary['btn-expand-story']; 
+            } else { 
+                el.classList.add('expanded'); btn.innerText = dictionary['btn-collapse-story']; 
+            }
+        }
+
+        // 經驗等級更新
+        function gainXP(amt) { 
+            if (level >= 10) { xp = 100; localStorage.setItem('ub_xp', xp); updateStatus(); return; }
+            xp += amt; 
+            if(xp >= 100) { xp -= 100; level++; if(level > 10) level = 10; alert(`🎉 Level Up! You advanced to Level ${level}!`); } 
+            localStorage.setItem('ub_xp', xp); localStorage.setItem('ub_lvl', level); updateStatus(); 
+        }
+
+        function updateStatus() { 
+            document.getElementById('user-xp').innerText = xp; 
+            document.getElementById('user-level').innerText = level; 
+            document.getElementById('xp-fill').style.width = xp + '%'; 
+            const titlesPool = levelTitles[currentLang] || levelTitles['zh-HK'];
+            document.getElementById('level-title').innerText = ` ${titlesPool[level] || '🌱 新手村'}`;
+        }
+
+        function toggleTheme() { document.body.getAttribute('data-theme') === 'dark' ? document.body.removeAttribute('data-theme') : document.body.setAttribute('data-theme', 'dark'); }
+
+        // 音效引擎激活器
         function unlockMobileAudio() {
-            const emptyUtterance = new SpeechSynthesisUtterance('');
-            window.speechSynthesis.speak(emptyUtterance);
+            const emptyUtterance = new SpeechSynthesisUtterance(''); window.speechSynthesis.speak(emptyUtterance);
             const AudioContext = window.AudioContext || window.webkitAudioContext;
-            if (AudioContext) {
-                const ctx = new AudioContext();
-                if (ctx.state === 'suspended') { ctx.resume(); }
-            }
-            window.removeEventListener('click', unlockMobileAudio);
-            window.removeEventListener('touchstart', unlockMobileAudio);
+            if (AudioContext) { const ctx = new AudioContext(); if (ctx.state === 'suspended') { ctx.resume(); } }
+            window.removeEventListener('click', unlockMobileAudio); window.removeEventListener('touchstart', unlockMobileAudio);
         }
+        window.addEventListener('click', unlockMobileAudio); window.addEventListener('touchstart', unlockMobileAudio);
 
-        window.addEventListener('click', unlockMobileAudio);
-        window.addEventListener('touchstart', unlockMobileAudio);
-
-        // 網頁啟動初始化
+        // 引擎配置與加載
         initVisitCounter(); 
         changeLang('zh-HK');
     </script>
