@@ -274,7 +274,19 @@
         </div>
         <div id="culture-card-container"></div>
     </main>
-
+<div id="culture-modal" class="modal-overlay">
+    <div class="modal-content">
+        <span class="modal-close-btn" onclick="closeCultureModal()">&times;</span>
+        
+        <h3 id="modal-title">故事標題</h3>
+        <div id="modal-text" class="modal-text-content">故事詳細內容...</div>
+        
+        <div class="audio-controls">
+            <button id="btn-play-audio" class="btn-audio-play">🔊 廣東話導讀</button>
+            <button id="btn-stop-audio" class="btn-audio-stop" style="display:none;">⏹️ 停止播放</button>
+        </div>
+    </div>
+</div>
     <script>
         let currentLang = 'zh-HK';
 
@@ -946,7 +958,187 @@
             let indices = culturePool.map((_, i) => i).sort(() => 0.5 - Math.random()).slice(0, 3);
             const container = document.getElementById('culture-card-container');
             const dictionary = uiLangData[currentLang]; container.innerHTML = '';
-            
+            /* 懸浮遮罩層：佔滿全屏，半透明背景 */
+.modal-overlay {
+    display: none; /* 默認隱藏 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 半透明黑 */
+    backdrop-filter: blur(5px); /* 배경 磨砂玻璃效果 */
+    z-index: 9999; /* 確保在最上層 */
+    justify-content: center;
+    align-items: center;
+}
+
+/* 卡片主體 */
+.modal-content {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    max-width: 500px;
+    width: 85%;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    animation: popIn 0.3s ease; /* 彈出動畫 */
+}
+
+/* 彈出動畫 */
+@keyframes popIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* 右上角關閉按鈕 */
+.modal-close-btn {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #999;
+    transition: color 0.2s;
+}
+.modal-close-btn:hover {
+    color: #333;
+}
+
+/* 內容樣式 */
+#modal-title {
+    margin-top: 0;
+    font-size: 22px;
+    color: #222;
+}
+.modal-text-content {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+    margin-top: 15px;
+    max-height: 300px;
+    overflow-y: auto; /* 內容過長時可滾動 */
+}
+
+/* 語音按鈕樣式 */
+.audio-controls {
+    margin-top: 25px;
+    display: flex;
+    gap: 12px;
+}
+.btn-audio-play, .btn-audio-stop {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+.btn-audio-play {
+    background-color: #007aff;
+    color: white;
+}
+.btn-audio-play:hover { background-color: #0063cc; }
+
+.btn-audio-stop {
+    background-color: #ff3b30;
+    color: white;
+}
+.btn-audio-stop:hover { background-color: #d32f2f; }
+
+            // 全局變量，用來控制語音
+let cantoneseUtterance = null;
+
+/**
+ * 🛠️ 核心對接方法：打開懸浮卡片
+ * @param {string} title 故事標題
+ * @param {string} text 故事內容
+ */
+function openCultureModal(title, text) {
+    // 1. 填充內容
+    document.getElementById('modal-title').innerText = title;
+    document.getElementById('modal-text').innerText = text;
+    
+    // 2. 顯示彈窗 (使用 flex 居中)
+    document.getElementById('culture-modal').style.display = 'flex';
+    
+    // 3. 重置按鈕狀態
+    document.getElementById('btn-play-audio').style.display = 'inline-block';
+    document.getElementById('btn-stop-audio').style.display = 'none';
+    
+    // 4. 綁定導讀按鈕點擊事件
+    document.getElementById('btn-play-audio').onclick = function() {
+        playCantoneseSpeech(text);
+    };
+    document.getElementById('btn-stop-audio').onclick = function() {
+        stopCantoneseSpeech();
+    };
+}
+
+/**
+ * ❌ 關閉懸浮卡片（關閉時會自動停止語音）
+ */
+function closeCultureModal() {
+    document.getElementById('culture-modal').style.display = 'none';
+    stopCantoneseSpeech(); // 關閉卡片時必須停止發聲
+}
+
+/**
+ * 🔊 播放純粵語導讀
+ */
+function playCantoneseSpeech(text) {
+    // 先停止當前正在播放的語音
+    stopCantoneseSpeech();
+
+    if ('speechSynthesis' in window) {
+        // 創建語音對象，並過濾掉 HTML 標籤（純文本朗讀）
+        const cleanText = text.replace(/<[^>]*>/g, '');
+        cantoneseUtterance = new SpeechSynthesisUtterance(cleanText);
+        
+        // 🌟 關鍵：強制設定語言為香港粵語 (zh-HK)
+        cantoneseUtterance.lang = 'zh-HK'; 
+        cantoneseUtterance.rate = 0.95; // 語速稍微放慢一點，聽起來更像專業導讀
+        cantoneseUtterance.pitch = 1.0; // 音調
+
+        // 監聽播放結束事件：播完後自動換回「播放按鈕」
+        cantoneseUtterance.onend = function() {
+            document.getElementById('btn-play-audio').style.display = 'inline-block';
+            document.getElementById('btn-stop-audio').style.display = 'none';
+        };
+
+        // 切換按鈕顯示狀態
+        document.getElementById('btn-play-audio').style.display = 'none';
+        document.getElementById('btn-stop-audio').style.display = 'inline-block';
+        
+        // 開始播放
+        window.speechSynthesis.speak(cantoneseUtterance);
+    } else {
+        alert('您的瀏覽器或設備不支援網頁語音導讀功能。');
+    }
+}
+
+/**
+ * ⏹️ 停止播放語音
+ */
+function stopCantoneseSpeech() {
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+    }
+    document.getElementById('btn-play-audio').style.display = 'inline-block';
+    document.getElementById('btn-stop-audio').style.display = 'none';
+}
+
+/**
+ * 點擊空白處關閉卡片邏輯
+ */
+window.addEventListener('click', function(event) {
+    const modal = document.getElementById('culture-modal');
+    // 如果點擊的目標剛好是遮罩層本身（而不是卡片內部），就關閉
+    if (event.target === modal) {
+        closeCultureModal();
+    }
+});
             indices.forEach(idx => {
                 const c = culturePool[idx];
                 container.innerHTML += `
