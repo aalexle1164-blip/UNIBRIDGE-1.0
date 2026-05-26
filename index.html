@@ -237,7 +237,7 @@
     <main id="dialogue" class="content-section">
         <div class="section-desc" id="dialogue-desc">⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！</div>
         <div class="card">
-            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換 (標準 10 話輪)</h2>
+            <h2 style="margin:0 0 12px 0; font-size:18px;" id="dialogue-title">🗣️ 擬真對話切換</h2>
             <select id="scene-selector" class="scene-select-dropdown" onchange="switchScene(this.value)"></select>
             <div class="chat-container" id="dialogue-chat-container"></div>
         </div>
@@ -281,7 +281,7 @@
                 'welcome-title': '今日想港滴乜嘢？', 'tips-title': '💡 系統功能與修行提示',
                 'tips-desc': '歡迎來到煲匯橋學習空間！本系統配備四大核心修行功能：高頻詞彙隨機滾動刷詞、擬真 10 話輪情境對話（支援 AI 語音跟讀與即時智能評分）、精選隨堂測驗以及自動記錄的錯題消滅簿、以及深度的老香港歷史典故探索。請點擊上方導航欄開啟您的粵語神功修煉之旅！',
                 'vocab-desc': '🌱 快速學會打招呼、數字與茶餐廳單詞。', 'vocab-title': '📊 高頻詞彙', 'btn-refresh-vocab': '🔄 換一批',
-                'dialogue-desc': '⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！', 'dialogue-title': '🗣️ 擬真對話切換 (標準 10 話輪)',
+                'dialogue-desc': '⚔️ 實境對話挑戰，支持手機端全流暢 AI 語音跟讀與打分評估！', 'dialogue-title': '🗣️ 擬真對話切換',
                 'quiz-desc': '🏆 每日自動派發挑戰，答對可穩步獲得經驗值。', 'quiz-title': '🎯 隨堂實戰測驗', 'btn-refresh-quiz': '🔄 換一批題目',
                 'lbl-wrong-title': '❌ 我的錯題簿', 'btn-clear-wrong': '🗑️ 清空',
                 'culture-desc': '🧳 探索老香港傳奇故事。', 'btn-refresh-culture': '🔄 換一批故事',
@@ -295,7 +295,7 @@
                 'welcome-title': '今日想港滴乜嘢？', 'tips-title': '💡 系统功能与修行提示',
                 'tips-desc': '欢迎来到煲汇桥学习空间！本系统配备四大核心修行功能：高频词汇随机滚动刷词、拟真 10 话轮情境对话（支持 AI 语音跟读与即时智能评分）、精选随堂测验以及自动记录的错题消灭簿、以及深度的老香港历史典故探索。请点击上方导航栏开启您的粤语神功修炼之旅！',
                 'vocab-desc': '🌱 快速学会打招呼、数字与茶餐厅单词。', 'vocab-title': '📊 高频词汇', 'btn-refresh-vocab': '🔄 换一批',
-                'dialogue-desc': '⚔️ 实境对话挑战，支持手机端全流畅 AI 语音跟读与打分评估！', 'dialogue-title': '🗣️ 拟真对话切换 (标准 10 话轮)',
+                'dialogue-desc': '⚔️ 实境对话挑战，支持手机端全流畅 AI 语音跟读与打分评估！', 'dialogue-title': '🗣️ 拟真对话切换',
                 'quiz-desc': '🏆 每日自动派发挑战，答对可稳步获得经验值。', 'quiz-title': '🎯 随堂实战测验', 'btn-refresh-quiz': '🔄 换一批题目',
                 'lbl-wrong-title': '❌ 我的错题簿', 'btn-clear-wrong': '🗑️ 清空',
                 'culture-desc': '🧳 探索老香港传奇故事。', 'btn-refresh-culture': '🔄 换一批故事',
@@ -309,7 +309,7 @@
                 'welcome-title': 'What do you want to speak today?', 'tips-title': '💡 Features & Training Tips',
                 'tips-desc': 'Welcome to UniBridge Cantonese learning space! Features included: Vocab flashcards, real-world 10-turn dialogue practices (with AI scoring), system short quizzes with auto error notebooks, and in-depth HK traditional heritage exploration. Tap nav menus above to boost your journey!',
                 'vocab-desc': '🌱 Learn greetings, numbers, and local restaurant terms rapidly.', 'vocab-title': '📊 High-Frequency Vocab', 'btn-refresh-vocab': '🔄 Refresh',
-                'dialogue-desc': '⚔️ Real-world conversational drills. Supports mobile AI voice scoring.', 'dialogue-title': '🗣️ Dialogue Practice (10 Turns)',
+                'dialogue-desc': '⚔️ Real-world conversational drills. Supports mobile AI voice scoring.', 'dialogue-title': '🗣️ Dialogue Practice',
                 'quiz-desc': '🏆 Daily evaluation. Earn Experience Points (XP) through correct answers.', 'quiz-title': '🎯 Quiz Challenge', 'btn-refresh-quiz': '🔄 Refresh Questions',
                 'lbl-wrong-title': '❌ My Error Notebook', 'btn-clear-wrong': '🗑️ Clear All',
                 'culture-desc': '🧳 Explore legendary Hong Kong stories and heritage.', 'btn-refresh-culture': '🔄 Refresh Stories',
@@ -644,9 +644,9 @@
             autoQuizPool.push({
                 id: i,
                 question: {
-                    'zh-HK': `[題號#${i} - ${base.cat}] ${base.q_hk}`,
-                    'zh-CN': `[题号#${i} - ${base.cat}] ${base.q_hk}`,
-                    'en': `[No.${i} - ${base.cat}] ${base.q_hk}`
+                    'zh-HK': `${base.q_hk}`,
+                    'zh-CN': `${base.q_hk}`,
+                    'en': `${base.q_hk}`
                 },
                 answer: { 'zh-HK': base.a_hk, 'zh-CN': base.a_hk, 'en': base.a_hk }
             });
